@@ -1,0 +1,41 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '2.7.2'
+    id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+}
+
+group = 'hufs.team'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    //Web
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    // DB
+    runtimeOnly 'mysql:mysql-connector-java'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+    // Test
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    // Dev
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
