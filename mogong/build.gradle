@@ -1,0 +1,91 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '2.7.2'
+    id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+    id 'org.asciidoctor.jvm.convert' version "3.3.2"
+}
+
+group = 'hufs.team'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+configurations {
+    asciidoctorExtensions
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    //Web
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    // DB
+    runtimeOnly 'mysql:mysql-connector-java'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+    // Test
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'io.rest-assured:rest-assured'
+
+    // API Docs
+    testImplementation 'org.springframework.restdocs:spring-restdocs-restassured'
+    asciidoctorExtensions 'org.springframework.restdocs:spring-restdocs-asciidoctor'
+
+    // Dev
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+
+    // AWS S3
+    implementation 'io.awspring.cloud:spring-cloud-starter-aws:2.4.2'
+    implementation 'com.amazonaws:aws-java-sdk-s3'
+    testImplementation 'io.findify:s3mock_2.13:0.2.6'
+}
+
+
+//-- API 문서 관련 설정 -------------------------------------------------------
+ext {
+    snippetsDir = file("${project.buildDir}/generated-snippets")
+}
+
+test {
+    outputs.dir snippetsDir
+    useJUnitPlatform()
+}
+
+asciidoctor {
+    dependsOn test
+    configurations 'asciidoctorExtensions'
+    inputs.dir snippetsDir
+
+    sources {
+        include '**/index.adoc'
+    }
+
+    baseDirFollowsSourceFile()
+}
+
+asciidoctor.doFirst {
+    delete file("${project.rootDir}/src/main/resources/static/docs")
+}
+
+task copyDocument(type: Copy) {
+    dependsOn asciidoctor
+
+    from "${project.buildDir}/docs/asciidoc"
+    into "${project.rootDir}/src/main/resources/static/docs"
+}
+
+bootJar {
+    dependsOn copyDocument
+    copy {
+        from "${project.buildDir}/docs/asciidoc"
+        into "${project.buildDir}/resources/main/static/docs"
+    }
+}
