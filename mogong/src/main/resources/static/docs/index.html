@@ -445,9 +445,10 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#_simple_read">Simple Read</a>
+<li><a href="#_이미지_api">이미지 API</a>
 <ul class="sectlevel2">
-<li><a href="#_http_request">HTTP Request</a></li>
+<li><a href="#_전체_목록_images">전체 목록 (/images/*)</a></li>
+<li><a href="#_s3_presigned_url_생성">S3 Presigned URL 생성</a></li>
 </ul>
 </li>
 </ul>
@@ -455,11 +456,143 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div id="content">
 <div class="sect1">
-<h2 id="_simple_read"><a class="link" href="#_simple_read">Simple Read</a></h2>
+<h2 id="_이미지_api"><a class="link" href="#_이미지_api">이미지 API</a></h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_http_request"><a class="link" href="#_http_request">HTTP Request</a></h3>
+<h3 id="_전체_목록_images"><a class="link" href="#_전체_목록_images">전체 목록 (/images/*)</a></h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">기능</th>
+<th class="tableblock halign-left valign-top">API</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#_s3_presigned_url_생성">S3 Presigned URL 생성</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">GET /images</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_s3_presigned_url_생성"><a class="link" href="#_s3_presigned_url_생성">S3 Presigned URL 생성</a></h3>
+<div class="paragraph">
+<p>API : <code>GET /images?extension=(.이미지 파일의 확장자)</code></p>
+</div>
+<div class="paragraph">
+<p>Query Parameter(=Request Parameter) 로 이미지 파일 확장자(.jpg, .jpeg, .png) 를 보내야합니다.</p>
+</div>
+<div class="paragraph">
+<p>꼭 확장자 앞에는 점(.)을 붙여주세요</p>
+</div>
+<div class="sect3">
+<h4 id="_200_ok"><a class="link" href="#_200_ok">200 OK</a></h4>
+<div class="sect4">
+<h5 id="_request"><a class="link" href="#_request">Request</a></h5>
+<div class="sect5">
+<h6 id="_request_http_request"><a class="link" href="#_request_http_request">HTTP request</a></h6>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /images?extension=.jpg HTTP/1.1
+Accept: application/json
+Content-Type: application/json
+Host: localhost</code></pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_request_request_parameters"><a class="link" href="#_request_request_parameters">Request parameters</a></h6>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>extension</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">이미지 파일 확장자</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_response"><a class="link" href="#_response">Response</a></h5>
+<div class="sect5">
+<h6 id="_response_http_response"><a class="link" href="#_response_http_response">HTTP response</a></h6>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
+Content-Type: application/json
+Transfer-Encoding: chunked
+Date: Fri, 17 Mar 2023 10:42:03 GMT
+Keep-Alive: timeout=60
+Connection: keep-alive
+Content-Length: 561
 
+{
+  "code" : "I-S001",
+  "message" : "이미지 PreSigned URL 생성에 성공했습니다.",
+  "data" : {
+    "preSignedUrl" : "https://mogong.s3.ap-northeast-2.amazonaws.com/image/5e9a96dd-66c8-4104-9116-f30618cce25c.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Date=20230317T104203Z&amp;X-Amz-SignedHeaders=host&amp;X-Amz-Expires=599&amp;X-Amz-Credential=AKIATAIREWDPDOXL3X74%2F20230317%2Fap-northeast-2%2Fs3%2Faws4_request&amp;X-Amz-Signature=0ef793f615cbd82891eb2e0a445c9547942b8f7ea33e038cd6569094a2d844e1",
+    "fileName" : "5e9a96dd-66c8-4104-9116-f30618cce25c.jpg"
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_response_response_fields"><a class="link" href="#_response_response_fields">Response fields</a></h6>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>code</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MOGONG 서버 전용 상태코드</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>message</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">자세한 응답 메세지</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.preSignedUrl</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">PUT S3 PreSigned URL</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.fileName</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">S3에 저장될 파일 이름</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -467,7 +600,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2023-03-17 00:17:26 +0900
+Last updated 2023-03-17 19:41:56 +0900
 </div>
 </div>
 </body>
