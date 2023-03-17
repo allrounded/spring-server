@@ -534,19 +534,22 @@ Host: localhost</code></pre>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
 Content-Type: application/json
 Transfer-Encoding: chunked
-Date: Fri, 17 Mar 2023 10:42:03 GMT
+Date: Fri, 17 Mar 2023 17:40:42 GMT
 Keep-Alive: timeout=60
 Connection: keep-alive
-Content-Length: 561
+Content-Length: 559
 
 {
   "code" : "I-S001",
   "message" : "이미지 PreSigned URL 생성에 성공했습니다.",
   "data" : {
-    "preSignedUrl" : "https://mogong.s3.ap-northeast-2.amazonaws.com/image/5e9a96dd-66c8-4104-9116-f30618cce25c.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Date=20230317T104203Z&amp;X-Amz-SignedHeaders=host&amp;X-Amz-Expires=599&amp;X-Amz-Credential=AKIATAIREWDPDOXL3X74%2F20230317%2Fap-northeast-2%2Fs3%2Faws4_request&amp;X-Amz-Signature=0ef793f615cbd82891eb2e0a445c9547942b8f7ea33e038cd6569094a2d844e1",
-    "fileName" : "5e9a96dd-66c8-4104-9116-f30618cce25c.jpg"
+    "preSignedUrl" : "https://mogong.s3.ap-northeast-2.amazonaws.com/image/9f216da0-4a73-4c27-b3ef-c6e1434aa464.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Date=20230317T174042Z&amp;X-Amz-SignedHeaders=host&amp;X-Amz-Expires=600&amp;X-Amz-Credential=MOGONGMOGONGMOGONG%2F20230317%2Fap-northeast-2%2Fs3%2Faws4_request&amp;X-Amz-Signature=8770f2c8f12854024ec7478b3e5075870c7c68231c6943bda547f4dea20f8527",
+    "fileName" : "9f216da0-4a73-4c27-b3ef-c6e1434aa464.jpg"
   }
 }</code></pre>
 </div>
@@ -600,7 +603,7 @@ Content-Length: 561
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2023-03-17 19:41:56 +0900
+Last updated 2023-03-18 01:54:59 +0900
 </div>
 </div>
 </body>

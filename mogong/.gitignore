@@ -39,3 +39,4 @@ out/
 # properties
 application.yml
 application-prod.yml
+!**/src/test/**/application.yml
