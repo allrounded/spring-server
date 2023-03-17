@@ -2,3 +2,9 @@
 :toc: left
 :toclevels: 2
 :sectlinks:
+
+== 이미지 API
+
+include::{docdir}/image/s3.adoc[]
+
+
