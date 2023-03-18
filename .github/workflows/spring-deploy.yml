@@ -66,6 +66,6 @@ jobs:
             sudo docker system prune -f
             sudo docker pull gkstjr5731/mogong:latest
             sudo docker stop mogong-spring-server && sudo docker rm mogong-spring-server
-            sudo docker run -d --name mogong-spring-server -p 443:8080 gkstjr5731/mogong:latest
+            sudo docker run -d --name mogong-spring-server -p 8080:8080 gkstjr5731/mogong:latest
             sleep 60
             sudo docker inspect -f {{.State.Pid}} mogong-spring-server | grep -v '^0'
