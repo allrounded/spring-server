@@ -1,9 +1,10 @@
-package hufs.team.mogong.service;
+package hufs.team.mogong.image.service;
 
 import static com.amazonaws.HttpMethod.PUT;
 
 import com.amazonaws.services.s3.AmazonS3;
-import hufs.team.mogong.service.dto.PreSignedUrlResponse;
+import hufs.team.mogong.image.service.dto.PreSignedUrlRequest;
+import hufs.team.mogong.image.service.dto.PreSignedUrlResponse;
 import java.util.Date;
 import java.util.UUID;
 import lombok.extern.slf4j.Slf4j;
@@ -26,7 +27,8 @@ public class ImageUploadService {
 		this.amazonS3 = amazonS3;
 	}
 
-	public PreSignedUrlResponse generate(String extension) {
+	public PreSignedUrlResponse generate(PreSignedUrlRequest request) {
+		String extension = request.getExtension();
 		log.debug("IMAGE FILE EXTENSION = {}", extension);
 		String fileName = IMAGE_DIR + UUID.randomUUID() + extension;
 		log.debug("IMAGE FILE NAME = {}", fileName.substring(IMAGE_DIR.length()));

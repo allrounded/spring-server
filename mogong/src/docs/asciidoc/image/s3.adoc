@@ -3,14 +3,14 @@
 |===
 | 기능 | API
 
-| <<S3 Presigned URL 생성>> | GET /images
+| <<S3 Presigned URL 생성>> | [POST] /images
 |===
 
 === S3 Presigned URL 생성
 
-API : `GET /images?extension=(.이미지 파일의 확장자)`
+API : `POST /images`
 
-Query Parameter(=Request Parameter) 로 이미지 파일 확장자(.jpg, .jpeg, .png) 를 보내야합니다.
+Request Body 로 이미지 파일 확장자(.jpg, .jpeg, .png) 를 보내야합니다.
 
 꼭 확장자 앞에는 점(.)을 붙여주세요
 
@@ -18,8 +18,8 @@ Query Parameter(=Request Parameter) 로 이미지 파일 확장자(.jpg, .jpeg, 
 
 ===== Request
 
-operation::pre_signed_url_test/generate__pre_signed_url_success[snippets='http-request,request-parameters']
+operation::pre_signed_url_test/generate_pre_signed_url_success[snippets='http-request,request-body,request-fields']
 
 ===== Response
 
-operation::pre_signed_url_test/generate__pre_signed_url_success[snippets='http-response,response-fields']
+operation::pre_signed_url_test/generate_pre_signed_url_success[snippets='http-response,response-body,response-fields']
