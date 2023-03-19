@@ -451,6 +451,13 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_s3_presigned_url_생성">S3 Presigned URL 생성</a></li>
 </ul>
 </li>
+<li><a href="#_팀_api">팀 API</a>
+<ul class="sectlevel2">
+<li><a href="#_전체_목록_teams">전체 목록 (/teams/*)</a></li>
+<li><a href="#_1_팀_생성">1. 팀 생성</a></li>
+<li><a href="#_2_팀_이미지_업로드">2. 팀 이미지 업로드</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -474,7 +481,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#_s3_presigned_url_생성">S3 Presigned URL 생성</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">GET /images</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">[POST] /images</p></td>
 </tr>
 </tbody>
 </table>
@@ -482,10 +489,10 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="sect2">
 <h3 id="_s3_presigned_url_생성"><a class="link" href="#_s3_presigned_url_생성">S3 Presigned URL 생성</a></h3>
 <div class="paragraph">
-<p>API : <code>GET /images?extension=(.이미지 파일의 확장자)</code></p>
+<p>API : <code>POST /images</code></p>
 </div>
 <div class="paragraph">
-<p>Query Parameter(=Request Parameter) 로 이미지 파일 확장자(.jpg, .jpeg, .png) 를 보내야합니다.</p>
+<p>Request Body 로 이미지 파일 확장자(.jpg, .jpeg, .png) 를 보내야합니다.</p>
 </div>
 <div class="paragraph">
 <p>꼭 확장자 앞에는 점(.)을 붙여주세요</p>
@@ -498,29 +505,47 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h6 id="_request_http_request"><a class="link" href="#_request_http_request">HTTP request</a></h6>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /images?extension=.jpg HTTP/1.1
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /images HTTP/1.1
 Accept: application/json
 Content-Type: application/json
-Host: localhost</code></pre>
+Host: localhost
+Content-Length: 26
+
+{
+  "extension" : ".JPG"
+}</code></pre>
 </div>
 </div>
 </div>
 <div class="sect5">
-<h6 id="_request_request_parameters"><a class="link" href="#_request_request_parameters">Request parameters</a></h6>
+<h6 id="_request_request_body"><a class="link" href="#_request_request_body">Request body</a></h6>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code>{
+  "extension" : ".JPG"
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_request_request_fields"><a class="link" href="#_request_request_fields">Request fields</a></h6>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
 <th class="tableblock halign-left valign-top">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>extension</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">이미지 파일 확장자</p></td>
 </tr>
 </tbody>
@@ -539,7 +564,7 @@ Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json
 Transfer-Encoding: chunked
-Date: Fri, 17 Mar 2023 17:40:42 GMT
+Date: Sun, 19 Mar 2023 14:04:09 GMT
 Keep-Alive: timeout=60
 Connection: keep-alive
 Content-Length: 559
@@ -548,8 +573,23 @@ Content-Length: 559
   "code" : "I-S001",
   "message" : "이미지 PreSigned URL 생성에 성공했습니다.",
   "data" : {
-    "preSignedUrl" : "https://mogong.s3.ap-northeast-2.amazonaws.com/image/9f216da0-4a73-4c27-b3ef-c6e1434aa464.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Date=20230317T174042Z&amp;X-Amz-SignedHeaders=host&amp;X-Amz-Expires=600&amp;X-Amz-Credential=MOGONGMOGONGMOGONG%2F20230317%2Fap-northeast-2%2Fs3%2Faws4_request&amp;X-Amz-Signature=8770f2c8f12854024ec7478b3e5075870c7c68231c6943bda547f4dea20f8527",
-    "fileName" : "9f216da0-4a73-4c27-b3ef-c6e1434aa464.jpg"
+    "preSignedUrl" : "https://mogong.s3.ap-northeast-2.amazonaws.com/image/1c487536-08ef-4332-bc2f-16830f49495f.JPG?X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Date=20230319T140409Z&amp;X-Amz-SignedHeaders=host&amp;X-Amz-Expires=600&amp;X-Amz-Credential=MOGONGMOGONGMOGONG%2F20230319%2Fap-northeast-2%2Fs3%2Faws4_request&amp;X-Amz-Signature=3f0a42e1dde9493a1144ede3535fc4dbb800e514f50cde768ca0fca7e5061ac5",
+    "fileName" : "1c487536-08ef-4332-bc2f-16830f49495f.JPG"
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_response_response_body"><a class="link" href="#_response_response_body">Response body</a></h6>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code>{
+  "code" : "I-S001",
+  "message" : "이미지 PreSigned URL 생성에 성공했습니다.",
+  "data" : {
+    "preSignedUrl" : "https://mogong.s3.ap-northeast-2.amazonaws.com/image/1c487536-08ef-4332-bc2f-16830f49495f.JPG?X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Date=20230319T140409Z&amp;X-Amz-SignedHeaders=host&amp;X-Amz-Expires=600&amp;X-Amz-Credential=MOGONGMOGONGMOGONG%2F20230319%2Fap-northeast-2%2Fs3%2Faws4_request&amp;X-Amz-Signature=3f0a42e1dde9493a1144ede3535fc4dbb800e514f50cde768ca0fca7e5061ac5",
+    "fileName" : "1c487536-08ef-4332-bc2f-16830f49495f.JPG"
   }
 }</code></pre>
 </div>
@@ -599,11 +639,381 @@ Content-Length: 559
 </div>
 </div>
 </div>
+<div class="sect1">
+<h2 id="_팀_api"><a class="link" href="#_팀_api">팀 API</a></h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_전체_목록_teams"><a class="link" href="#_전체_목록_teams">전체 목록 (/teams/*)</a></h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">기능</th>
+<th class="tableblock halign-left valign-top">API</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#_1_팀_생성">1. 팀 생성</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">[POST] /teams</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#_2_팀_이미지_업로드">2. 팀 이미지 업로드</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">[POST] /teams/{teamId}</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_1_팀_생성"><a class="link" href="#_1_팀_생성">1. 팀 생성</a></h3>
+<div class="paragraph">
+<p>API : <code>POST /teams</code></p>
+</div>
+<div class="paragraph">
+<p>Request Body 로 팀 구성원 수를 보내야 합니다.</p>
+</div>
+<div class="sect3">
+<h4 id="_200_ok_2"><a class="link" href="#_200_ok_2">200 OK</a></h4>
+<div class="sect4">
+<h5 id="_request_2"><a class="link" href="#_request_2">Request</a></h5>
+<div class="sect5">
+<h6 id="_request_2_http_request"><a class="link" href="#_request_2_http_request">HTTP request</a></h6>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /teams HTTP/1.1
+Accept: application/json
+Content-Type: application/json
+Host: localhost
+Content-Length: 24
+
+{
+  "numberOfTeam" : 5
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_request_2_request_body"><a class="link" href="#_request_2_request_body">Request body</a></h6>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code>{
+  "numberOfTeam" : 5
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_request_2_request_fields"><a class="link" href="#_request_2_request_fields">Request fields</a></h6>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>numberOfTeam</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">팀 구성원 수</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_response_2"><a class="link" href="#_response_2">Response</a></h5>
+<div class="sect5">
+<h6 id="_response_2_http_response"><a class="link" href="#_response_2_http_response">HTTP response</a></h6>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/json
+Transfer-Encoding: chunked
+Date: Sun, 19 Mar 2023 14:04:09 GMT
+Keep-Alive: timeout=60
+Connection: keep-alive
+Content-Length: 166
+
+{
+  "code" : "T-S001",
+  "message" : "팀 생성에 성공했습니다.",
+  "data" : {
+    "teamId" : "sample-team-id",
+    "numberOfTeam" : 5,
+    "submit" : 0
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_response_2_response_body"><a class="link" href="#_response_2_response_body">Response body</a></h6>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code>{
+  "code" : "T-S001",
+  "message" : "팀 생성에 성공했습니다.",
+  "data" : {
+    "teamId" : "sample-team-id",
+    "numberOfTeam" : 5,
+    "submit" : 0
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_response_2_response_fields"><a class="link" href="#_response_2_response_fields">Response fields</a></h6>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>code</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MOGONG 서버 전용 상태코드</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>message</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">자세한 응답 메세지</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.teamId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">생성된 팀 아이디</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.numberOfTeam</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">팀 구성원 수</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.submit</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">이미지를 제출한 구성원 수</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_2_팀_이미지_업로드"><a class="link" href="#_2_팀_이미지_업로드">2. 팀 이미지 업로드</a></h3>
+<div class="paragraph">
+<p>API : <code>POST /teams/{teamId}</code></p>
+</div>
+<div class="paragraph">
+<p>Request Body 로 업로드가 완료된 Image URL을 보내야 합니다.</p>
+</div>
+<div class="sect3">
+<h4 id="_200_ok_3"><a class="link" href="#_200_ok_3">200 OK</a></h4>
+<div class="sect4">
+<h5 id="_request_3"><a class="link" href="#_request_3">Request</a></h5>
+<div class="sect5">
+<h6 id="_request_3_http_request"><a class="link" href="#_request_3_http_request">HTTP request</a></h6>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /teams/sample-team-id HTTP/1.1
+Accept: application/json
+Content-Type: application/json
+Host: localhost
+Content-Length: 56
+
+{
+  "imageUrl" : "http://localhost/image/sample_3.JPG"
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_request_3_request_body"><a class="link" href="#_request_3_request_body">Request body</a></h6>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code>{
+  "imageUrl" : "http://localhost/image/sample_3.JPG"
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_request_3_request_fields"><a class="link" href="#_request_3_request_fields">Request fields</a></h6>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>imageUrl</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">업로드가 완료된 이미지 링크</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_response_3"><a class="link" href="#_response_3">Response</a></h5>
+<div class="sect5">
+<h6 id="_response_3_http_response"><a class="link" href="#_response_3_http_response">HTTP response</a></h6>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/json
+Transfer-Encoding: chunked
+Date: Sun, 19 Mar 2023 14:04:09 GMT
+Keep-Alive: timeout=60
+Connection: keep-alive
+Content-Length: 295
+
+{
+  "code" : "T-S002",
+  "message" : "팀 멤버의 이미지 등록에 성공했습니다.",
+  "data" : {
+    "teamId" : "sample-team-id",
+    "numberOfTeam" : 5,
+    "submit" : 2,
+    "resultImageUrl" : null,
+    "timeResponses" : {
+      "divisorMinutes" : 30,
+      "times" : [ ]
+    }
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_response_3_response_body"><a class="link" href="#_response_3_response_body">Response body</a></h6>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code>{
+  "code" : "T-S002",
+  "message" : "팀 멤버의 이미지 등록에 성공했습니다.",
+  "data" : {
+    "teamId" : "sample-team-id",
+    "numberOfTeam" : 5,
+    "submit" : 2,
+    "resultImageUrl" : null,
+    "timeResponses" : {
+      "divisorMinutes" : 30,
+      "times" : [ ]
+    }
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_response_3_response_fields"><a class="link" href="#_response_3_response_fields">Response fields</a></h6>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>code</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MOGONG 서버 전용 상태코드</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>message</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">자세한 응답 메세지</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.teamId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">생성된 팀 아이디</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.numberOfTeam</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">팀 구성원 수</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.submit</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">이미지를 제출한 구성원 수</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.resultImageUrl</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Null</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">결과 이미지 URL(submit 미 충족시 생성 안됨)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.timeResponses</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Object</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">N분 단위의 시간들(submit 미 충족시 생성 안됨)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.timeResponses.divisorMinutes</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">시간 단위 (default : 30분)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.timeResponses.times[]</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">요일과 시간을 담은 배열</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </div>
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2023-03-18 01:54:59 +0900
+Last updated 2023-03-19 21:14:46 +0900
 </div>
 </div>
 </body>

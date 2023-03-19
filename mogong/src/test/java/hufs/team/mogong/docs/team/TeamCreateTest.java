@@ -7,7 +7,7 @@ import static io.restassured.RestAssured.given;
 import static org.springframework.restdocs.restassured3.RestAssuredRestDocumentation.document;
 
 import hufs.team.mogong.docs.InitDocumentationTest;
-import hufs.team.mogong.team.service.dto.TeamRequest;
+import hufs.team.mogong.team.service.dto.request.CreateTeamRequest;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -22,7 +22,7 @@ class TeamCreateTest extends InitDocumentationTest {
 	@Test
 	@DisplayName("팀 생성 성공")
 	void create_team_success(){
-		TeamRequest request = new TeamRequest(NUMBER_OF_TEAM);
+		CreateTeamRequest request = new CreateTeamRequest(NUMBER_OF_TEAM);
 
 		//given
 		given(this.spec)
