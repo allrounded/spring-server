@@ -7,7 +7,8 @@ import static io.restassured.RestAssured.given;
 import static org.springframework.restdocs.restassured3.RestAssuredRestDocumentation.document;
 
 import hufs.team.mogong.docs.InitDocumentationTest;
-import hufs.team.mogong.service.dto.PreSignedUrlResponse;
+import hufs.team.mogong.image.service.dto.PreSignedUrlRequest;
+import hufs.team.mogong.image.service.dto.PreSignedUrlResponse;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,14 +17,10 @@ import org.springframework.http.MediaType;
 
 @DisplayName("[API DOCS] AWS S3 PreSigned URL 생성")
 class PreSignedUrlTest extends InitDocumentationTest {
-
-	private static final String BUCKET_URL = "https://mogong.s3.ap-northeast-2.amazonaws.com/";
-	private static final String FILE_NAME = "image/sample_1.JPG";
 	@Test
-	void generate_PreSignedURL_success(){
-		PreSignedUrlResponse response = new PreSignedUrlResponse(
-			BUCKET_URL + FILE_NAME,
-			FILE_NAME);
+	@DisplayName("PreSigned URL 생성 성공")
+	void generate_pre_signed_url_success(){
+		PreSignedUrlRequest request = new PreSignedUrlRequest(".JPG");
 
 		//given
 		given(this.spec)
@@ -32,11 +29,11 @@ class PreSignedUrlTest extends InitDocumentationTest {
 				PRESIGNED_URL_GENERATE_RESPONSE_SNIPPET))
 			.accept(MediaType.APPLICATION_JSON_VALUE)
 			.header(CONTENT_TYPE, APPLICATION_JSON)
-			.queryParam("extension", ".jpg")
+			.body(request)
 
 		//when
 		.when()
-			.get("/images")
+			.post("/images")
 
 		//then
 		.then()

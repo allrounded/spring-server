@@ -1,23 +1,24 @@
 package hufs.team.mogong.docs.image;
 
 import static hufs.team.mogong.docs.DocumentFormatGenerator.createResponseSnippetWithFields;
+import static hufs.team.mogong.docs.DocumentFormatGenerator.requestSnippetWithConstraintsAndFields;
 import static hufs.team.mogong.docs.DocumentFormatGenerator.responseFieldsOfCommon;
 import static hufs.team.mogong.docs.DocumentFormatGenerator.responseFieldsOfObjectWithConstraintsAndFields;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
-import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
-import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
 import static org.springframework.restdocs.request.RequestDocumentation.requestParameters;
 
-import hufs.team.mogong.service.dto.PreSignedUrlResponse;
+import hufs.team.mogong.image.service.dto.PreSignedUrlRequest;
+import hufs.team.mogong.image.service.dto.PreSignedUrlResponse;
 import org.springframework.restdocs.payload.JsonFieldType;
-import org.springframework.restdocs.payload.PayloadDocumentation;
 import org.springframework.restdocs.snippet.Snippet;
 
 public interface S3Snippet {
 
-	Snippet PRESIGNED_URL_GENERATE_REQUEST_PARAM_SNIPPET = requestParameters(
-		parameterWithName("extension").description("이미지 파일 확장자"));
+	Snippet PRESIGNED_URL_GENERATE_REQUEST_PARAM_SNIPPET = requestSnippetWithConstraintsAndFields(
+		PreSignedUrlRequest.class,
+		fieldWithPath("extension").type(JsonFieldType.STRING).description("이미지 파일 확장자")
+	);
 
 	Snippet PRESIGNED_URL_GENERATE_RESPONSE_SNIPPET = createResponseSnippetWithFields(
 		responseFieldsOfCommon(),

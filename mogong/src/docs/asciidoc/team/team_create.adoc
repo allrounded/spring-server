@@ -1,0 +1,41 @@
+=== 전체 목록 (/teams/*)
+[cols=2*]
+|===
+| 기능 | API
+
+| <<1. 팀 생성>> | [POST] /teams
+| <<2. 팀 이미지 업로드>> | [POST] /teams/{teamId}
+
+|===
+
+=== 1. 팀 생성
+
+API : `POST /teams`
+
+Request Body 로 팀 구성원 수를 보내야 합니다.
+
+==== 200 OK
+
+===== Request
+
+operation::team_create_test/create_team_success[snippets='http-request,request-body,request-fields']
+
+===== Response
+
+operation::team_create_test/create_team_success[snippets='http-response,response-body,response-fields']
+
+=== 2. 팀 이미지 업로드
+
+API : `POST /teams/{teamId}`
+
+Request Body 로 업로드가 완료된 Image URL을 보내야 합니다.
+
+==== 200 OK
+
+===== Request
+
+operation::team_upload_test/upload_team_success[snippets='http-request,request-body,request-fields']
+
+===== Response
+
+operation::team_upload_test/upload_team_success[snippets='http-response,response-body,response-fields']
