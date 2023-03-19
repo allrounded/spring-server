@@ -6,7 +6,7 @@ import hufs.team.mogong.common.response.BaseResponse;
 import hufs.team.mogong.image.service.ImageUploadService;
 import hufs.team.mogong.image.service.dto.PreSignedUrlRequest;
 import hufs.team.mogong.image.service.dto.PreSignedUrlResponse;
-import java.io.IOException;
+import javax.validation.Valid;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,7 +23,7 @@ public class ImageS3Controller {
 	}
 
 	@PostMapping
-	public BaseResponse<PreSignedUrlResponse> upload(final @RequestBody PreSignedUrlRequest request){
+	public BaseResponse<PreSignedUrlResponse> upload(final @Valid @RequestBody PreSignedUrlRequest request){
 		PreSignedUrlResponse response = imageUploadService.generate(request);
 		return new BaseResponse<>(GENERATE_IMAGE_PRESIGNED_URL_SUCCESS, response);
 	}

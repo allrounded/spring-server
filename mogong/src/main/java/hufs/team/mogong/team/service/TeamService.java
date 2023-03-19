@@ -1,23 +1,38 @@
 package hufs.team.mogong.team.service;
 
-import hufs.team.mogong.team.service.dto.request.UploadTeamRequest;
+import hufs.team.mogong.team.Team;
+import hufs.team.mogong.team.repository.TeamRepository;
 import hufs.team.mogong.team.service.dto.request.CreateTeamRequest;
+import hufs.team.mogong.team.service.dto.request.UploadTeamRequest;
 import hufs.team.mogong.team.service.dto.response.CreateTeamResponse;
 import hufs.team.mogong.team.service.dto.response.TimeResponses;
 import hufs.team.mogong.team.service.dto.response.UploadTeamResponse;
 import java.util.ArrayList;
+import java.util.UUID;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Service
-@Transactional(readOnly = true)
 public class TeamService {
+
+	private static final int ZERO = 0;
+
+	private final TeamRepository teamRepository;
+
+	public TeamService(TeamRepository teamRepository) {
+		this.teamRepository = teamRepository;
+	}
 
 	@Transactional
 	public CreateTeamResponse create(CreateTeamRequest request) {
-		return new CreateTeamResponse("sample-team-id", 5, 0);
+		log.debug("REQUEST NUMBER OF TEAM = {}", request.getNumberOfTeam());
+		Team team = teamRepository.save(
+			new Team(UUID.randomUUID().toString(), request.getNumberOfTeam())
+		);
+		log.debug("[SAVE TEAM] teamId ={}, numberOfMember = {}", team.getTeamId(), team.getNumberOfMember());
+		return new CreateTeamResponse(team.getTeamId(), team.getNumberOfMember(), ZERO);
 	}
 
 	@Transactional
