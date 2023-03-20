@@ -16,7 +16,8 @@ public enum ResponseCodeAndMessages implements CodeAndMessages {
 	 */
 	CREATE_TEAM_SUCCESS("T-S001", "팀 생성에 성공했습니다."),
 	UPLOAD_SINGLE_MEMBER_IMAGE_SUCCESS("T-S002", "팀 멤버의 이미지 등록에 성공했습니다."),
-	GENERATE_TEAM_RESULT_SUCCESS("T-S003", "팀 결과 생성에 성공했습니다."),
+	UPLOAD_ALL_MEMBER_IMAGE_SUCCESS("T-S003", "팀 멤버의 모든 이미지가 등록되었습니다. 결과를 요청해주세요"),
+	GENERATE_TEAM_RESULT_SUCCESS("T-S004", "팀 결과 생성에 성공했습니다."),
 	;
 
 	private final String code;

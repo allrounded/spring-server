@@ -1,5 +1,6 @@
 package hufs.team.mogong.team.service.dto.response;
 
+import java.util.Objects;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,10 +13,8 @@ public class UploadTeamResponse {
 	private final String teamName;
 	private final Integer numberOfTeam;
 	private final Integer submit;
-	private final String resultImageUrl;
-	private final TimeResponses timeResponses;
 
-	public boolean hasResult() {
-		return resultImageUrl != null;
+	public boolean completedSubmit() {
+		return numberOfTeam <= submit;
 	}
 }

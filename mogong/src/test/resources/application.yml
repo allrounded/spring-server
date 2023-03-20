@@ -12,11 +12,10 @@ spring:
     username: root
     url: jdbc:tc:mysql:8://mogong?characterEncoding=UTF-8&serverTimeZone=Asia/Seoul
     password: allrounded-mogong-1234
-
-  sql:
-    init:
-      mode: always
-      data-locations: classpath:data.sql
+#  sql:
+#    init:
+#      mode: always
+#      data-locations: classpath:data.sql
 
 logging:
   level:
