@@ -5,8 +5,6 @@ import static hufs.team.mogong.docs.DocumentFormatGenerator.requestSnippetWithCo
 import static hufs.team.mogong.docs.DocumentFormatGenerator.responseFieldsOfCommon;
 import static hufs.team.mogong.docs.DocumentFormatGenerator.responseFieldsOfObjectWithConstraintsAndFields;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
-import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
-import static org.springframework.restdocs.request.RequestDocumentation.requestParameters;
 
 import hufs.team.mogong.image.service.dto.PreSignedUrlRequest;
 import hufs.team.mogong.image.service.dto.PreSignedUrlResponse;

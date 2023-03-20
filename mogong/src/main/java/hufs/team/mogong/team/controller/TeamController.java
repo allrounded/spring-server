@@ -34,7 +34,7 @@ public class TeamController {
 	}
 
 	@PostMapping("/{teamId}")
-	public BaseResponse<UploadTeamResponse> upload(final @PathVariable String teamId,
+	public BaseResponse<UploadTeamResponse> upload(final @PathVariable Long teamId,
 		final @Valid @RequestBody UploadTeamRequest request) {
 		UploadTeamResponse response = teamService.upload(teamId, request);
 		if (response.hasResult()) {

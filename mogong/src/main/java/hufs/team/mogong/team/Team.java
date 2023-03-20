@@ -15,16 +15,16 @@ import lombok.NoArgsConstructor;
 public class Team {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private Long teamId;
 
 	@Column(nullable = false, unique = true)
-	private String teamId;
+	private String teamName;
 
 	@Column(nullable = false)
 	private Integer numberOfMember;
 
-	public Team(String teamId, Integer numberOfMember) {
-		this.teamId = teamId;
+	public Team(String teamName, Integer numberOfMember) {
+		this.teamName = teamName;
 		this.numberOfMember = numberOfMember;
 	}
 }

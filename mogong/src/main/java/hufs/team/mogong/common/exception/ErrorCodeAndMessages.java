@@ -7,9 +7,14 @@ import lombok.Getter;
 public enum ErrorCodeAndMessages implements CodeAndMessages {
 
 	/**
-	 * IMAGE
+	 * Image
 	 */
-	GENERATE_IMAGE_PRESIGNED_URL_FAILED("I-F001", "이미지 PreSigned URL 생성에 성공했습니다.")
+	GENERATE_IMAGE_PRESIGNED_URL_FAILED("I-F001", "이미지 PreSigned URL 생성에 성공했습니다."),
+
+	/**
+	 * Team
+	 */
+	NOT_FOUND_TEAM_ID("T-F001", "해당 팀 ID를 찾을 수 없습니다."),
 	;
 	private final String code;
 	private final String message;

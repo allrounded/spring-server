@@ -8,7 +8,8 @@ import lombok.Getter;
 @AllArgsConstructor(access = AccessLevel.PUBLIC)
 public class UploadTeamResponse {
 
-	private final String teamId;
+	private final Long teamId;
+	private final String teamName;
 	private final Integer numberOfTeam;
 	private final Integer submit;
 	private final String resultImageUrl;

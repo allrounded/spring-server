@@ -25,7 +25,8 @@ public interface TeamSnippet {
 		responseFieldsOfCommon(),
 		responseFieldsOfObjectWithConstraintsAndFields(
 			CreateTeamResponse.class,
-			fieldWithPath("teamId").type(JsonFieldType.STRING).description("생성된 팀 아이디"),
+			fieldWithPath("teamId").type(JsonFieldType.NUMBER).description("생성된 팀 아이디"),
+			fieldWithPath("teamName").type(JsonFieldType.STRING).description("생성된 팀 이름(UUID)"),
 			fieldWithPath("numberOfTeam").type(JsonFieldType.NUMBER).description("팀 구성원 수"),
 			fieldWithPath("submit").type(JsonFieldType.NUMBER).description("이미지를 제출한 구성원 수")
 		)
@@ -40,7 +41,8 @@ public interface TeamSnippet {
 		responseFieldsOfCommon(),
 		responseFieldsOfObjectWithConstraintsAndFields(
 			UploadTeamResponse.class,
-			fieldWithPath("teamId").type(JsonFieldType.STRING).description("생성된 팀 아이디"),
+			fieldWithPath("teamId").type(JsonFieldType.NUMBER).description("팀 아이디"),
+			fieldWithPath("teamName").type(JsonFieldType.STRING).description("팀 이름(UUID)"),
 			fieldWithPath("numberOfTeam").type(JsonFieldType.NUMBER).description("팀 구성원 수"),
 			fieldWithPath("submit").type(JsonFieldType.NUMBER).description("이미지를 제출한 구성원 수"),
 			fieldWithPath("resultImageUrl").type(JsonFieldType.NULL).description("결과 이미지 URL(submit 미 충족시 생성 안됨)"),

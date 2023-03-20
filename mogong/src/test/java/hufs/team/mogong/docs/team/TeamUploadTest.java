@@ -17,12 +17,12 @@ import org.springframework.http.MediaType;
 @DisplayName("[API DOCS] Team 멤버 이미지 등록")
 class TeamUploadTest extends InitDocumentationTest {
 
-	private static final String SAMPLE_IMAGE_URL = "https://mogong.s3.ap-northeast-2.amazonaws.com/image/sample_3.JPG";
+	private static final String SAMPLE_IMAGE_URL = "https://mogong.s3.ap-northeast-2.amazonaws.com/image/sample_4.JPG";
 
 	@Test
 	@DisplayName("팀 멤버 이미지 업로드 성공")
 	void upload_team_success(){
-		String teamId = "sample-team-id";
+		Long teamId = 1L;
 		UploadTeamRequest request = new UploadTeamRequest(SAMPLE_IMAGE_URL);
 
 		//given

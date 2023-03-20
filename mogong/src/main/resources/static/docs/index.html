@@ -564,7 +564,7 @@ Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json
 Transfer-Encoding: chunked
-Date: Sun, 19 Mar 2023 16:07:21 GMT
+Date: Mon, 20 Mar 2023 02:13:03 GMT
 Keep-Alive: timeout=60
 Connection: keep-alive
 Content-Length: 559
@@ -573,8 +573,8 @@ Content-Length: 559
   "code" : "I-S001",
   "message" : "이미지 PreSigned URL 생성에 성공했습니다.",
   "data" : {
-    "preSignedUrl" : "https://mogong.s3.ap-northeast-2.amazonaws.com/image/c39dd630-77cf-4482-8089-590e4539aef6.JPG?X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Date=20230319T160721Z&amp;X-Amz-SignedHeaders=host&amp;X-Amz-Expires=599&amp;X-Amz-Credential=MOGONGMOGONGMOGONG%2F20230319%2Fap-northeast-2%2Fs3%2Faws4_request&amp;X-Amz-Signature=beb56fc3b3907e7e463c8336b9d80a1b7b12befdc7b90b4565b4f3a78d2cddb4",
-    "fileName" : "c39dd630-77cf-4482-8089-590e4539aef6.JPG"
+    "preSignedUrl" : "https://mogong.s3.ap-northeast-2.amazonaws.com/image/4f7fe56c-5646-4ecd-9156-70f78cacb5e0.JPG?X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Date=20230320T021303Z&amp;X-Amz-SignedHeaders=host&amp;X-Amz-Expires=599&amp;X-Amz-Credential=MOGONGMOGONGMOGONG%2F20230320%2Fap-northeast-2%2Fs3%2Faws4_request&amp;X-Amz-Signature=01591b9271464bae97d42359fb5c2f7da860ad05a877100803b0e624d4ae3efd",
+    "fileName" : "4f7fe56c-5646-4ecd-9156-70f78cacb5e0.JPG"
   }
 }</code></pre>
 </div>
@@ -588,8 +588,8 @@ Content-Length: 559
   "code" : "I-S001",
   "message" : "이미지 PreSigned URL 생성에 성공했습니다.",
   "data" : {
-    "preSignedUrl" : "https://mogong.s3.ap-northeast-2.amazonaws.com/image/c39dd630-77cf-4482-8089-590e4539aef6.JPG?X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Date=20230319T160721Z&amp;X-Amz-SignedHeaders=host&amp;X-Amz-Expires=599&amp;X-Amz-Credential=MOGONGMOGONGMOGONG%2F20230319%2Fap-northeast-2%2Fs3%2Faws4_request&amp;X-Amz-Signature=beb56fc3b3907e7e463c8336b9d80a1b7b12befdc7b90b4565b4f3a78d2cddb4",
-    "fileName" : "c39dd630-77cf-4482-8089-590e4539aef6.JPG"
+    "preSignedUrl" : "https://mogong.s3.ap-northeast-2.amazonaws.com/image/4f7fe56c-5646-4ecd-9156-70f78cacb5e0.JPG?X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Date=20230320T021303Z&amp;X-Amz-SignedHeaders=host&amp;X-Amz-Expires=599&amp;X-Amz-Credential=MOGONGMOGONGMOGONG%2F20230320%2Fap-northeast-2%2Fs3%2Faws4_request&amp;X-Amz-Signature=01591b9271464bae97d42359fb5c2f7da860ad05a877100803b0e624d4ae3efd",
+    "fileName" : "4f7fe56c-5646-4ecd-9156-70f78cacb5e0.JPG"
   }
 }</code></pre>
 </div>
@@ -742,16 +742,17 @@ Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json
 Transfer-Encoding: chunked
-Date: Sun, 19 Mar 2023 16:07:21 GMT
+Date: Mon, 20 Mar 2023 02:13:03 GMT
 Keep-Alive: timeout=60
 Connection: keep-alive
-Content-Length: 188
+Content-Length: 208
 
 {
   "code" : "T-S001",
   "message" : "팀 생성에 성공했습니다.",
   "data" : {
-    "teamId" : "6c5af146-801e-45ff-b0c7-ae9246acc210",
+    "teamId" : 2,
+    "teamName" : "45a4b8dd-2989-415d-98e9-4c463d51997c",
     "numberOfTeam" : 5,
     "submit" : 0
   }
@@ -767,7 +768,8 @@ Content-Length: 188
   "code" : "T-S001",
   "message" : "팀 생성에 성공했습니다.",
   "data" : {
-    "teamId" : "6c5af146-801e-45ff-b0c7-ae9246acc210",
+    "teamId" : 2,
+    "teamName" : "45a4b8dd-2989-415d-98e9-4c463d51997c",
     "numberOfTeam" : 5,
     "submit" : 0
   }
@@ -803,8 +805,13 @@ Content-Length: 188
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.teamId</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">생성된 팀 아이디</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.teamName</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">생성된 팀 이름(UUID)</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.numberOfTeam</code></p></td>
@@ -838,7 +845,7 @@ Content-Length: 188
 <h6 id="_request_3_http_request"><a class="link" href="#_request_3_http_request">HTTP request</a></h6>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /teams/sample-team-id HTTP/1.1
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /teams/1 HTTP/1.1
 Accept: application/json
 Content-Type: application/json
 Host: localhost
@@ -897,18 +904,19 @@ Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json
 Transfer-Encoding: chunked
-Date: Sun, 19 Mar 2023 16:07:21 GMT
+Date: Mon, 20 Mar 2023 02:13:03 GMT
 Keep-Alive: timeout=60
 Connection: keep-alive
-Content-Length: 295
+Content-Length: 337
 
 {
   "code" : "T-S002",
   "message" : "팀 멤버의 이미지 등록에 성공했습니다.",
   "data" : {
-    "teamId" : "sample-team-id",
+    "teamId" : 1,
+    "teamName" : "1c487536-08ef-4332-bc2f-16830f49495f",
     "numberOfTeam" : 5,
-    "submit" : 2,
+    "submit" : 3,
     "resultImageUrl" : null,
     "timeResponses" : {
       "divisorMinutes" : 30,
@@ -927,9 +935,10 @@ Content-Length: 295
   "code" : "T-S002",
   "message" : "팀 멤버의 이미지 등록에 성공했습니다.",
   "data" : {
-    "teamId" : "sample-team-id",
+    "teamId" : 1,
+    "teamName" : "1c487536-08ef-4332-bc2f-16830f49495f",
     "numberOfTeam" : 5,
-    "submit" : 2,
+    "submit" : 3,
     "resultImageUrl" : null,
     "timeResponses" : {
       "divisorMinutes" : 30,
@@ -968,8 +977,13 @@ Content-Length: 295
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.teamId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">팀 아이디</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.teamName</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">생성된 팀 아이디</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">팀 이름(UUID)</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.numberOfTeam</code></p></td>
