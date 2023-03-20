@@ -5,6 +5,7 @@
 
 | <<1. 팀 생성>> | [POST] /teams
 | <<2. 팀 이미지 업로드>> | [POST] /teams/{teamId}
+| <<3. 팀 결과 요청>> | [GET] /teams/{teamId}/results
 
 |===
 
@@ -36,6 +37,27 @@ Request Body 로 업로드가 완료된 Image URL을 보내야 합니다.
 
 operation::team_upload_test/upload_team_success[snippets='http-request,request-body,request-fields']
 
-===== Response
+===== Response(팀원들이 모두 이미지 업로드가 안된 상태일 때)
 
 operation::team_upload_test/upload_team_success[snippets='http-response,response-body,response-fields']
+
+===== Response(팀원들이 모두 이미지 업로드가 안된 상태일 때)
+
+operation::team_upload_test/completed_upload_team_success[snippets='response-body,response-fields']
+
+=== 3. 팀 결과 요청
+
+API : `GET /teams/{teamId}/results`
+
+==== 200 OK
+
+===== Request
+
+operation::team_result_test/result_team_success[snippets='http-request']
+
+===== Response(이미지 제출 수 충족, 성공)
+
+operation::team_result_test/result_team_success[snippets='http-response,response-body,response-fields']
+
+===== Response(이미지 제출 수 미충족, 실패)
+operation::team_result_test/result_team_fail[snippets='response-body']
