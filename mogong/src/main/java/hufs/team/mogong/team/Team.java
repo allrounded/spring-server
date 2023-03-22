@@ -23,8 +23,12 @@ public class Team {
 	@Column(nullable = false)
 	private Integer numberOfMember;
 
-	public Team(String teamName, Integer numberOfMember) {
+	@Column(nullable = false)
+	private String authCode;
+
+	public Team(String teamName, Integer numberOfMember, String authCode) {
 		this.teamName = teamName;
 		this.numberOfMember = numberOfMember;
+		this.authCode = authCode;
 	}
 }

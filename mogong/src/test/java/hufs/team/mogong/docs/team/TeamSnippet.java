@@ -18,7 +18,8 @@ public interface TeamSnippet {
 
 	Snippet CREATE_TEAM_REQUEST_BODY_SNIPPET = requestSnippetWithConstraintsAndFields(
 		CreateTeamRequest.class,
-		fieldWithPath("numberOfTeam").type(JsonFieldType.NUMBER).description("팀 구성원 수")
+		fieldWithPath("numberOfTeam").type(JsonFieldType.NUMBER).description("팀 구성원 수"),
+		fieldWithPath("authCode").type(JsonFieldType.STRING).description("팀장 코드(4자리, 각 자리는 0~9에 해당하는 정수여야 함.)")
 	);
 
 	Snippet CREATE_TEAM_RESPONSE_SNIPPET = createResponseSnippetWithFields(
@@ -28,7 +29,8 @@ public interface TeamSnippet {
 			fieldWithPath("teamId").type(JsonFieldType.NUMBER).description("생성된 팀 아이디"),
 			fieldWithPath("teamName").type(JsonFieldType.STRING).description("생성된 팀 이름(UUID)"),
 			fieldWithPath("numberOfTeam").type(JsonFieldType.NUMBER).description("팀 구성원 수"),
-			fieldWithPath("submit").type(JsonFieldType.NUMBER).description("이미지를 제출한 구성원 수")
+			fieldWithPath("submit").type(JsonFieldType.NUMBER).description("이미지를 제출한 구성원 수"),
+			fieldWithPath("authCode").type(JsonFieldType.STRING).description("팀장 코드")
 		)
 	);
 

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -47,8 +48,9 @@ public class TeamController {
 	}
 
 	@GetMapping("/{teamId}/results")
-	public BaseResponse<ResultTeamResponse> requestResult(final @PathVariable Long teamId) {
-		ResultTeamResponse response = teamService.getResult(teamId);
+	public BaseResponse<ResultTeamResponse> requestResult(final @PathVariable Long teamId,
+		final @RequestParam(name = "auth_code", required = false) String authCode) {
+		ResultTeamResponse response = teamService.getResult(teamId, authCode);
 		return new BaseResponse<>(GENERATE_TEAM_RESULT_SUCCESS, response);
 	}
 }

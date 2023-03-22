@@ -38,7 +38,7 @@ class TeamUploadTest extends InitDocumentationTest {
 	void init() {
 		imageRepository.deleteAllInBatch();
 		teamRepository.deleteAllInBatch();
-		team = teamRepository.save(new Team("1c487536-08ef-4332-bc2f-16830f49495f", 5));
+		team = teamRepository.save(new Team("1c487536-08ef-4332-bc2f-16830f49495f", 5, "1234"));
 		teamId = team.getTeamId();
 		imageRepository.save(
 			new Image(team, "https://mogong.s3.ap-northeast-2.amazonaws.com/image/sample_1.JPG")

@@ -45,7 +45,7 @@ operation::team_upload_test/upload_team_success[snippets='http-response,response
 
 operation::team_upload_test/completed_upload_team_success[snippets='response-body,response-fields']
 
-=== 3. 팀 결과 요청
+=== 3. 팀 결과 요청 (auth_code 미입력)
 
 API : `GET /teams/{teamId}/results`
 
@@ -55,9 +55,36 @@ API : `GET /teams/{teamId}/results`
 
 operation::team_result_test/result_team_success[snippets='http-request']
 
-===== Response(이미지 제출 수 충족, 성공)
+===== Response(이미지 제출 수 충족, 성공, auth_code와 상관 없음)
 
 operation::team_result_test/result_team_success[snippets='http-response,response-body,response-fields']
 
-===== Response(이미지 제출 수 미충족, 실패)
+===== Response(이미지 제출 수 미충족, 실패, auth_code와 상관 없음)
+
 operation::team_result_test/result_team_fail[snippets='response-body']
+
+=== 4. 팀 결과 요청 (auth_code 입력)
+
+API : `GET /teams/{teamId}/results?auth_code=1234`
+
+- auth_code : 4자리 숫자로 구성됩니다. 각 자리는 0~9에 해당하는 정수여야 합니다.
+
+==== 200 OK
+
+===== Request(이미지 제출 수 미충족, 성공, 올바른 auth_cde를 입력한 경우)
+
+operation::team_result_test/result_team_with_auth_code[snippets='http-request']
+
+
+===== Response(이미지 제출 수 미충족, 성공, 올바른 auth_cde를 입력한 경우)
+
+operation::team_result_test/result_team_with_auth_code[snippets='response-body']
+
+
+===== Request(이미지 제출 수 미충족, 실패, 잘못된 auth_cde를 입력한 경우)
+
+operation::team_result_test/result_team_with_wrong_auth_code[snippets='http-request']
+
+===== Response(이미지 제출 수 미충족, 실패, 잘못된 auth_cde를 입력한 경우)
+
+operation::team_result_test/result_team_with_wrong_auth_code[snippets='response-body']

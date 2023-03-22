@@ -8,6 +8,7 @@ import static org.springframework.restdocs.restassured3.RestAssuredRestDocumenta
 
 import hufs.team.mogong.docs.InitDocumentationTest;
 import hufs.team.mogong.team.service.dto.request.CreateTeamRequest;
+import org.apache.http.auth.AUTH;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,11 +19,12 @@ import org.springframework.http.MediaType;
 class TeamCreateTest extends InitDocumentationTest {
 
 	private static final Integer NUMBER_OF_TEAM = 5;
+	private static final String AUTH_CODE = "1234";
 
 	@Test
 	@DisplayName("팀 생성 성공")
 	void create_team_success(){
-		CreateTeamRequest request = new CreateTeamRequest(NUMBER_OF_TEAM);
+		CreateTeamRequest request = new CreateTeamRequest(NUMBER_OF_TEAM, AUTH_CODE);
 
 		//given
 		given(this.spec)

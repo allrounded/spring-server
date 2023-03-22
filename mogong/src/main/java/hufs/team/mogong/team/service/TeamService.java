@@ -6,6 +6,7 @@ import hufs.team.mogong.team.DayOfWeek;
 import hufs.team.mogong.team.Team;
 import hufs.team.mogong.team.exception.NotCompletedSubmit;
 import hufs.team.mogong.team.exception.NotFoundTeamIdException;
+import hufs.team.mogong.team.exception.NotMatchAuthCode;
 import hufs.team.mogong.team.repository.TeamRepository;
 import hufs.team.mogong.team.service.dto.request.CreateTeamRequest;
 import hufs.team.mogong.team.service.dto.request.UploadTeamRequest;
@@ -16,6 +17,7 @@ import hufs.team.mogong.team.service.dto.response.TimeResponses;
 import hufs.team.mogong.team.service.dto.response.UploadTeamResponse;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -40,10 +42,9 @@ public class TeamService {
 	public CreateTeamResponse create(CreateTeamRequest request) {
 		log.debug("REQUEST NUMBER OF TEAM = {}", request.getNumberOfTeam());
 		Team team = teamRepository.save(
-			new Team(UUID.randomUUID().toString(), request.getNumberOfTeam())
-		);
+			new Team(UUID.randomUUID().toString(), request.getNumberOfTeam(), request.getAuthCode()));
 		log.debug("[SAVE TEAM] teamId ={}, name ={}, numberOfMember = {}", team.getTeamId(), team.getTeamName(), team.getNumberOfMember());
-		return new CreateTeamResponse(team.getTeamId(), team.getTeamName(), team.getNumberOfMember(), ZERO);
+		return new CreateTeamResponse(team.getTeamId(), team.getTeamName(), team.getNumberOfMember(), ZERO, team.getAuthCode());
 	}
 
 	@Transactional
@@ -66,12 +67,17 @@ public class TeamService {
 			imageSize);
 	}
 
-	public ResultTeamResponse getResult(Long teamId) {
+	public ResultTeamResponse getResult(Long teamId, String authCode) {
 		Team team = teamRepository.findById(teamId)
 			.orElseThrow(NotFoundTeamIdException::new);
 		List<Image> images = imageRepository.findAllByTeam_TeamId(teamId);
-		if (!checkImageSize(team, images)) {
+
+		if (isNull(authCode) && !checkImageSize(team, images)) {
 			throw new NotCompletedSubmit();
+		}
+
+		if (!isNull(authCode) && !Objects.equals(team.getAuthCode(), authCode)) {
+			throw new NotMatchAuthCode();
 		}
 		// Flask 호출
 		log.debug("[Flask 호출]");
@@ -87,5 +93,9 @@ public class TeamService {
 
 	private boolean checkImageSize(Team team, List<Image> images) {
 		return team.getNumberOfMember() == images.size();
+	}
+
+	private boolean isNull(String authCode){
+		return authCode == null;
 	}
 }
