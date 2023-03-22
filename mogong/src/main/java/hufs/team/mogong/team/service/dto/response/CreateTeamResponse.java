@@ -12,4 +12,5 @@ public class CreateTeamResponse {
 	private final String teamName;
 	private final Integer numberOfTeam;
 	private final Integer submit;
+	private final String authCode;
 }

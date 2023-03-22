@@ -456,7 +456,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_전체_목록_teams">전체 목록 (/teams/*)</a></li>
 <li><a href="#_1_팀_생성">1. 팀 생성</a></li>
 <li><a href="#_2_팀_이미지_업로드">2. 팀 이미지 업로드</a></li>
-<li><a href="#_3_팀_결과_요청">3. 팀 결과 요청</a></li>
+<li><a href="#_3_팀_결과_요청_auth_code_미입력">3. 팀 결과 요청 (auth_code 미입력)</a></li>
+<li><a href="#_4_팀_결과_요청_auth_code_입력">4. 팀 결과 요청 (auth_code 입력)</a></li>
 </ul>
 </li>
 </ul>
@@ -565,7 +566,7 @@ Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json
 Transfer-Encoding: chunked
-Date: Mon, 20 Mar 2023 11:54:04 GMT
+Date: Wed, 22 Mar 2023 03:23:04 GMT
 Keep-Alive: timeout=60
 Connection: keep-alive
 Content-Length: 559
@@ -574,8 +575,8 @@ Content-Length: 559
   "code" : "I-S001",
   "message" : "이미지 PreSigned URL 생성에 성공했습니다.",
   "data" : {
-    "preSignedUrl" : "https://mogong.s3.ap-northeast-2.amazonaws.com/image/4011cc94-9025-434e-b737-839d95023be0.JPG?X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Date=20230320T115405Z&amp;X-Amz-SignedHeaders=host&amp;X-Amz-Expires=600&amp;X-Amz-Credential=MOGONGMOGONGMOGONG%2F20230320%2Fap-northeast-2%2Fs3%2Faws4_request&amp;X-Amz-Signature=677baa67e7f870e7670f353b1b1e79f828f8f5ca9ac9b15a36e0e3758471aa42",
-    "fileName" : "4011cc94-9025-434e-b737-839d95023be0.JPG"
+    "preSignedUrl" : "https://mogong.s3.ap-northeast-2.amazonaws.com/image/e6cb44a9-6661-4ed3-88c4-a4f56ba79678.JPG?X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Date=20230322T032304Z&amp;X-Amz-SignedHeaders=host&amp;X-Amz-Expires=599&amp;X-Amz-Credential=MOGONGMOGONGMOGONG%2F20230322%2Fap-northeast-2%2Fs3%2Faws4_request&amp;X-Amz-Signature=5820ad42243b7db6522ee339cd598c25a39dc0e98859bff105c9b7ba67bd9283",
+    "fileName" : "e6cb44a9-6661-4ed3-88c4-a4f56ba79678.JPG"
   }
 }</code></pre>
 </div>
@@ -589,8 +590,8 @@ Content-Length: 559
   "code" : "I-S001",
   "message" : "이미지 PreSigned URL 생성에 성공했습니다.",
   "data" : {
-    "preSignedUrl" : "https://mogong.s3.ap-northeast-2.amazonaws.com/image/4011cc94-9025-434e-b737-839d95023be0.JPG?X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Date=20230320T115405Z&amp;X-Amz-SignedHeaders=host&amp;X-Amz-Expires=600&amp;X-Amz-Credential=MOGONGMOGONGMOGONG%2F20230320%2Fap-northeast-2%2Fs3%2Faws4_request&amp;X-Amz-Signature=677baa67e7f870e7670f353b1b1e79f828f8f5ca9ac9b15a36e0e3758471aa42",
-    "fileName" : "4011cc94-9025-434e-b737-839d95023be0.JPG"
+    "preSignedUrl" : "https://mogong.s3.ap-northeast-2.amazonaws.com/image/e6cb44a9-6661-4ed3-88c4-a4f56ba79678.JPG?X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Date=20230322T032304Z&amp;X-Amz-SignedHeaders=host&amp;X-Amz-Expires=599&amp;X-Amz-Credential=MOGONGMOGONGMOGONG%2F20230322%2Fap-northeast-2%2Fs3%2Faws4_request&amp;X-Amz-Signature=5820ad42243b7db6522ee339cd598c25a39dc0e98859bff105c9b7ba67bd9283",
+    "fileName" : "e6cb44a9-6661-4ed3-88c4-a4f56ba79678.JPG"
   }
 }</code></pre>
 </div>
@@ -666,7 +667,7 @@ Content-Length: 559
 <td class="tableblock halign-left valign-top"><p class="tableblock">[POST] /teams/{teamId}</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#_3_팀_결과_요청">3. 팀 결과 요청</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#3. 팀 결과 요청">[3. 팀 결과 요청]</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">[GET] /teams/{teamId}/results</p></td>
 </tr>
 </tbody>
@@ -692,10 +693,11 @@ Content-Length: 559
 Accept: application/json
 Content-Type: application/json
 Host: localhost
-Content-Length: 24
+Content-Length: 47
 
 {
-  "numberOfTeam" : 5
+  "numberOfTeam" : 5,
+  "authCode" : "1234"
 }</code></pre>
 </div>
 </div>
@@ -705,7 +707,8 @@ Content-Length: 24
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code>{
-  "numberOfTeam" : 5
+  "numberOfTeam" : 5,
+  "authCode" : "1234"
 }</code></pre>
 </div>
 </div>
@@ -731,6 +734,11 @@ Content-Length: 24
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">팀 구성원 수</p></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>authCode</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">팀장 코드(4자리, 각 자리는 0~9에 해당하는 정수여야 함.)</p></td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -747,19 +755,20 @@ Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json
 Transfer-Encoding: chunked
-Date: Mon, 20 Mar 2023 11:54:04 GMT
+Date: Wed, 22 Mar 2023 03:23:04 GMT
 Keep-Alive: timeout=60
 Connection: keep-alive
-Content-Length: 208
+Content-Length: 233
 
 {
   "code" : "T-S001",
   "message" : "팀 생성에 성공했습니다.",
   "data" : {
-    "teamId" : 3,
-    "teamName" : "061a57d8-45b8-4e88-b062-5d5a034d2193",
+    "teamId" : 1,
+    "teamName" : "97101cc3-b44a-4f8a-af0f-1c1069b2956a",
     "numberOfTeam" : 5,
-    "submit" : 0
+    "submit" : 0,
+    "authCode" : "1234"
   }
 }</code></pre>
 </div>
@@ -773,10 +782,11 @@ Content-Length: 208
   "code" : "T-S001",
   "message" : "팀 생성에 성공했습니다.",
   "data" : {
-    "teamId" : 3,
-    "teamName" : "061a57d8-45b8-4e88-b062-5d5a034d2193",
+    "teamId" : 1,
+    "teamName" : "97101cc3-b44a-4f8a-af0f-1c1069b2956a",
     "numberOfTeam" : 5,
-    "submit" : 0
+    "submit" : 0,
+    "authCode" : "1234"
   }
 }</code></pre>
 </div>
@@ -828,6 +838,11 @@ Content-Length: 208
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">이미지를 제출한 구성원 수</p></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.authCode</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">팀장 코드</p></td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -850,7 +865,7 @@ Content-Length: 208
 <h6 id="_request_3_http_request"><a class="link" href="#_request_3_http_request">HTTP request</a></h6>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /teams/4 HTTP/1.1
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /teams/6 HTTP/1.1
 Accept: application/json
 Content-Type: application/json
 Host: localhost
@@ -909,7 +924,7 @@ Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json
 Transfer-Encoding: chunked
-Date: Mon, 20 Mar 2023 11:54:04 GMT
+Date: Wed, 22 Mar 2023 03:23:05 GMT
 Keep-Alive: timeout=60
 Connection: keep-alive
 Content-Length: 228
@@ -918,7 +933,7 @@ Content-Length: 228
   "code" : "T-S002",
   "message" : "팀 멤버의 이미지 등록에 성공했습니다.",
   "data" : {
-    "teamId" : 4,
+    "teamId" : 6,
     "teamName" : "1c487536-08ef-4332-bc2f-16830f49495f",
     "numberOfTeam" : 5,
     "submit" : 4
@@ -935,7 +950,7 @@ Content-Length: 228
   "code" : "T-S002",
   "message" : "팀 멤버의 이미지 등록에 성공했습니다.",
   "data" : {
-    "teamId" : 4,
+    "teamId" : 6,
     "teamName" : "1c487536-08ef-4332-bc2f-16830f49495f",
     "numberOfTeam" : 5,
     "submit" : 4
@@ -1004,7 +1019,7 @@ Content-Length: 228
   "code" : "T-S003",
   "message" : "팀 멤버의 모든 이미지가 등록되었습니다. 결과를 요청해주세요",
   "data" : {
-    "teamId" : 5,
+    "teamId" : 7,
     "teamName" : "1c487536-08ef-4332-bc2f-16830f49495f",
     "numberOfTeam" : 5,
     "submit" : 5
@@ -1066,7 +1081,7 @@ Content-Length: 228
 </div>
 </div>
 <div class="sect2">
-<h3 id="_3_팀_결과_요청"><a class="link" href="#_3_팀_결과_요청">3. 팀 결과 요청</a></h3>
+<h3 id="_3_팀_결과_요청_auth_code_미입력"><a class="link" href="#_3_팀_결과_요청_auth_code_미입력">3. 팀 결과 요청 (auth_code 미입력)</a></h3>
 <div class="paragraph">
 <p>API : <code>GET /teams/{teamId}/results</code></p>
 </div>
@@ -1078,7 +1093,7 @@ Content-Length: 228
 <h6 id="_request_4_http_request"><a class="link" href="#_request_4_http_request">HTTP request</a></h6>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /teams/2/results HTTP/1.1
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /teams/4/results HTTP/1.1
 Accept: application/json
 Content-Type: application/json
 Host: localhost</code></pre>
@@ -1087,9 +1102,9 @@ Host: localhost</code></pre>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_response이미지_제출_수_충족_성공"><a class="link" href="#_response이미지_제출_수_충족_성공">Response(이미지 제출 수 충족, 성공)</a></h5>
+<h5 id="_response이미지_제출_수_충족_성공_auth_code와_상관_없음"><a class="link" href="#_response이미지_제출_수_충족_성공_auth_code와_상관_없음">Response(이미지 제출 수 충족, 성공, auth_code와 상관 없음)</a></h5>
 <div class="sect5">
-<h6 id="_response이미지_제출_수_충족_성공_http_response"><a class="link" href="#_response이미지_제출_수_충족_성공_http_response">HTTP response</a></h6>
+<h6 id="_response이미지_제출_수_충족_성공_auth_code와_상관_없음_http_response"><a class="link" href="#_response이미지_제출_수_충족_성공_auth_code와_상관_없음_http_response">HTTP response</a></h6>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
@@ -1098,7 +1113,7 @@ Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json
 Transfer-Encoding: chunked
-Date: Mon, 20 Mar 2023 11:54:04 GMT
+Date: Wed, 22 Mar 2023 03:23:04 GMT
 Keep-Alive: timeout=60
 Connection: keep-alive
 Content-Length: 482
@@ -1127,7 +1142,7 @@ Content-Length: 482
 </div>
 </div>
 <div class="sect5">
-<h6 id="_response이미지_제출_수_충족_성공_response_body"><a class="link" href="#_response이미지_제출_수_충족_성공_response_body">Response body</a></h6>
+<h6 id="_response이미지_제출_수_충족_성공_auth_code와_상관_없음_response_body"><a class="link" href="#_response이미지_제출_수_충족_성공_auth_code와_상관_없음_response_body">Response body</a></h6>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code>{
@@ -1154,7 +1169,7 @@ Content-Length: 482
 </div>
 </div>
 <div class="sect5">
-<h6 id="_response이미지_제출_수_충족_성공_response_fields"><a class="link" href="#_response이미지_제출_수_충족_성공_response_fields">Response fields</a></h6>
+<h6 id="_response이미지_제출_수_충족_성공_auth_code와_상관_없음_response_fields"><a class="link" href="#_response이미지_제출_수_충족_성공_auth_code와_상관_없음_response_fields">Response fields</a></h6>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 33.3333%;">
@@ -1214,14 +1229,103 @@ Content-Length: 482
 </div>
 </div>
 <div class="sect4">
-<h5 id="_response이미지_제출_수_미충족_실패"><a class="link" href="#_response이미지_제출_수_미충족_실패">Response(이미지 제출 수 미충족, 실패)</a></h5>
+<h5 id="_response이미지_제출_수_미충족_실패_auth_code와_상관_없음"><a class="link" href="#_response이미지_제출_수_미충족_실패_auth_code와_상관_없음">Response(이미지 제출 수 미충족, 실패, auth_code와 상관 없음)</a></h5>
 <div class="sect5">
-<h6 id="_response이미지_제출_수_미충족_실패_response_body"><a class="link" href="#_response이미지_제출_수_미충족_실패_response_body">Response body</a></h6>
+<h6 id="_response이미지_제출_수_미충족_실패_auth_code와_상관_없음_response_body"><a class="link" href="#_response이미지_제출_수_미충족_실패_auth_code와_상관_없음_response_body">Response body</a></h6>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code>{
   "code" : "T-F002",
   "message" : "현재 등록된 이미지 수가 지정된 멤버 수보다 적습니다.",
+  "data" : null
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_4_팀_결과_요청_auth_code_입력"><a class="link" href="#_4_팀_결과_요청_auth_code_입력">4. 팀 결과 요청 (auth_code 입력)</a></h3>
+<div class="paragraph">
+<p>API : <code>GET /teams/{teamId}/results?auth_code=1234</code></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>auth_code : 4자리 숫자로 구성됩니다. 각 자리는 0~9에 해당하는 정수여야 합니다.</p>
+</li>
+</ul>
+</div>
+<div class="sect3">
+<h4 id="_200_ok_5"><a class="link" href="#_200_ok_5">200 OK</a></h4>
+<div class="sect4">
+<h5 id="_request이미지_제출_수_미충족_성공_올바른_auth_cde를_입력한_경우"><a class="link" href="#_request이미지_제출_수_미충족_성공_올바른_auth_cde를_입력한_경우">Request(이미지 제출 수 미충족, 성공, 올바른 auth_cde를 입력한 경우)</a></h5>
+<div class="sect5">
+<h6 id="_request이미지_제출_수_미충족_성공_올바른_auth_cde를_입력한_경우_http_request"><a class="link" href="#_request이미지_제출_수_미충족_성공_올바른_auth_cde를_입력한_경우_http_request">HTTP request</a></h6>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /teams/3/results?auth_code=1234 HTTP/1.1
+Accept: application/json
+Content-Type: application/json
+Host: localhost</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_response이미지_제출_수_미충족_성공_올바른_auth_cde를_입력한_경우"><a class="link" href="#_response이미지_제출_수_미충족_성공_올바른_auth_cde를_입력한_경우">Response(이미지 제출 수 미충족, 성공, 올바른 auth_cde를 입력한 경우)</a></h5>
+<div class="sect5">
+<h6 id="_response이미지_제출_수_미충족_성공_올바른_auth_cde를_입력한_경우_response_body"><a class="link" href="#_response이미지_제출_수_미충족_성공_올바른_auth_cde를_입력한_경우_response_body">Response body</a></h6>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code>{
+  "code" : "T-S004",
+  "message" : "팀 결과 생성에 성공했습니다.",
+  "data" : {
+    "resultImageUrl" : "https://mogong.s3.ap-northeast-2.amazonaws.com/image/sample_5.JPG",
+    "timeResponses" : {
+      "divisorMinutes" : 30,
+      "times" : [ {
+        "dayOfWeek" : "MON",
+        "time" : "09:00~09:30"
+      }, {
+        "dayOfWeek" : "MON",
+        "time" : "09:30~10:00"
+      }, {
+        "dayOfWeek" : "SUN",
+        "time" : "09:00~09:30"
+      } ]
+    }
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_request이미지_제출_수_미충족_실패_잘못된_auth_cde를_입력한_경우"><a class="link" href="#_request이미지_제출_수_미충족_실패_잘못된_auth_cde를_입력한_경우">Request(이미지 제출 수 미충족, 실패, 잘못된 auth_cde를 입력한 경우)</a></h5>
+<div class="sect5">
+<h6 id="_request이미지_제출_수_미충족_실패_잘못된_auth_cde를_입력한_경우_http_request"><a class="link" href="#_request이미지_제출_수_미충족_실패_잘못된_auth_cde를_입력한_경우_http_request">HTTP request</a></h6>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /teams/5/results?auth_code=5678 HTTP/1.1
+Accept: application/json
+Content-Type: application/json
+Host: localhost</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_response이미지_제출_수_미충족_실패_잘못된_auth_cde를_입력한_경우"><a class="link" href="#_response이미지_제출_수_미충족_실패_잘못된_auth_cde를_입력한_경우">Response(이미지 제출 수 미충족, 실패, 잘못된 auth_cde를 입력한 경우)</a></h5>
+<div class="sect5">
+<h6 id="_response이미지_제출_수_미충족_실패_잘못된_auth_cde를_입력한_경우_response_body"><a class="link" href="#_response이미지_제출_수_미충족_실패_잘못된_auth_cde를_입력한_경우_response_body">Response body</a></h6>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code>{
+  "code" : "T-F003",
+  "message" : "AUTH CODE가 일치하지 않습니다.",
   "data" : null
 }</code></pre>
 </div>
