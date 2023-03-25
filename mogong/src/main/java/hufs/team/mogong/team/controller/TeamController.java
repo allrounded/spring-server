@@ -10,8 +10,9 @@ import hufs.team.mogong.team.service.TeamService;
 import hufs.team.mogong.team.service.dto.request.CreateTeamRequest;
 import hufs.team.mogong.team.service.dto.request.UploadTeamRequest;
 import hufs.team.mogong.team.service.dto.response.CreateTeamResponse;
-import hufs.team.mogong.team.service.dto.response.ResultTeamResponse;
+import hufs.team.mogong.team.service.dto.response.TeamResultResponse;
 import hufs.team.mogong.team.service.dto.response.UploadTeamResponse;
+import java.io.IOException;
 import javax.validation.Valid;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,7 +33,8 @@ public class TeamController {
 	}
 
 	@PostMapping
-	public BaseResponse<CreateTeamResponse> create(final @Valid @RequestBody CreateTeamRequest request) {
+	public BaseResponse<CreateTeamResponse> create(
+		final @Valid @RequestBody CreateTeamRequest request) {
 		CreateTeamResponse response = teamService.create(request);
 		return new BaseResponse<>(CREATE_TEAM_SUCCESS, response);
 	}
@@ -48,9 +50,9 @@ public class TeamController {
 	}
 
 	@GetMapping("/{teamId}/results")
-	public BaseResponse<ResultTeamResponse> requestResult(final @PathVariable Long teamId,
+	public BaseResponse<TeamResultResponse> requestResult(final @PathVariable Long teamId,
 		final @RequestParam(name = "auth_code", required = false) String authCode) {
-		ResultTeamResponse response = teamService.getResult(teamId, authCode);
+		TeamResultResponse response = teamService.getResult(teamId, authCode);
 		return new BaseResponse<>(GENERATE_TEAM_RESULT_SUCCESS, response);
 	}
 }

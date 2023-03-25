@@ -34,3 +34,6 @@ cloud:
       auto: false
     stack:
       auto: false
+
+image-server:
+  url: https://www.dummy.site/teams/{teamId}
