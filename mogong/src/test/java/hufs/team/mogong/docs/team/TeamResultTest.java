@@ -12,16 +12,25 @@ import hufs.team.mogong.image.Image;
 import hufs.team.mogong.image.repository.ImageRepository;
 import hufs.team.mogong.team.Team;
 import hufs.team.mogong.team.repository.TeamRepository;
+import hufs.team.mogong.tool.RestTemplateMocks;
+import java.io.IOException;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.contract.wiremock.AutoConfigureWireMock;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.TestPropertySource;
 
+@AutoConfigureWireMock(port = 0)
+@TestPropertySource(properties = {
+	"image-server.url=http://localhost:${wiremock.server.port}/teams/{teamId}"
+})
 @DisplayName("[API DOCS] Team 멤버 결과 요청")
 class TeamResultTest extends InitDocumentationTest {
+
 	@Autowired
 	private TeamRepository teamRepository;
 	@Autowired
@@ -31,7 +40,7 @@ class TeamResultTest extends InitDocumentationTest {
 	private Team team;
 
 	@BeforeEach
-	void init() {
+	void init() throws IOException {
 		imageRepository.deleteAllInBatch();
 		teamRepository.deleteAllInBatch();
 		team = teamRepository.save(new Team("1c487536-08ef-4332-bc2f-16830f49495f", 5, "1234"));
@@ -45,11 +54,12 @@ class TeamResultTest extends InitDocumentationTest {
 		imageRepository.save(
 			new Image(team, "https://mogong.s3.ap-northeast-2.amazonaws.com/image/sample_3.JPG")
 		);
+		RestTemplateMocks.setUpResponses();
 	}
 
 	@Test
 	@DisplayName("팀 멤버 결과 요청 성공")
-	void result_team_success(){
+	void result_team_success() {
 		imageRepository.save(
 			new Image(team, "https://mogong.s3.ap-northeast-2.amazonaws.com/image/sample_4.JPG")
 		);
@@ -79,7 +89,7 @@ class TeamResultTest extends InitDocumentationTest {
 
 	@Test
 	@DisplayName("팀 멤버 결과 요청 실패(제출 수 미달)")
-	void result_team_fail(){
+	void result_team_fail() {
 		//given
 		given(this.spec)
 			.filter(document(DEFAULT_RESTDOCS_PATH))
@@ -102,7 +112,7 @@ class TeamResultTest extends InitDocumentationTest {
 
 	@Test
 	@DisplayName("팀 멤버 결과 요청시, submit이 미충족 되더라도 알맞은 auth code가 있는 경우")
-	void result_team_with_auth_code(){
+	void result_team_with_auth_code() {
 		//given
 		given(this.spec)
 			.filter(document(DEFAULT_RESTDOCS_PATH))
@@ -125,7 +135,7 @@ class TeamResultTest extends InitDocumentationTest {
 
 	@Test
 	@DisplayName("팀 멤버 결과 요청시, submit이 미충족 되었지만, 알맞지 않은 auth code가 있는 경우")
-	void result_team_with_wrong_auth_code(){
+	void result_team_with_wrong_auth_code() {
 		//given
 		given(this.spec)
 			.filter(document(DEFAULT_RESTDOCS_PATH))

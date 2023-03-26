@@ -1,0 +1,16 @@
+{
+  "resultImageUrl": "https://mogong.s3.ap-northeast-2.amazonaws.com/image/sample_5.JPG",
+  "timeResponses": {
+    "divisorMinutes": 30,
+    "times" : [ {
+      "dayOfWeek" : "MON",
+      "time" : "09:00~09:30"
+    }, {
+      "dayOfWeek" : "MON",
+      "time" : "09:30~10:00"
+    }, {
+      "dayOfWeek" : "SUN",
+      "time" : "09:00~09:30"
+    } ]
+  }
+}

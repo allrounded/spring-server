@@ -8,7 +8,6 @@ import static org.springframework.restdocs.restassured3.RestAssuredRestDocumenta
 
 import hufs.team.mogong.docs.InitDocumentationTest;
 import hufs.team.mogong.image.service.dto.PreSignedUrlRequest;
-import hufs.team.mogong.image.service.dto.PreSignedUrlResponse;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

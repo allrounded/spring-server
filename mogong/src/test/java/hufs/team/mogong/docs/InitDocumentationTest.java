@@ -4,10 +4,8 @@ import static org.springframework.restdocs.operation.preprocess.Preprocessors.mo
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
 import static org.springframework.restdocs.restassured3.RestAssuredRestDocumentation.documentationConfiguration;
 
-import com.amazonaws.services.s3.AmazonS3;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import hufs.team.mogong.config.AwsMockConfig;
-import hufs.team.mogong.config.AwsS3Config;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.config.ObjectMapperConfig;
@@ -42,12 +40,6 @@ public class InitDocumentationTest {
 	@Autowired
 	protected ObjectMapper objectMapper;
 
-	@Autowired
-	protected AmazonS3 amazonS3;
-
-	@Autowired
-	protected AwsS3Config awsS3Config;
-
 	protected RequestSpecification spec;
 
 	{
@@ -78,4 +70,5 @@ public class InitDocumentationTest {
 			)
 			.build();
 	}
+
 }

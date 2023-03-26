@@ -566,17 +566,17 @@ Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json
 Transfer-Encoding: chunked
-Date: Sat, 25 Mar 2023 14:19:42 GMT
+Date: Sun, 26 Mar 2023 12:57:46 GMT
 Keep-Alive: timeout=60
 Connection: keep-alive
-Content-Length: 559
+Content-Length: 287
 
 {
   "code" : "I-S001",
   "message" : "이미지 PreSigned URL 생성에 성공했습니다.",
   "data" : {
-    "preSignedUrl" : "https://mogong.s3.ap-northeast-2.amazonaws.com/image/49a62d3d-a538-43d3-b205-d30378eb80de.JPG?X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Date=20230325T141942Z&amp;X-Amz-SignedHeaders=host&amp;X-Amz-Expires=599&amp;X-Amz-Credential=MOGONGMOGONGMOGONG%2F20230325%2Fap-northeast-2%2Fs3%2Faws4_request&amp;X-Amz-Signature=29e36fb0724a7b43c0e73f2b6ad28c9908e905ffbb985e7f3027953ccbbffc48",
-    "fileName" : "49a62d3d-a538-43d3-b205-d30378eb80de.JPG"
+    "preSignedUrl" : "http://localhost:5050/local-embedded-bucket/image/906cdcca-7bd7-403d-86d6-119d1fbf70fe.JPG",
+    "fileName" : "906cdcca-7bd7-403d-86d6-119d1fbf70fe.JPG"
   }
 }</code></pre>
 </div>
@@ -590,8 +590,8 @@ Content-Length: 559
   "code" : "I-S001",
   "message" : "이미지 PreSigned URL 생성에 성공했습니다.",
   "data" : {
-    "preSignedUrl" : "https://mogong.s3.ap-northeast-2.amazonaws.com/image/49a62d3d-a538-43d3-b205-d30378eb80de.JPG?X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Date=20230325T141942Z&amp;X-Amz-SignedHeaders=host&amp;X-Amz-Expires=599&amp;X-Amz-Credential=MOGONGMOGONGMOGONG%2F20230325%2Fap-northeast-2%2Fs3%2Faws4_request&amp;X-Amz-Signature=29e36fb0724a7b43c0e73f2b6ad28c9908e905ffbb985e7f3027953ccbbffc48",
-    "fileName" : "49a62d3d-a538-43d3-b205-d30378eb80de.JPG"
+    "preSignedUrl" : "http://localhost:5050/local-embedded-bucket/image/906cdcca-7bd7-403d-86d6-119d1fbf70fe.JPG",
+    "fileName" : "906cdcca-7bd7-403d-86d6-119d1fbf70fe.JPG"
   }
 }</code></pre>
 </div>
@@ -755,7 +755,7 @@ Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json
 Transfer-Encoding: chunked
-Date: Sat, 25 Mar 2023 14:19:42 GMT
+Date: Sun, 26 Mar 2023 12:57:46 GMT
 Keep-Alive: timeout=60
 Connection: keep-alive
 Content-Length: 233
@@ -765,7 +765,7 @@ Content-Length: 233
   "message" : "팀 생성에 성공했습니다.",
   "data" : {
     "teamId" : 1,
-    "teamName" : "480bcfe5-f768-4a4f-b119-4b02af379d62",
+    "teamName" : "879bb0a1-99e0-4079-8d5e-f24920fd1ddf",
     "numberOfTeam" : 5,
     "submit" : 0,
     "authCode" : "1234"
@@ -783,7 +783,7 @@ Content-Length: 233
   "message" : "팀 생성에 성공했습니다.",
   "data" : {
     "teamId" : 1,
-    "teamName" : "480bcfe5-f768-4a4f-b119-4b02af379d62",
+    "teamName" : "879bb0a1-99e0-4079-8d5e-f24920fd1ddf",
     "numberOfTeam" : 5,
     "submit" : 0,
     "authCode" : "1234"
@@ -865,7 +865,7 @@ Content-Length: 233
 <h6 id="_request_3_http_request"><a class="link" href="#_request_3_http_request">HTTP request</a></h6>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /teams/6 HTTP/1.1
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /teams/5 HTTP/1.1
 Accept: application/json
 Content-Type: application/json
 Host: localhost
@@ -924,7 +924,7 @@ Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json
 Transfer-Encoding: chunked
-Date: Sat, 25 Mar 2023 14:19:43 GMT
+Date: Sun, 26 Mar 2023 12:57:49 GMT
 Keep-Alive: timeout=60
 Connection: keep-alive
 Content-Length: 228
@@ -933,7 +933,7 @@ Content-Length: 228
   "code" : "T-S002",
   "message" : "팀 멤버의 이미지 등록에 성공했습니다.",
   "data" : {
-    "teamId" : 6,
+    "teamId" : 5,
     "teamName" : "1c487536-08ef-4332-bc2f-16830f49495f",
     "numberOfTeam" : 5,
     "submit" : 4
@@ -950,7 +950,7 @@ Content-Length: 228
   "code" : "T-S002",
   "message" : "팀 멤버의 이미지 등록에 성공했습니다.",
   "data" : {
-    "teamId" : 6,
+    "teamId" : 5,
     "teamName" : "1c487536-08ef-4332-bc2f-16830f49495f",
     "numberOfTeam" : 5,
     "submit" : 4
@@ -1019,7 +1019,7 @@ Content-Length: 228
   "code" : "T-S003",
   "message" : "팀 멤버의 모든 이미지가 등록되었습니다. 결과를 요청해주세요",
   "data" : {
-    "teamId" : 7,
+    "teamId" : 6,
     "teamName" : "1c487536-08ef-4332-bc2f-16830f49495f",
     "numberOfTeam" : 5,
     "submit" : 5
@@ -1093,7 +1093,7 @@ Content-Length: 228
 <h6 id="_request_4_http_request"><a class="link" href="#_request_4_http_request">HTTP request</a></h6>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /teams/4/results HTTP/1.1
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /teams/3/results HTTP/1.1
 Accept: application/json
 Content-Type: application/json
 Host: localhost</code></pre>
@@ -1113,7 +1113,7 @@ Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json
 Transfer-Encoding: chunked
-Date: Sat, 25 Mar 2023 14:19:43 GMT
+Date: Sun, 26 Mar 2023 12:57:49 GMT
 Keep-Alive: timeout=60
 Connection: keep-alive
 Content-Length: 482
@@ -1265,7 +1265,7 @@ Content-Length: 482
 <h6 id="_request이미지_제출_수_미충족_성공_올바른_auth_cde를_입력한_경우_http_request"><a class="link" href="#_request이미지_제출_수_미충족_성공_올바른_auth_cde를_입력한_경우_http_request">HTTP request</a></h6>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /teams/3/results?auth_code=1234 HTTP/1.1
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /teams/2/results?auth_code=1234 HTTP/1.1
 Accept: application/json
 Content-Type: application/json
 Host: localhost</code></pre>
@@ -1309,7 +1309,7 @@ Host: localhost</code></pre>
 <h6 id="_request이미지_제출_수_미충족_실패_잘못된_auth_cde를_입력한_경우_http_request"><a class="link" href="#_request이미지_제출_수_미충족_실패_잘못된_auth_cde를_입력한_경우_http_request">HTTP request</a></h6>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /teams/5/results?auth_code=5678 HTTP/1.1
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /teams/4/results?auth_code=5678 HTTP/1.1
 Accept: application/json
 Content-Type: application/json
 Host: localhost</code></pre>
