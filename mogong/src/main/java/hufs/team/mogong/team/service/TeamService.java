@@ -2,26 +2,29 @@ package hufs.team.mogong.team.service;
 
 import hufs.team.mogong.image.Image;
 import hufs.team.mogong.image.repository.ImageRepository;
-import hufs.team.mogong.team.DayOfWeek;
+import hufs.team.mogong.image.service.ImageUploadService;
+import hufs.team.mogong.image.service.dto.PreSignedUrlRequest;
 import hufs.team.mogong.team.Team;
 import hufs.team.mogong.team.exception.NotCompletedSubmit;
 import hufs.team.mogong.team.exception.NotFoundTeamIdException;
 import hufs.team.mogong.team.exception.NotMatchAuthCode;
 import hufs.team.mogong.team.repository.TeamRepository;
 import hufs.team.mogong.team.service.dto.request.CreateTeamRequest;
+import hufs.team.mogong.team.service.dto.request.ImageUrlRequest;
+import hufs.team.mogong.team.service.dto.request.TeamResultRequest;
 import hufs.team.mogong.team.service.dto.request.UploadTeamRequest;
 import hufs.team.mogong.team.service.dto.response.CreateTeamResponse;
-import hufs.team.mogong.team.service.dto.response.ResultTeamResponse;
-import hufs.team.mogong.team.service.dto.response.TimeDetailResponse;
-import hufs.team.mogong.team.service.dto.response.TimeResponses;
+import hufs.team.mogong.team.service.dto.response.TeamResultResponse;
 import hufs.team.mogong.team.service.dto.response.UploadTeamResponse;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
+import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestTemplate;
 
 @Slf4j
 @Service
@@ -29,13 +32,21 @@ import org.springframework.transaction.annotation.Transactional;
 public class TeamService {
 
 	private static final int ZERO = 0;
+	@Value("${image-server.url}")
+	private String imageServerUrl;
 
 	private final TeamRepository teamRepository;
 	private final ImageRepository imageRepository;
+	private final RestTemplate restTemplate;
+	private final ImageUploadService imageUploadService;
 
-	public TeamService(TeamRepository teamRepository, ImageRepository imageRepository) {
+
+	public TeamService(TeamRepository teamRepository, ImageRepository imageRepository,
+		RestTemplate restTemplate, ImageUploadService imageUploadService) {
 		this.teamRepository = teamRepository;
 		this.imageRepository = imageRepository;
+		this.restTemplate = restTemplate;
+		this.imageUploadService = imageUploadService;
 	}
 
 	@Transactional
@@ -67,7 +78,7 @@ public class TeamService {
 			imageSize);
 	}
 
-	public ResultTeamResponse getResult(Long teamId, String authCode) {
+	public TeamResultResponse getResult(Long teamId, String authCode) {
 		Team team = teamRepository.findById(teamId)
 			.orElseThrow(NotFoundTeamIdException::new);
 		List<Image> images = imageRepository.findAllByTeam_TeamId(teamId);
@@ -81,14 +92,10 @@ public class TeamService {
 		}
 		// Flask 호출
 		log.debug("[Flask 호출]");
-
-		List<TimeDetailResponse> times = new ArrayList<>();
-		times.add(new TimeDetailResponse(DayOfWeek.MON, "09:00~09:30"));
-		times.add(new TimeDetailResponse(DayOfWeek.MON, "09:30~10:00"));
-		times.add(new TimeDetailResponse(DayOfWeek.SUN, "09:00~09:30"));
-		return new ResultTeamResponse(
-			"https://mogong.s3.ap-northeast-2.amazonaws.com/image/sample_5.JPG",
-			new TimeResponses(30, times));
+		TeamResultRequest request = createTeamResultRequest(team, images);
+		TeamResultResponse response = createTeamResultResponse(request, team);
+		log.debug("TeamResultResponse FROM Flask Server = {}", response);
+		return response;
 	}
 
 	private boolean checkImageSize(Team team, List<Image> images) {
@@ -97,5 +104,34 @@ public class TeamService {
 
 	private boolean isNull(String authCode){
 		return authCode == null;
+	}
+
+	private ImageUrlRequest getResultPreSignedUrl() {
+		String resultPreSignedUrl = imageUploadService
+			.generate(new PreSignedUrlRequest(".jpeg"))
+			.getPreSignedUrl();
+		log.debug("Result PreSignedUrl = {}", resultPreSignedUrl);
+		return new ImageUrlRequest(resultPreSignedUrl);
+	}
+
+	private TeamResultRequest createTeamResultRequest(Team team,  List<Image> images) {
+		return new TeamResultRequest(
+			team.getTeamName(),
+			team.getNumberOfMember(),
+			images.stream()
+				.map(ImageUrlRequest::from)
+				.collect(Collectors.toList()),
+			getResultPreSignedUrl()
+		);
+	}
+
+	private TeamResultResponse createTeamResultResponse(TeamResultRequest request, Team team) {
+		log.debug(restTemplate.getMessageConverters().toString());
+		return restTemplate.postForObject(
+			imageServerUrl,
+			request,
+			TeamResultResponse.class,
+			team.getTeamId()
+		);
 	}
 }

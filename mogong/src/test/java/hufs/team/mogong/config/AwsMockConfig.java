@@ -5,11 +5,18 @@ import com.amazonaws.auth.AnonymousAWSCredentials;
 import com.amazonaws.client.builder.AwsClientBuilder;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
+import hufs.team.mogong.tool.ProcessUtils;
 import io.findify.s3mock.S3Mock;
+import java.io.IOException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Primary;
+import org.springframework.web.util.UriComponentsBuilder;
 
+
+@Slf4j
 @TestConfiguration
 public class AwsMockConfig {
 
@@ -20,17 +27,25 @@ public class AwsMockConfig {
 	@Value("${cloud.aws.region.static}")
 	private String region;
 
+	@Value("${cloud.aws.s3.mock.port}")
+	private int port;
+
 	@Bean
-	public S3Mock s3Mock() {
-		return new S3Mock.Builder().withPort(8001).withInMemoryBackend().build();
+	public S3Mock s3Mock() throws IOException {
+		port = ProcessUtils.isRunningPort(port) ? ProcessUtils.findAvailableRandomPort() : port;
+		log.debug("IN MEMORY S3 MOCK SERVER START! PORT = {}", port);
+		return new S3Mock.Builder()
+			.withPort(port)
+			.withInMemoryBackend()
+			.build();
 	}
 
 	@Bean
+	@Primary
 	public AmazonS3 amazonS3Mock(S3Mock s3Mock) {
 		s3Mock.start();
-
-		AwsClientBuilder.EndpointConfiguration endpoint = new AwsClientBuilder
-			.EndpointConfiguration("http://localhost:8001", region);
+		AwsClientBuilder.EndpointConfiguration endpoint = new AwsClientBuilder.EndpointConfiguration(
+			getUri(), region);
 
 		AmazonS3 client = AmazonS3ClientBuilder
 			.standard()
@@ -40,7 +55,15 @@ public class AwsMockConfig {
 			.build();
 
 		client.createBucket(bucket);
-
 		return client;
+	}
+
+	private String getUri() {
+		return UriComponentsBuilder.newInstance()
+			.scheme("http")
+			.host("localhost")
+			.port(port)
+			.build()
+			.toUriString();
 	}
 }

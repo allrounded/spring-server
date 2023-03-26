@@ -25,12 +25,16 @@ logging:
 cloud:
   aws:
     s3:
-      bucket: mogong
+      bucket: local-embedded-bucket
+      mock:
+        port: 5050
     credentials:
       access-key: MOGONGMOGONGMOGONG
       secret-key: MOGONGMOGONGMOGONGMOGONGMOGONGMOGONGMOGONGMOGONGMOGONG
     region:
       static: ap-northeast-2
-      auto: false
     stack:
       auto: false
+
+image-server:
+  url: https://www.dummy.site/teams/{teamId}
