@@ -37,11 +37,11 @@ Request Body 로 업로드가 완료된 Image URL을 보내야 합니다.
 
 operation::team_upload_test/upload_team_success[snippets='http-request,request-body,request-fields']
 
-===== Response(팀원들이 모두 이미지 업로드가 안된 상태일 때)
+===== Response(팀원들이 모두 이미지 업로드가 안 된 상태일 때)
 
 operation::team_upload_test/upload_team_success[snippets='http-response,response-body,response-fields']
 
-===== Response(팀원들이 모두 이미지 업로드가 안된 상태일 때)
+===== Response(팀원들이 모두 이미지 업로드가 된 상태일 때)
 
 operation::team_upload_test/completed_upload_team_success[snippets='response-body,response-fields']
 
@@ -71,20 +71,20 @@ API : `GET /teams/{teamId}/results?auth_code=1234`
 
 ==== 200 OK
 
-===== Request(이미지 제출 수 미충족, 성공, 올바른 auth_cde를 입력한 경우)
+===== Request(이미지 제출 수 미충족, 성공, 올바른 auth_code를 입력한 경우)
 
 operation::team_result_test/result_team_with_auth_code[snippets='http-request']
 
 
-===== Response(이미지 제출 수 미충족, 성공, 올바른 auth_cde를 입력한 경우)
+===== Response(이미지 제출 수 미충족, 성공, 올바른 auth_code를 입력한 경우)
 
 operation::team_result_test/result_team_with_auth_code[snippets='response-body']
 
 
-===== Request(이미지 제출 수 미충족, 실패, 잘못된 auth_cde를 입력한 경우)
+===== Request(이미지 제출 수 미충족, 실패, 잘못된 auth_code를 입력한 경우)
 
 operation::team_result_test/result_team_with_wrong_auth_code[snippets='http-request']
 
-===== Response(이미지 제출 수 미충족, 실패, 잘못된 auth_cde를 입력한 경우)
+===== Response(이미지 제출 수 미충족, 실패, 잘못된 auth_code를 입력한 경우)
 
 operation::team_result_test/result_team_with_wrong_auth_code[snippets='response-body']

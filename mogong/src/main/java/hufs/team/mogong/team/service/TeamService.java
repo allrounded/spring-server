@@ -104,7 +104,7 @@ public class TeamService {
 		List<Image> images = imageRepository.findAllByTeam_TeamId(teamId);
 
 		if (isNull(authCode) && !checkImageSize(team, images)) {
-			throw new NotCompletedSubmit();
+			throw new NotCompletedSubmit(images.size(), team.getNumberOfMember());
 		}
 
 		if (!isNull(authCode) && !Objects.equals(team.getAuthCode(), authCode)) {

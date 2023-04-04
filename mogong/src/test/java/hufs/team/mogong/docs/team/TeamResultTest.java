@@ -12,6 +12,7 @@ import hufs.team.mogong.image.Image;
 import hufs.team.mogong.image.repository.ImageRepository;
 import hufs.team.mogong.team.Team;
 import hufs.team.mogong.team.repository.TeamRepository;
+import hufs.team.mogong.team.service.dto.response.SubmitResponse;
 import hufs.team.mogong.tool.RestTemplateMocks;
 import java.io.IOException;
 import org.hamcrest.Matchers;
@@ -38,6 +39,7 @@ class TeamResultTest extends InitDocumentationTest {
 
 	private Long teamId;
 	private Team team;
+	private int sizeOfImages;
 
 	@BeforeEach
 	void init() throws IOException {
@@ -54,6 +56,7 @@ class TeamResultTest extends InitDocumentationTest {
 		imageRepository.save(
 			new Image(team, "https://mogong.s3.ap-northeast-2.amazonaws.com/image/sample_3.JPG")
 		);
+		sizeOfImages = 3;
 		RestTemplateMocks.setUpResponses();
 	}
 
@@ -106,7 +109,6 @@ class TeamResultTest extends InitDocumentationTest {
 			.statusCode(HttpStatus.OK.value())
 			.body("code", Matchers.equalTo(NOT_COMPLETED_SUBMIT.getCode()))
 			.body("message", Matchers.equalTo(NOT_COMPLETED_SUBMIT.getMessage()))
-			.body("data", Matchers.equalTo(null))
 			.log().all();
 	}
 
