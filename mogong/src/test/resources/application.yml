@@ -38,3 +38,4 @@ cloud:
 
 image-server:
   url: https://www.dummy.site/teams/{teamId}
+  validate: http://www.dummy.site/validate
