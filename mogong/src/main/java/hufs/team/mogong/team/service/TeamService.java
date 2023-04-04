@@ -8,6 +8,7 @@ import hufs.team.mogong.team.Team;
 import hufs.team.mogong.team.exception.NotCompletedSubmit;
 import hufs.team.mogong.team.exception.NotFoundTeamIdException;
 import hufs.team.mogong.team.exception.NotMatchAuthCode;
+import hufs.team.mogong.team.exception.UnValidImageUrl;
 import hufs.team.mogong.team.repository.TeamRepository;
 import hufs.team.mogong.team.service.dto.request.CreateTeamRequest;
 import hufs.team.mogong.team.service.dto.request.ImageUrlRequest;
@@ -32,10 +33,13 @@ import org.springframework.web.client.RestTemplate;
 public class TeamService {
 
 	private static final int ZERO = 0;
+	@Value("${image-server.validate}")
+	private String imageValidateUrl;
 	@Value("${image-server.url}")
 	private String imageServerUrl;
 
 	private final TeamRepository teamRepository;
+
 	private final ImageRepository imageRepository;
 	private final RestTemplate restTemplate;
 	private final ImageUploadService imageUploadService;
@@ -67,6 +71,10 @@ public class TeamService {
 
 		log.debug("[요청 전 IMAGE 제출 수] {}", imageSize);
 		if (!checkImageSize(team, images)) {
+			/*
+			 * TODO RestTemplate을 통해 Flask에 요청하고 받는 부분 WireMock으로 지정하여 테스트까지 완료하기
+			 */
+//			validateImage(request.getImageUrl());
 			imageRepository.save(new Image(team, request.getImageUrl()));
 			imageSize++;
 		}
@@ -76,6 +84,18 @@ public class TeamService {
 			team.getTeamName(),
 			team.getNumberOfMember(),
 			imageSize);
+	}
+
+	private void validateImage(String imageUrl) {
+		Boolean isValidated = restTemplate.postForObject(
+			imageValidateUrl,
+			imageUrl,
+			Boolean.class
+		);
+		log.debug("IMAGE VALIDATE = {}", isValidated);
+		if (Boolean.FALSE.equals(isValidated)) {
+			throw new UnValidImageUrl();
+		}
 	}
 
 	public TeamResultResponse getResult(Long teamId, String authCode) {
@@ -99,7 +119,7 @@ public class TeamService {
 	}
 
 	private boolean checkImageSize(Team team, List<Image> images) {
-		return team.getNumberOfMember() == images.size();
+		return team.getNumberOfMember() <= images.size();
 	}
 
 	private boolean isNull(String authCode){

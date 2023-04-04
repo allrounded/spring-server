@@ -12,5 +12,5 @@ import org.hibernate.validator.constraints.URL;
 public class UploadTeamRequest {
 
 	@URL
-	public String imageUrl;
+	private String imageUrl;
 }
