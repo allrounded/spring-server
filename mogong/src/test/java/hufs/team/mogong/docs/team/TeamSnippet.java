@@ -10,6 +10,7 @@ import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWit
 import hufs.team.mogong.team.service.dto.request.CreateTeamRequest;
 import hufs.team.mogong.team.service.dto.request.UploadTeamRequest;
 import hufs.team.mogong.team.service.dto.response.CreateTeamResponse;
+import hufs.team.mogong.team.service.dto.response.TeamIdResponse;
 import hufs.team.mogong.team.service.dto.response.UploadTeamResponse;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.restdocs.snippet.Snippet;
@@ -59,6 +60,15 @@ public interface TeamSnippet {
 			fieldWithPath("timeResponses.times[]").type(JsonFieldType.ARRAY).description("요일과 시간을 담은 배열"),
 			fieldWithPath("timeResponses.times[].dayOfWeek").type(JsonFieldType.STRING).description("요일"),
 			fieldWithPath("timeResponses.times[].time").type(JsonFieldType.STRING).description("30분 단위로 나눈 시간들 (ex. \"09:00~09:30\")")
+		)
+	);
+
+	Snippet TEAM_NAME_RESPONSE_SNIPPET = createResponseSnippetWithFields(
+		responseFieldsOfCommon(),
+		responseFieldsOfObjectWithConstraintsAndFields(
+			TeamIdResponse.class,
+			fieldWithPath("teamName").type(JsonFieldType.STRING).description("Team Name"),
+			fieldWithPath("teamId").type(JsonFieldType.NUMBER).description("Team Id")
 		)
 	);
 }

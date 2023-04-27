@@ -7,6 +7,7 @@ import hufs.team.mogong.image.service.dto.PreSignedUrlRequest;
 import hufs.team.mogong.team.Team;
 import hufs.team.mogong.team.exception.NotCompletedSubmit;
 import hufs.team.mogong.team.exception.NotFoundTeamIdException;
+import hufs.team.mogong.team.exception.NotFoundTeamNameException;
 import hufs.team.mogong.team.exception.NotMatchAuthCode;
 import hufs.team.mogong.team.exception.UnValidImageUrl;
 import hufs.team.mogong.team.repository.TeamRepository;
@@ -15,6 +16,7 @@ import hufs.team.mogong.team.service.dto.request.ImageUrlRequest;
 import hufs.team.mogong.team.service.dto.request.TeamResultRequest;
 import hufs.team.mogong.team.service.dto.request.UploadTeamRequest;
 import hufs.team.mogong.team.service.dto.response.CreateTeamResponse;
+import hufs.team.mogong.team.service.dto.response.TeamIdResponse;
 import hufs.team.mogong.team.service.dto.response.TeamResultResponse;
 import hufs.team.mogong.team.service.dto.response.UploadTeamResponse;
 import java.util.List;
@@ -153,5 +155,14 @@ public class TeamService {
 			TeamResultResponse.class,
 			team.getTeamId()
 		);
+	}
+
+	public TeamIdResponse findId(String teamName) {
+		log.debug("[Team ID 조회] teamName = {}", teamName);
+		Team team = teamRepository.findByTeamName(teamName)
+			.orElseThrow(NotFoundTeamNameException::new);
+		return new TeamIdResponse(
+				team.getTeamName(),
+				team.getTeamId());
 	}
 }

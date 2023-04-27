@@ -18,6 +18,7 @@ public enum ErrorCodeAndMessages implements CodeAndMessages {
 	NOT_COMPLETED_SUBMIT("T-F002", "현재 등록된 이미지 수가 지정된 멤버 수보다 적습니다."),
 	NOT_MATCH_AUTH_CODE("T-F003", "AUTH CODE가 일치하지 않습니다."),
 	UN_VALID_IMAGE_URL("T-F004", "시간표 이미지가 아닙니다. 이미지를 다시 확인해주세요."),
+	NOT_FOUND_TEAM_NAME("T-F005", "해당 팀 NAME을 찾을 수 없습니다."),
 	;
 	private final String code;
 	private final String message;

@@ -2,6 +2,7 @@ package hufs.team.mogong.team.controller;
 
 import static hufs.team.mogong.common.response.ResponseCodeAndMessages.CREATE_TEAM_SUCCESS;
 import static hufs.team.mogong.common.response.ResponseCodeAndMessages.GENERATE_TEAM_RESULT_SUCCESS;
+import static hufs.team.mogong.common.response.ResponseCodeAndMessages.FIND_TEAM_ID_SUCCESS;
 import static hufs.team.mogong.common.response.ResponseCodeAndMessages.UPLOAD_ALL_MEMBER_IMAGE_SUCCESS;
 import static hufs.team.mogong.common.response.ResponseCodeAndMessages.UPLOAD_SINGLE_MEMBER_IMAGE_SUCCESS;
 
@@ -10,9 +11,9 @@ import hufs.team.mogong.team.service.TeamService;
 import hufs.team.mogong.team.service.dto.request.CreateTeamRequest;
 import hufs.team.mogong.team.service.dto.request.UploadTeamRequest;
 import hufs.team.mogong.team.service.dto.response.CreateTeamResponse;
+import hufs.team.mogong.team.service.dto.response.TeamIdResponse;
 import hufs.team.mogong.team.service.dto.response.TeamResultResponse;
 import hufs.team.mogong.team.service.dto.response.UploadTeamResponse;
-import java.io.IOException;
 import javax.validation.Valid;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -54,5 +55,11 @@ public class TeamController {
 		final @RequestParam(name = "auth_code", required = false) String authCode) {
 		TeamResultResponse response = teamService.getResult(teamId, authCode);
 		return new BaseResponse<>(GENERATE_TEAM_RESULT_SUCCESS, response);
+	}
+
+	@GetMapping("/names/{teamName}")
+	public BaseResponse<TeamIdResponse> findId(final @PathVariable String teamName) {
+		TeamIdResponse response = teamService.findId(teamName);
+		return new BaseResponse<>(FIND_TEAM_ID_SUCCESS, response);
 	}
 }
