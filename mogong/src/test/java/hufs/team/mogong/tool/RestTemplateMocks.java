@@ -18,14 +18,24 @@ public class RestTemplateMocks {
 
 	public static void setUpResponses() throws IOException {
 		setUpMockTeamResultResponse();
+		setUpMockMemberImageUploadResponse();
 	}
 
 	private static void setUpMockTeamResultResponse() throws IOException {
-		stubFor(post(urlPathMatching("/teams/[0-9]+"))
+		stubFor(post(urlPathMatching("/teams/[0-9]+/results"))
 			.willReturn(aResponse()
 				.withStatus(HttpStatus.OK.value())
 				.withHeader(Headers.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
 				.withBody(getMockResponseBodyByPath("payload/post-team-result-response.json"))
+			));
+	}
+
+	private static void setUpMockMemberImageUploadResponse() throws IOException {
+		stubFor(post(urlPathMatching("/teams/[0-9]+/members/[0-9]+"))
+			.willReturn(aResponse()
+				.withStatus(HttpStatus.OK.value())
+				.withHeader(Headers.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+				.withBody(getMockResponseBodyByPath("payload/post-member-image-upload-response.json"))
 			));
 	}
 
