@@ -1,0 +1,68 @@
+=== 전체 목록 (/teams/{teamId}/members)
+[cols=2*]
+|===
+| 기능 | API
+
+| <<1. 팀원 생성>> | [POST] /teams/{teamId}/members
+| <<2. 팀원 조회>> | [GET] /teams/{teamId}/members/{memberId}
+| <<3. 팀원 이미지 업로드>> | [PUT] /teams/{teamId}/members/{memberId}/images/v2
+
+|===
+
+---
+
+=== 1. 팀원 생성
+
+API : `POST /teams/{teamId}/members`
+
+RequestBody로 팀원의 nickName을 보내야 합니다.
+
+==== 200 OK
+
+===== Request
+
+operation::create_member_test/create_member_success[snippets='http-request,request-body,request-fields']
+
+===== Response
+
+- 팀원의 이미지 URL은 `~/teams/{teamId}/UUID.jpeg` 형태로 구성됩니다.
+
+operation::create_member_test/create_member_success[snippets='http-response,response-body,response-fields']
+
+---
+
+=== 2. 팀원 조회
+
+API : `POST /teams/{teamId}/members/{memberId}`
+
+==== 200 OK
+
+===== Request
+
+operation::find_member_test/find_member_success[snippets='http-request']
+
+===== Response
+
+- 팀원의 이미지 URL은 `~/teams/{teamId}/UUID.jpeg` 형태로 구성됩니다.
+
+operation::find_member_test/find_member_success[snippets='http-response,response-body,response-fields']
+
+---
+
+=== 3. 팀원 이미지 업로드
+
+API : `PUT /teams/{teamId}/members/{memberId}/images/v2`
+
+- v2: 멤버들의 시간표를 이진수 비트 마스킹으로 처리하기 위해, BIG INT로 데이터 관리
+
+==== 200 OK
+
+===== Request
+
+operation::member_member_image_upload_test/find_member_success[snippets='http-request']
+
+===== Response
+
+- 팀원의 이미지 URL은 `~/teams/{teamId}/UUID.jpeg` 형태로 구성됩니다.
+
+operation::member_member_image_upload_test/find_member_success[snippets='http-response,response-body,response-fields']

@@ -9,7 +9,7 @@ include::{docdir}/image/s3.adoc[]
 
 == 팀 API
 
-include::{docdir}/team/team_create.adoc[]
+include::{docdir}/team/team.adoc[]
 
 
 

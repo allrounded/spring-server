@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 public class ImageUploadService {
 
 	private static final String IMAGE_DIR = "image/";
-	private static final int SET_TIME = 1000 * 60 * 10;
+	private static final long SET_TIME = 1000000L * 60 * 60;
 
 	private final AmazonS3 amazonS3;
 
@@ -34,8 +34,17 @@ public class ImageUploadService {
 		log.debug("IMAGE FILE NAME = {}", fileName.substring(IMAGE_DIR.length()));
 		return new PreSignedUrlResponse(
 			getPreSignedUrl(fileName),
-			fileName.substring(IMAGE_DIR.length())
-		);
+			fileName.substring(IMAGE_DIR.length()));
+	}
+
+	public PreSignedUrlResponse generate(PreSignedUrlRequest request, String imagePath) {
+		String extension = request.getExtension();
+		log.debug("IMAGE FILE EXTENSION = {}", extension);
+		String fileName = imagePath + UUID.randomUUID() + extension;
+		log.debug("IMAGE FILE NAME = {}", fileName.substring(imagePath.length()));
+		return new PreSignedUrlResponse(
+			getPreSignedUrl(fileName),
+			fileName.substring(imagePath.length()));
 	}
 
 	private String getPreSignedUrl(String fileName) {

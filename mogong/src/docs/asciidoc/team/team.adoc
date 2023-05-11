@@ -1,0 +1,103 @@
+=== 전체 목록 (/teams/*)
+[cols=2*]
+|===
+| 기능 | API
+
+| <<1. 팀 생성>> | [POST] /teams
+| <<2. 팀 결과 조회(팀 제출 수 충족)>> | [GET] /teams/{teamId}/v2
+| <<3. 팀 결과 조회(팀 제출 수 미충족 & auth_code 미입력)>> | [GET] /teams/{teamId}/v2
+| <<4. 팀 결과 조회(팀 제출 수 미충족 & 옳은 auth_code 입력)>> | [GET] /teams/{teamId}/v2?auth_code={authCode}
+| <<5. 팀 결과 조회(팀 제출 수 미충족 & 옳지 않은 auth_code 입력)>> | [GET] /teams/{teamId}/v2?auth_code={authCode}
+| <<6. 팀 ID 조회>> | [GET] /teams/names/{teamName}
+
+|===
+
+=== 1. 팀 생성
+
+API : `POST /teams`
+
+Request Body 로 팀 구성원 수를 보내야 합니다.
+
+==== 200 OK
+
+===== Request
+
+operation::team_create_test/create_team_success[snippets='http-request,request-body,request-fields']
+
+===== Response
+
+operation::team_create_test/create_team_success[snippets='http-response,response-body,response-fields']
+
+=== 2. 팀 결과 조회(팀 제출 수 충족)
+
+API : `GET /teams/{teamId}/v2`
+
+
+==== 200 OK
+
+===== Request
+
+operation::find_team_test/result_team_success[snippets='http-request']
+
+===== Response(팀원들이 모두 이미지 업로드가 된 상태일 때)
+
+operation::find_team_test/result_team_success[snippets='http-response,response-body,response-fields']
+
+
+=== 3. 팀 결과 조회(팀 제출 수 미충족 & auth_code 미입력)
+
+API : `GET /teams/{teamId}/results`
+
+==== 200 OK
+
+===== Request
+
+operation::find_team_test/result_team_fail[snippets='http-request']
+
+===== Response
+
+operation::find_team_test/result_team_fail[snippets='http-response,response-body,response-fields']
+
+=== 4. 팀 결과 조회(팀 제출 수 미충족 & 옳은 auth_code 입력)
+
+API : `GET /teams/{teamId}/results?auth_code={authCode}`
+
+==== 200 OK
+
+===== Request
+
+operation::find_team_test/result_team_with_auth_code[snippets='http-request']
+
+===== Response
+
+operation::find_team_test/result_team_with_auth_code[snippets='http-response,response-body,response-fields']
+
+=== 5. 팀 결과 조회(팀 제출 수 미충족 & 옳지 않은 auth_code 입력)
+
+API : `GET /teams/{teamId}/results?auth_code={authCode}`
+
+==== 200 OK
+
+===== Request
+
+operation::find_team_test/result_team_with_wrong_auth_code[snippets='http-request']
+
+===== Response
+
+operation::find_team_test/result_team_with_wrong_auth_code[snippets='http-response,response-body,response-fields']
+
+=== 6. 팀 ID 조회
+
+API : `GET /teams/names/{teamName}`
+
+teamName을 Path Parameter로 넣어야 합니다.
+
+==== 200 OK
+
+===== Request
+
+operation::team_name_test/find_team_id_by_team_name_success[snippets='http-request']
+
+===== Response
+
+operation::team_name_test/find_team_id_by_team_name_success[snippets='http-response,response-body,response-fields']
