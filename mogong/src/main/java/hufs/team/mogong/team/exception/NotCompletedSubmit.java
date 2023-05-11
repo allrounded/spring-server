@@ -7,12 +7,12 @@ import lombok.Getter;
 @Getter
 public class NotCompletedSubmit extends BaseException {
 
-	private final int sizeOfImages;
-	private final int numberOfTeam;
+	private final int numberOfMember;
+	private final int numberOfSubmit;
 
-	public NotCompletedSubmit(int sizeOfImages, int numberOfTeam) {
+	public NotCompletedSubmit(int numberOfMember, int numberOfSubmit) {
 		super(ErrorCodeAndMessages.NOT_COMPLETED_SUBMIT);
-		this.sizeOfImages = sizeOfImages;
-		this.numberOfTeam = numberOfTeam;
+		this.numberOfMember = numberOfMember;
+		this.numberOfSubmit = numberOfSubmit;
 	}
 }

@@ -1,6 +1,6 @@
 package hufs.team.mogong.team.service.dto.request;
 
-import java.util.List;
+import hufs.team.mogong.team.service.dto.response.ResultTimeResponses;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,9 +11,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor(access = AccessLevel.PUBLIC)
 public class TeamResultRequest {
 
+	private Long teamId;
 	private String teamName;
-	private Integer numberOfTeam;
-	private List<ImageUrlRequest> images;
-	private ImageUrlRequest resultImageUrl;
+	private String resultImageUrl;
+	private ResultTimeResponses timeResponses;
 
 }

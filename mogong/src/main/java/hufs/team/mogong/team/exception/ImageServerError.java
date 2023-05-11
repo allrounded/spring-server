@@ -3,9 +3,9 @@ package hufs.team.mogong.team.exception;
 import hufs.team.mogong.common.exception.BaseException;
 import hufs.team.mogong.common.exception.ErrorCodeAndMessages;
 
-public class UnValidImageUrl extends BaseException {
+public class ImageServerError extends BaseException {
 
-	public UnValidImageUrl() {
-		super(ErrorCodeAndMessages.UN_VALID_IMAGE_URL);
+	public ImageServerError() {
+		super(ErrorCodeAndMessages.IMAGE_SERVER_ERROR);
 	}
 }
