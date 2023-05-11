@@ -1,4 +1,4 @@
-package hufs.team.mogong.team.service.dto.response;
+package hufs.team.mogong.member.service.dto.response;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -6,12 +6,12 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor(access = AccessLevel.PUBLIC)
-public class CreateTeamResponse {
+public class MemberImageUploadResponse {
 
-	private final Long teamId;
 	private final String teamName;
 	private final Integer numberOfMember;
 	private final Integer numberOfSubmit;
-	private final String authCode;
+	private final String nickName;
 	private final String imageUrl;
+	private final boolean submit;
 }

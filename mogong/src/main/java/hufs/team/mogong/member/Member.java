@@ -1,4 +1,4 @@
-package hufs.team.mogong.image;
+package hufs.team.mogong.member;
 
 import hufs.team.mogong.team.Team;
 import javax.persistence.Column;
@@ -16,22 +16,27 @@ import lombok.NoArgsConstructor;
 @Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Image {
+public class Member {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "image_id")
-	private Long id;
+	private Long memberId;
+
+	@Column(nullable = false)
+	private String nickName;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "team_id")
 	private Team team;
 
-	@Column(nullable = false)
-	private String url;
+	private boolean submit  = false;
 
-	public Image(Team team, String url) {
+	public Member(String nickName, Team team) {
+		this.nickName = nickName;
 		this.team = team;
-		this.url = url;
+	}
+
+	public void submit() {
+		this.submit = true;
 	}
 }

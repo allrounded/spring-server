@@ -37,5 +37,7 @@ cloud:
       auto: false
 
 image-server:
+#  url: http://3.37.217.90:5000/teams/{teamId}/members/{memberId}
+#  result: http://3.37.217.90:5000/teams/{teamId}/results
   url: https://www.dummy.site/teams/{teamId}
-  validate: http://www.dummy.site/validate
+  result: http://www.dummy.site/validate

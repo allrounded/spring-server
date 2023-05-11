@@ -1,16 +1,16 @@
-package hufs.team.mogong.team.service.dto.request;
+package hufs.team.mogong.member.service.dto.request;
 
+import javax.validation.constraints.NotBlank;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.validator.constraints.URL;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PUBLIC)
-public class UploadTeamRequest {
+public class CreateMemberRequest {
 
-	@URL
-	private String imageUrl;
+	@NotBlank
+	private String nickName;
 }

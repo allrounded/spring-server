@@ -19,11 +19,10 @@ public class GlobalExceptionHandler {
 
 	@ExceptionHandler(NotCompletedSubmit.class)
 	public BaseResponse<SubmitResponse> handleNotCompletedSubmit(NotCompletedSubmit e) {
-		log.debug("[NOT COMPLETED SUBMIT] 현재 이미지 요청 수 = {}", e.getSizeOfImages());
+		log.debug("[NOT COMPLETED SUBMIT] 현재 이미지 요청 수 = {}", e.getNumberOfSubmit());
 		return new BaseResponse<>(
 			e.getCode(),
 			e.getMessage(),
-			new SubmitResponse(e.getSizeOfImages(), e.getNumberOfTeam()));
+			new SubmitResponse(e.getNumberOfSubmit(), e.getNumberOfMember()));
 	}
-
 }

@@ -1,19 +1,15 @@
 package hufs.team.mogong.team.controller;
 
 import static hufs.team.mogong.common.response.ResponseCodeAndMessages.CREATE_TEAM_SUCCESS;
-import static hufs.team.mogong.common.response.ResponseCodeAndMessages.GENERATE_TEAM_RESULT_SUCCESS;
 import static hufs.team.mogong.common.response.ResponseCodeAndMessages.FIND_TEAM_ID_SUCCESS;
-import static hufs.team.mogong.common.response.ResponseCodeAndMessages.UPLOAD_ALL_MEMBER_IMAGE_SUCCESS;
-import static hufs.team.mogong.common.response.ResponseCodeAndMessages.UPLOAD_SINGLE_MEMBER_IMAGE_SUCCESS;
+import static hufs.team.mogong.common.response.ResponseCodeAndMessages.FIND_TEAM_SUCCESS;
 
 import hufs.team.mogong.common.response.BaseResponse;
 import hufs.team.mogong.team.service.TeamService;
 import hufs.team.mogong.team.service.dto.request.CreateTeamRequest;
-import hufs.team.mogong.team.service.dto.request.UploadTeamRequest;
 import hufs.team.mogong.team.service.dto.response.CreateTeamResponse;
 import hufs.team.mogong.team.service.dto.response.TeamIdResponse;
-import hufs.team.mogong.team.service.dto.response.TeamResultResponse;
-import hufs.team.mogong.team.service.dto.response.UploadTeamResponse;
+import hufs.team.mogong.team.service.dto.response.TeamResponse;
 import javax.validation.Valid;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,27 +30,23 @@ public class TeamController {
 	}
 
 	@PostMapping
-	public BaseResponse<CreateTeamResponse> create(
-		final @Valid @RequestBody CreateTeamRequest request) {
+	public BaseResponse<CreateTeamResponse> create(final @Valid @RequestBody CreateTeamRequest request) {
 		CreateTeamResponse response = teamService.create(request);
 		return new BaseResponse<>(CREATE_TEAM_SUCCESS, response);
 	}
 
-	@PostMapping("/{teamId}")
-	public BaseResponse<UploadTeamResponse> upload(final @PathVariable Long teamId,
-		final @Valid @RequestBody UploadTeamRequest request) {
-		UploadTeamResponse response = teamService.upload(teamId, request);
-		if (response.completedSubmit()) {
-			return new BaseResponse<>(UPLOAD_ALL_MEMBER_IMAGE_SUCCESS, response);
-		}
-		return new BaseResponse<>(UPLOAD_SINGLE_MEMBER_IMAGE_SUCCESS, response);
+	@GetMapping("/{teamId}/v1")
+	public BaseResponse<TeamResponse> findByIdV1(final @PathVariable Long teamId,
+		final @RequestParam(name = "auth_code", required = false) String authCode) {
+		TeamResponse response = teamService.findById(teamId, true, authCode);
+		return new BaseResponse<>(FIND_TEAM_SUCCESS, response);
 	}
 
-	@GetMapping("/{teamId}/results")
-	public BaseResponse<TeamResultResponse> requestResult(final @PathVariable Long teamId,
+	@GetMapping("/{teamId}/v2")
+	public BaseResponse<TeamResponse> findByIdV2(final @PathVariable Long teamId,
 		final @RequestParam(name = "auth_code", required = false) String authCode) {
-		TeamResultResponse response = teamService.getResult(teamId, authCode);
-		return new BaseResponse<>(GENERATE_TEAM_RESULT_SUCCESS, response);
+		TeamResponse response = teamService.findById(teamId, false, authCode);
+		return new BaseResponse<>(FIND_TEAM_SUCCESS, response);
 	}
 
 	@GetMapping("/names/{teamName}")
@@ -62,4 +54,12 @@ public class TeamController {
 		TeamIdResponse response = teamService.findId(teamName);
 		return new BaseResponse<>(FIND_TEAM_ID_SUCCESS, response);
 	}
+
+	/**
+	 * Team 삭제
+	 */
+
+	/**
+	 * Team 인원 수정하기
+	 */
 }

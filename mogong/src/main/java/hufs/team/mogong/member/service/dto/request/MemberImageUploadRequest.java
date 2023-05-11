@@ -1,19 +1,22 @@
-package hufs.team.mogong.team.service.dto.request;
+package hufs.team.mogong.member.service.dto.request;
 
-import hufs.team.mogong.team.service.dto.response.ResultTimeResponses;
+import javax.validation.constraints.NotEmpty;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.URL;
+
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PUBLIC)
-public class TeamResultRequest {
+public class MemberImageUploadRequest {
 
-	private Long teamId;
+	@NotEmpty
 	private String teamName;
-	private String resultImageUrl;
-	private ResultTimeResponses timeResponses;
+
+	@URL
+	private String imageUrl;
 
 }
