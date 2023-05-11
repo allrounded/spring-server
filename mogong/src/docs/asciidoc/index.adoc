@@ -11,5 +11,9 @@ include::{docdir}/image/s3.adoc[]
 
 include::{docdir}/team/team.adoc[]
 
+== 팀원 API
+
+include::{docdir}/member/member.adoc[]
+
 
 
