@@ -211,8 +211,8 @@ public class MemberService {
 		return restTemplate.postForObject(
 			imageServerUrl,
 			new MemberImageUploadRequest(team.getTeamName(),
-				"https://mogong.s3.ap-northeast-2.amazonaws.com/image/sample_3.JPG"
-//				image.getUrl().split("\\?")[0]
+//				"https://mogong.s3.ap-northeast-2.amazonaws.com/image/sample_3.JPG"
+				image.getUrl().split("\\?")[0]
 			),
 			ImageServerTimeResponses.class,
 			team.getTeamId(), member.getMemberId()
