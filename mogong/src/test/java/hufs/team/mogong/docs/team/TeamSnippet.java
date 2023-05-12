@@ -11,7 +11,6 @@ import hufs.team.mogong.team.service.dto.request.CreateTeamRequest;
 import hufs.team.mogong.team.service.dto.response.CreateTeamResponse;
 import hufs.team.mogong.team.service.dto.response.TeamIdResponse;
 import hufs.team.mogong.team.service.dto.response.TeamResponse;
-import hufs.team.mogong.team.service.dto.response.UploadTeamResponse;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.restdocs.snippet.Snippet;
 
@@ -35,22 +34,6 @@ public interface TeamSnippet {
 			fieldWithPath("authCode").type(JsonFieldType.STRING).description("팀장 코드")
 		)
 	);
-
-//	Snippet UPLOAD_TEAM_REQUEST_BODY_SNIPPET = requestSnippetWithConstraintsAndFields(
-//		UploadTeamRequest.class,
-//		fieldWithPath("imageUrl").type(JsonFieldType.STRING).description("업로드가 완료된 이미지 링크")
-//	);
-
-	Snippet UPLOAD_TEAM_RESPONSE_SNIPPET = createResponseSnippetWithFields(
-		responseFieldsOfCommon(),
-		responseFieldsOfObjectWithConstraintsAndFields(
-			UploadTeamResponse.class,
-			fieldWithPath("teamId").type(JsonFieldType.NUMBER).description("팀 아이디"),
-			fieldWithPath("teamName").type(JsonFieldType.STRING).description("팀 이름(UUID)"),
-			fieldWithPath("numberOfTeam").type(JsonFieldType.NUMBER).description("팀 구성원 수"),
-			fieldWithPath("submit").type(JsonFieldType.NUMBER).description("이미지를 제출한 구성원 수")
-		)
-	);
 	Snippet TEAM_RESULT_RESPONSE_SNIPPET =  createResponseSnippetWithFields(
 		responseFieldsOfCommon(),
 		responseFieldsOfObjectWithConstraintsAndFields(
@@ -62,7 +45,6 @@ public interface TeamSnippet {
 			fieldWithPath("members[]").type(JsonFieldType.ARRAY).description("팀원 개별 정보"),
 			fieldWithPath("members[].memberId").type(JsonFieldType.NUMBER).description("팀원 ID"),
 			fieldWithPath("members[].nickName").type(JsonFieldType.STRING).description("팀원 이름"),
-			fieldWithPath("members[].imageUrl").type(JsonFieldType.STRING).description("팀원 이미지 URL"),
 			fieldWithPath("members[].submit").type(JsonFieldType.BOOLEAN).description("팀원 이미지 업로드 현황"),
 			fieldWithPath("resultImageUrl").type(JsonFieldType.STRING).description("결과 이미지 URL"),
 			fieldWithPath("timeResponses").type(JsonFieldType.OBJECT).description("N분 단위의 시간들"),

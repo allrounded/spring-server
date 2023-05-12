@@ -13,7 +13,6 @@ public class TeamResultRequest {
 
 	private Long teamId;
 	private String teamName;
-	private String resultImageUrl;
 	private ResultTimeResponses timeResponses;
 
 }

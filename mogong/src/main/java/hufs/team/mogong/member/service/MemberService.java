@@ -1,7 +1,7 @@
 package hufs.team.mogong.member.service;
 
 import hufs.team.mogong.image.MemberImage;
-import hufs.team.mogong.image.exception.NotFoundImageException;
+import hufs.team.mogong.image.exception.NotFoundMemberImageException;
 import hufs.team.mogong.image.repository.MemberImageRepository;
 import hufs.team.mogong.image.service.ImageUploadService;
 import hufs.team.mogong.image.service.dto.PreSignedUrlRequest;
@@ -16,14 +16,12 @@ import hufs.team.mogong.team.Team;
 import hufs.team.mogong.team.exception.NotFoundTeamIdException;
 import hufs.team.mogong.team.repository.TeamRepository;
 import hufs.team.mogong.team.service.dto.response.ImageServerTimeResponses;
-import hufs.team.mogong.team.service.dto.response.TimeResponses;
 import hufs.team.mogong.team.service.dto.response.TimeTableResponse;
 import hufs.team.mogong.timetable.TimeTableV1;
 import hufs.team.mogong.timetable.TimeTableV2;
 import hufs.team.mogong.timetable.repository.TimeTableV1Repository;
 import hufs.team.mogong.timetable.repository.TimeTableV2Repository;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
@@ -93,7 +91,7 @@ public class MemberService {
 		log.debug("[MEMBER] 조회 성공 | memberId={}", member.getMemberId());
 
 		MemberImage image = memberImageRepository.findByMember_MemberId(memberId)
-			.orElseThrow(NotFoundImageException::new);
+			.orElseThrow(NotFoundMemberImageException::new);
 		log.debug("[IMAGE] 조회 성공 | imageId={}", image.getId());
 
 		return new MemberResponse(
@@ -156,7 +154,7 @@ public class MemberService {
 				team.getNumberOfMember(),
 				team.getNumberOfSubmit(),
 				member.getNickName(),
-				image.getUrl(),
+				image.getUrl().split("\\?")[0],
 				Boolean.TRUE);
 		}
 
@@ -213,8 +211,8 @@ public class MemberService {
 		return restTemplate.postForObject(
 			imageServerUrl,
 			new MemberImageUploadRequest(team.getTeamName(),
-//				"https://mogong.s3.ap-northeast-2.amazonaws.com/image/sample_3.JPG"
-				image.getUrl()
+				"https://mogong.s3.ap-northeast-2.amazonaws.com/image/sample_3.JPG"
+//				image.getUrl().split("\\?")[0]
 			),
 			ImageServerTimeResponses.class,
 			team.getTeamId(), member.getMemberId()
@@ -233,6 +231,6 @@ public class MemberService {
 
 	private MemberImage findImageByMemberId(Long memberId) {
 		return memberImageRepository.findByMember_MemberId(memberId)
-			.orElseThrow(NotFoundImageException::new);
+			.orElseThrow(NotFoundMemberImageException::new);
 	}
 }

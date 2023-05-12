@@ -10,7 +10,8 @@ public enum ErrorCodeAndMessages implements CodeAndMessages {
 	 * Image
 	 */
 	GENERATE_IMAGE_PRESIGNED_URL_FAILED("I-F001", "이미지 PreSigned URL 생성에 실패했습니다."),
-	NOT_FOUND_IMAGE("I-F002", "이미지 조회에 실패했습니다."),
+	NOT_FOUND_MEMBER_IMAGE("I-F002", "팀원 이미지 조회에 실패했습니다."),
+	NOT_FOUND_TEAM_IMAGE("I-F003", "팀 이미지 조회에 실패했습니다."),
 
 	/**
 	 * Team

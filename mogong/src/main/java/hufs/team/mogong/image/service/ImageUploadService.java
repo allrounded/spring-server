@@ -3,6 +3,9 @@ package hufs.team.mogong.image.service;
 import static com.amazonaws.HttpMethod.PUT;
 
 import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.Headers;
+import com.amazonaws.services.s3.model.CannedAccessControlList;
+import com.amazonaws.services.s3.model.GeneratePresignedUrlRequest;
 import hufs.team.mogong.image.service.dto.PreSignedUrlRequest;
 import hufs.team.mogong.image.service.dto.PreSignedUrlResponse;
 import java.util.Date;
@@ -16,7 +19,7 @@ import org.springframework.stereotype.Service;
 public class ImageUploadService {
 
 	private static final String IMAGE_DIR = "image/";
-	private static final long SET_TIME = 1000000L * 60 * 60;
+	private static final long SET_TIME = 100000L * 60 * 60;
 
 	private final AmazonS3 amazonS3;
 
@@ -47,10 +50,28 @@ public class ImageUploadService {
 			fileName.substring(imagePath.length()));
 	}
 
+	public PreSignedUrlResponse generateTeamUrl(PreSignedUrlRequest request, String imagePath) {
+		String extension = request.getExtension();
+		log.debug("IMAGE FILE EXTENSION = {}", extension);
+		String fileName = imagePath + extension;
+		log.debug("IMAGE FILE NAME = {}", fileName.substring(imagePath.length()));
+		return new PreSignedUrlResponse(
+			getPreSignedUrl(fileName),
+			fileName.substring(imagePath.length()));
+	}
+
 	private String getPreSignedUrl(String fileName) {
 		Date exp = new Date();
 		exp.setTime(exp.getTime() + SET_TIME);
 		log.debug("Pre-signed URL 만료 시간 = {}", exp);
-		return amazonS3.generatePresignedUrl(bucket, fileName, exp, PUT).toString();
+		GeneratePresignedUrlRequest generatePresignedUrlRequest = new GeneratePresignedUrlRequest(
+			bucket, fileName)
+			.withMethod(PUT)
+			.withExpiration(exp);
+		generatePresignedUrlRequest.addRequestParameter(
+			Headers.S3_CANNED_ACL,
+			CannedAccessControlList.PublicRead.toString());
+
+		return amazonS3.generatePresignedUrl(generatePresignedUrlRequest).toString();
 	}
 }

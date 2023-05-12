@@ -1,15 +1,14 @@
 package hufs.team.mogong.team.service;
 
-import hufs.team.mogong.image.MemberImage;
 import hufs.team.mogong.image.TeamImage;
-import hufs.team.mogong.image.exception.NotFoundImageException;
+import hufs.team.mogong.image.exception.NotFoundTeamImageException;
 import hufs.team.mogong.image.repository.MemberImageRepository;
 import hufs.team.mogong.image.repository.TeamImageRepository;
 import hufs.team.mogong.image.service.ImageUploadService;
 import hufs.team.mogong.image.service.dto.PreSignedUrlRequest;
 import hufs.team.mogong.member.Member;
 import hufs.team.mogong.member.repository.MemberRepository;
-import hufs.team.mogong.member.service.dto.response.MemberResponse;
+import hufs.team.mogong.member.service.dto.response.MemberResultResponse;
 import hufs.team.mogong.team.DayOfWeek;
 import hufs.team.mogong.team.Team;
 import hufs.team.mogong.team.exception.ImageServerError;
@@ -18,11 +17,10 @@ import hufs.team.mogong.team.exception.NotFoundTeamIdException;
 import hufs.team.mogong.team.exception.NotFoundTeamNameException;
 import hufs.team.mogong.team.repository.TeamRepository;
 import hufs.team.mogong.team.service.dto.request.CreateTeamRequest;
-import hufs.team.mogong.team.service.dto.response.ImageServerTimeResponses;
-import hufs.team.mogong.team.service.dto.response.ResultTimeResponses;
 import hufs.team.mogong.team.service.dto.request.TeamResultRequest;
 import hufs.team.mogong.team.service.dto.response.CreateTeamResponse;
 import hufs.team.mogong.team.service.dto.response.ImageServerResultResponse;
+import hufs.team.mogong.team.service.dto.response.ResultTimeResponses;
 import hufs.team.mogong.team.service.dto.response.TeamIdResponse;
 import hufs.team.mogong.team.service.dto.response.TeamResponse;
 import hufs.team.mogong.team.service.dto.response.TimeResponses;
@@ -37,7 +35,6 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
@@ -51,7 +48,6 @@ public class TeamService {
 	private static final int DIVISOR_MINUTES = 30;
 	private static final int DAY_OF_WEEK = 7;
 	private static final int TIME_LENGTH = 30;
-	private static final int AUTH_CODE_LENGTH = 4;
 	private static final String JPEG = ".jpeg";
 	private static final String DEFAULT_TEAM_IMAGE_PATH = "image/teams/";
 	private static final int ZERO_NUMERIC_VALUE = Character.getNumericValue('0');
@@ -95,9 +91,7 @@ public class TeamService {
 				request.getNumberOfTeam(),
 				ZERO,
 				request.getAuthCode()));
-		TeamImage image = teamImageRepository.save(
-			new TeamImage(team, getPreSignedUrl(team.getTeamId()))
-		);
+		TeamImage image = teamImageRepository.save(new TeamImage(team, getPreSignedUrl(team)));
 
 		log.debug("[SAVE TEAM] teamId ={}, name ={}, numberOfMember = {}, imageUrl={}",
 			team.getTeamId(), team.getTeamName(), team.getNumberOfMember(), image.getUrl());
@@ -111,9 +105,10 @@ public class TeamService {
 			image.getUrl());
 	}
 
-	private String getPreSignedUrl(long teamId) {
+	private String getPreSignedUrl(Team team) {
 		return imageUploadService
-			.generate(new PreSignedUrlRequest(JPEG), DEFAULT_TEAM_IMAGE_PATH+teamId+"/")
+			.generateTeamUrl(new PreSignedUrlRequest(JPEG),
+				DEFAULT_TEAM_IMAGE_PATH+team.getTeamId()+"/"+team.getTeamName())
 			.getPreSignedUrl();
 	}
 
@@ -131,9 +126,9 @@ public class TeamService {
 		TeamImage teamImage = findTeamImageByTeamId(teamId);
 		List<Member> members = memberRepository.findAllByTeam_TeamId(teamId);
 
-		List<MemberResponse> memberResponses = members.stream()
-			.map(m -> new MemberResponse(m.getMemberId(), m.getNickName(),
-				findMemberImageByMemberId(m.getMemberId()).getUrl(), m.isSubmit()))
+		List<MemberResultResponse> memberResultResponses = members.stream()
+			.map(m -> {log.debug("MEMBER ID={}의 이미지 조회", m.getMemberId());
+				return new MemberResultResponse(m.getMemberId(), m.getNickName(), m.isSubmit());})
 			.collect(Collectors.toList());
 
 		TimeResponses timeResponses = getTeamResult(team, members, teamImage, isV1, authCode);
@@ -143,7 +138,7 @@ public class TeamService {
 			team.getTeamName(),
 			team.getNumberOfMember(),
 			team.getNumberOfSubmit(),
-			memberResponses,
+			memberResultResponses,
 			teamImage.getUrl().split("\\?")[0],
 			timeResponses);
 	}
@@ -152,14 +147,13 @@ public class TeamService {
 		boolean isV1, String authCode) {
 		if (isV1) {
 			log.debug("[V1 Result]");
-			return getTeamResultV1(team, members, teamImage, authCode);
+			return getTeamResultV1(team, members, authCode);
 		}
 		log.debug("[V2 Result]");
-		return getTeamResultV2(team, members, teamImage, authCode);
+		return getTeamResultV2(team, members, authCode);
 	}
 
-	private TimeResponses getTeamResultV1(Team team, List<Member> members, TeamImage teamImage,
-		String authCode) {
+	private TimeResponses getTeamResultV1(Team team, List<Member> members, String authCode) {
 		if (checkSubmit(team.getNumberOfMember(), team.getNumberOfSubmit())) {
 			int[][] times = new int[DAY_OF_WEEK][TIME_LENGTH];
 			for (Member member : members) {
@@ -167,7 +161,7 @@ public class TeamService {
 				timeTable.accumulate(times, TIME_LENGTH);
 			}
 			TimeTableResponse[] timeTableResponses = getTimeTables(times);
-			ImageServerResultResponse resultResponse = requestTeamResult(getTeamResultRequest(team, teamImage, timeTableResponses));
+			ImageServerResultResponse resultResponse = requestTeamResult(getTeamResultRequest(team, timeTableResponses));
 			if (resultResponse == null) {
 				throw new ImageServerError();
 			}
@@ -179,8 +173,7 @@ public class TeamService {
 		return null;
 	}
 
-	private TimeResponses getTeamResultV2(Team team, List<Member> members, TeamImage teamImage,
-		String authCode) {
+	private TimeResponses getTeamResultV2(Team team, List<Member> members, String authCode) {
 		if (checkSubmit(team.getNumberOfMember(), team.getNumberOfSubmit())) {
 			long[] times = new long[DAY_OF_WEEK];
 			for (Member member : members) {
@@ -189,7 +182,7 @@ public class TeamService {
 			}
 			int[][] renewalTimes = changeTimesToIntArray(times);
 			TimeTableResponse[] timeTableResponses = getTimeTables(renewalTimes);
-			ImageServerResultResponse resultResponse = requestTeamResult(getTeamResultRequest(team, teamImage, timeTableResponses));
+			ImageServerResultResponse resultResponse = requestTeamResult(getTeamResultRequest(team, timeTableResponses));
 			if (resultResponse == null) {
 				throw new ImageServerError();
 			}
@@ -227,11 +220,10 @@ public class TeamService {
 		return timeTables;
 	}
 
-	private TeamResultRequest getTeamResultRequest(Team team, TeamImage image, TimeTableResponse[] timeTableResponses) {
+	private TeamResultRequest getTeamResultRequest(Team team, TimeTableResponse[] timeTableResponses) {
 		return new TeamResultRequest(
 			team.getTeamId(),
 			team.getTeamName(),
-			image.getUrl(),
 			new ResultTimeResponses(DIVISOR_MINUTES, timeTableResponses)
 		);
 	}
@@ -274,11 +266,6 @@ public class TeamService {
 			.orElseThrow(() -> new NotCompletedSubmit(team.getNumberOfMember(), team.getNumberOfSubmit()));
 	}
 
-	private MemberImage findMemberImageByMemberId(Long memberId) {
-		return memberImageRepository.findByMember_MemberId(memberId)
-			.orElseThrow(NotFoundImageException::new);
-	}
-
 	private Team findTeamByTeamId(Long teamId){
 		return teamRepository.findById(teamId)
 			.orElseThrow(NotFoundTeamIdException::new);
@@ -286,6 +273,6 @@ public class TeamService {
 
 	private TeamImage findTeamImageByTeamId(Long teamId) {
 		return teamImageRepository.findByTeam_TeamId(teamId)
-			.orElseThrow(NotFoundImageException::new);
+			.orElseThrow(NotFoundTeamImageException::new);
 	}
 }
