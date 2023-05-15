@@ -46,7 +46,7 @@ operation::find_team_test/result_team_success[snippets='http-response,response-b
 
 === 3. 팀 결과 조회(팀 제출 수 미충족 & auth_code 미입력)
 
-API : `GET /teams/{teamId}/results`
+API : `GET /teams/{teamId}/v2`
 
 ==== 200 OK
 
@@ -60,7 +60,7 @@ operation::find_team_test/result_team_fail[snippets='http-response,response-body
 
 === 4. 팀 결과 조회(팀 제출 수 미충족 & 옳은 auth_code 입력)
 
-API : `GET /teams/{teamId}/results?auth_code={authCode}`
+API : `GET /teams/{teamId}/v2?auth_code={authCode}`
 
 ==== 200 OK
 
@@ -74,7 +74,7 @@ operation::find_team_test/result_team_with_auth_code[snippets='http-response,res
 
 === 5. 팀 결과 조회(팀 제출 수 미충족 & 옳지 않은 auth_code 입력)
 
-API : `GET /teams/{teamId}/results?auth_code={authCode}`
+API : `GET /teams/{teamId}/v2?auth_code={authCode}`
 
 ==== 200 OK
 
