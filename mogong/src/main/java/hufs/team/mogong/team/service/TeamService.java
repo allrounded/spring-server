@@ -31,6 +31,7 @@ import hufs.team.mogong.timetable.repository.TimeTableV1Repository;
 import hufs.team.mogong.timetable.repository.TimeTableV2Repository;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
@@ -131,7 +132,7 @@ public class TeamService {
 				return new MemberResultResponse(m.getMemberId(), m.getNickName(), m.isSubmit());})
 			.collect(Collectors.toList());
 
-		TimeResponses timeResponses = getTeamResult(team, members, teamImage, isV1, authCode);
+		TimeResponses timeResponses = getTeamResult(team, members, isV1, authCode);
 
 		return new TeamResponse(
 			team.getTeamId(),
@@ -143,8 +144,7 @@ public class TeamService {
 			timeResponses);
 	}
 
-	private TimeResponses getTeamResult(Team team, List<Member> members, TeamImage teamImage,
-		boolean isV1, String authCode) {
+	private TimeResponses getTeamResult(Team team, List<Member> members, boolean isV1, String authCode) {
 		if (isV1) {
 			log.debug("[V1 Result]");
 			return getTeamResultV1(team, members, authCode);
@@ -154,7 +154,8 @@ public class TeamService {
 	}
 
 	private TimeResponses getTeamResultV1(Team team, List<Member> members, String authCode) {
-		if (checkSubmit(team.getNumberOfMember(), team.getNumberOfSubmit())) {
+		if (checkSubmit(team.getNumberOfMember(), team.getNumberOfSubmit())
+			|| validateAuthCode(team, authCode)) {
 			int[][] times = new int[DAY_OF_WEEK][TIME_LENGTH];
 			for (Member member : members) {
 				TimeTableV1 timeTable = findTimeTableV1ByMemberId(member, team, authCode);
@@ -170,11 +171,12 @@ public class TeamService {
 			return new TimeResponses(DIVISOR_MINUTES, getTimeTables(times));
 		}
 
-		return null;
+		throw new NotCompletedSubmit(team.getNumberOfMember(), team.getNumberOfSubmit());
 	}
 
 	private TimeResponses getTeamResultV2(Team team, List<Member> members, String authCode) {
-		if (checkSubmit(team.getNumberOfMember(), team.getNumberOfSubmit())) {
+		if (checkSubmit(team.getNumberOfMember(), team.getNumberOfSubmit())
+			|| validateAuthCode(team, authCode)) {
 			long[] times = new long[DAY_OF_WEEK];
 			for (Member member : members) {
 				TimeTableV2 timeTable = findTimeTableV2ByMemberId(member, team, authCode);
@@ -191,7 +193,7 @@ public class TeamService {
 			return new TimeResponses(DIVISOR_MINUTES, getTimeTables(renewalTimes));
 		}
 
-		return null;
+		throw new NotCompletedSubmit(team.getNumberOfMember(), team.getNumberOfSubmit());
 	}
 
 	private int[][] changeTimesToIntArray(long[] times) {
@@ -261,7 +263,6 @@ public class TeamService {
 			return timeTableV2Repository.findByMember_MemberId(member.getMemberId())
 				.orElse(TimeTableV2.getDefault(member));
 		}
-
 		return timeTableV2Repository.findByMember_MemberId(member.getMemberId())
 			.orElseThrow(() -> new NotCompletedSubmit(team.getNumberOfMember(), team.getNumberOfSubmit()));
 	}
