@@ -31,8 +31,8 @@ jobs:
       - name: Spring - Grant execute permission for gradlew
         run: chmod +x gradlew
       
-      - name: Spring-application build 
-        run: ./gradlew build
+      - name: Spring-application clean build 
+        run: ./gradlew clean build
       
        # Docker
       - name: Docker - Setup Docker
