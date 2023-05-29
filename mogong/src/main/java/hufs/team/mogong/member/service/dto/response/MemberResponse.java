@@ -13,4 +13,6 @@ public class MemberResponse {
 	private final String imageUrl;
 	private final boolean submit;
 
+	private final boolean leader;
+
 }

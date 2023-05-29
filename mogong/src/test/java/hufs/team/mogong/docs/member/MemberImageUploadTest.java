@@ -62,7 +62,7 @@ class MemberImageUploadTest extends InitDocumentationTest {
 		teamImageRepository.save(new TeamImage(team, "https://aws.s3.dummy-img.jpeg"));
 		teamId = team.getTeamId();
 
-		member = memberRepository.save(new Member("dummy_nickname", team));
+		member = memberRepository.save(new Member("dummy_nickname", team, true));
 		memberId = member.getMemberId();
 		memberImageRepository.save(new MemberImage(member, "https://aws.s3.dummy-img/teams/1/dummy_img.jpeg"));
 

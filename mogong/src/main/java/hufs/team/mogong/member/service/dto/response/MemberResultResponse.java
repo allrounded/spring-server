@@ -12,5 +12,6 @@ public class MemberResultResponse {
 	private final Long memberId;
 	private final String nickName;
 	private final boolean submit;
+	private final boolean leader;
 
 }

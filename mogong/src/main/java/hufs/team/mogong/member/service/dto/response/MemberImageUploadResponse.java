@@ -14,4 +14,5 @@ public class MemberImageUploadResponse {
 	private final String nickName;
 	private final String imageUrl;
 	private final boolean submit;
+	private final boolean leader;
 }

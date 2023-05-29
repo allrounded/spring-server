@@ -46,6 +46,7 @@ public interface TeamSnippet {
 			fieldWithPath("members[].memberId").type(JsonFieldType.NUMBER).description("팀원 ID"),
 			fieldWithPath("members[].nickName").type(JsonFieldType.STRING).description("팀원 이름"),
 			fieldWithPath("members[].submit").type(JsonFieldType.BOOLEAN).description("팀원 이미지 업로드 현황"),
+			fieldWithPath("members[].leader").type(JsonFieldType.BOOLEAN).description("팀장 여부"),
 			fieldWithPath("resultImageUrl").type(JsonFieldType.STRING).description("결과 이미지 URL"),
 			fieldWithPath("timeResponses").type(JsonFieldType.OBJECT).description("N분 단위의 시간들"),
 			fieldWithPath("timeResponses.divisorMinutes").type(JsonFieldType.NUMBER).description("시간 단위 (default : 30분)"),

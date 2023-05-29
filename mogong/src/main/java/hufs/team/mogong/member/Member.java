@@ -30,10 +30,12 @@ public class Member {
 	private Team team;
 
 	private boolean submit  = false;
+	private boolean leader = false;
 
-	public Member(String nickName, Team team) {
+	public Member(String nickName, Team team, boolean leader) {
 		this.nickName = nickName;
 		this.team = team;
+		this.leader = leader;
 	}
 
 	public void submit() {
