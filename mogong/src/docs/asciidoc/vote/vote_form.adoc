@@ -1,0 +1,45 @@
+=== 전체 목록 (/votes/teams/{teamId}/forms)
+[cols=2*]
+|===
+| 기능 | API
+
+| <<1. 투표 폼 생성>> | [POST] /votes/teams/{teamId}/forms
+| <<2. 투표 폼 조회>> | [GET] /votes/teams/{teamId}/forms
+
+|===
+
+=== 1. 투표 폼 생성
+
+API : `POST /votes/teams/{teamId}/forms`
+
+Request Body 로 divisorMinutes(분 단위), duplicate(중복투표 허용 여부)를 담아 보내야 합니다.
+
+==== 200 OK
+
+===== Request
+
+operation::create_vote_form_test/create_team_vote_success[snippets='http-request,request-body,request-fields']
+
+===== Response (투표 폼 생성 성공)
+
+operation::create_vote_form_test/create_team_vote_success[snippets='http-response,response-body,response-fields']
+
+===== Response (투표 폼 생성 실패)
+
+operation::create_vote_form_test/create_team_vote_fail[snippets='http-response,response-body,response-fields']
+
+
+=== 2. 투표 폼 조회
+
+API : `GET /votes/teams/{teamId}/forms`
+
+==== 200 OK
+
+===== Request
+
+operation::find_vote_form_test/find_team_vote_success[snippets='http-request']
+
+===== Response
+
+operation::find_vote_form_test/find_team_vote_success[snippets='http-response,response-body,response-fields']
+

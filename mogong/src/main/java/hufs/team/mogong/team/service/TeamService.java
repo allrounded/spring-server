@@ -18,20 +18,20 @@ import hufs.team.mogong.team.exception.NotFoundTeamNameException;
 import hufs.team.mogong.team.repository.TeamRepository;
 import hufs.team.mogong.team.service.dto.request.CreateTeamRequest;
 import hufs.team.mogong.team.service.dto.request.TeamResultRequest;
+import hufs.team.mogong.team.service.dto.request.TimeRequests;
+import hufs.team.mogong.team.service.dto.request.TimeTableRequest;
 import hufs.team.mogong.team.service.dto.response.CreateTeamResponse;
 import hufs.team.mogong.team.service.dto.response.ImageServerResultResponse;
-import hufs.team.mogong.team.service.dto.response.ResultTimeResponses;
 import hufs.team.mogong.team.service.dto.response.TeamIdResponse;
 import hufs.team.mogong.team.service.dto.response.TeamResponse;
 import hufs.team.mogong.team.service.dto.response.TimeResponses;
 import hufs.team.mogong.team.service.dto.response.TimeTableResponse;
-import hufs.team.mogong.timetable.TimeTableV1;
-import hufs.team.mogong.timetable.TimeTableV2;
+import hufs.team.mogong.timetable.MemberTimeTableV1;
+import hufs.team.mogong.timetable.MemberTimeTableV2;
 import hufs.team.mogong.timetable.repository.TimeTableV1Repository;
-import hufs.team.mogong.timetable.repository.TimeTableV2Repository;
+import hufs.team.mogong.timetable.repository.MemberTimeTableV2Repository;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
@@ -63,7 +63,7 @@ public class TeamService {
 	private final TeamImageRepository teamImageRepository;
 	private final MemberRepository memberRepository;
 	private final TimeTableV1Repository timeTableV1Repository;
-	private final TimeTableV2Repository timeTableV2Repository;
+	private final MemberTimeTableV2Repository memberTimeTableV2Repository;
 
 	private final RestTemplate restTemplate;
 	private final ImageUploadService imageUploadService;
@@ -71,14 +71,14 @@ public class TeamService {
 
 	public TeamService(TeamRepository teamRepository, MemberImageRepository memberImageRepository,
 		TeamImageRepository teamImageRepository, MemberRepository memberRepository,
-		TimeTableV1Repository timeTableV1Repository, TimeTableV2Repository timeTableV2Repository,
+		TimeTableV1Repository timeTableV1Repository, MemberTimeTableV2Repository memberTimeTableV2Repository,
 		RestTemplate restTemplate, ImageUploadService imageUploadService) {
 		this.teamRepository = teamRepository;
 		this.memberImageRepository = memberImageRepository;
 		this.teamImageRepository = teamImageRepository;
 		this.memberRepository = memberRepository;
 		this.timeTableV1Repository = timeTableV1Repository;
-		this.timeTableV2Repository = timeTableV2Repository;
+		this.memberTimeTableV2Repository = memberTimeTableV2Repository;
 		this.restTemplate = restTemplate;
 		this.imageUploadService = imageUploadService;
 	}
@@ -158,17 +158,17 @@ public class TeamService {
 			|| validateAuthCode(team, authCode)) {
 			int[][] times = new int[DAY_OF_WEEK][TIME_LENGTH];
 			for (Member member : members) {
-				TimeTableV1 timeTable = findTimeTableV1ByMemberId(member, team, authCode);
+				MemberTimeTableV1 timeTable = findTimeTableV1ByMemberId(member, team, authCode);
 				timeTable.accumulate(times, TIME_LENGTH);
 			}
-			TimeTableResponse[] timeTableResponses = getTimeTables(times);
+			TimeTableRequest[] timeTableResponses = getTimeTableRequests(times);
 			ImageServerResultResponse resultResponse = requestTeamResult(getTeamResultRequest(team, timeTableResponses));
 			if (resultResponse == null) {
 				throw new ImageServerError();
 			}
 			resultResponse.checkStatusCode();
 
-			return new TimeResponses(DIVISOR_MINUTES, getTimeTables(times));
+			return new TimeResponses(DIVISOR_MINUTES, getTimeTableResponses(times));
 		}
 
 		throw new NotCompletedSubmit(team.getNumberOfMember(), team.getNumberOfSubmit());
@@ -179,18 +179,18 @@ public class TeamService {
 			|| validateAuthCode(team, authCode)) {
 			long[] times = new long[DAY_OF_WEEK];
 			for (Member member : members) {
-				TimeTableV2 timeTable = findTimeTableV2ByMemberId(member, team, authCode);
+				MemberTimeTableV2 timeTable = findTimeTableV2ByMemberId(member, team, authCode);
 				timeTable.accumulate(times);
 			}
 			int[][] renewalTimes = changeTimesToIntArray(times);
-			TimeTableResponse[] timeTableResponses = getTimeTables(renewalTimes);
+			TimeTableRequest[] timeTableResponses = getTimeTableRequests(renewalTimes);
 			ImageServerResultResponse resultResponse = requestTeamResult(getTeamResultRequest(team, timeTableResponses));
 			if (resultResponse == null) {
 				throw new ImageServerError();
 			}
 			resultResponse.checkStatusCode();
 
-			return new TimeResponses(DIVISOR_MINUTES, getTimeTables(renewalTimes));
+			return new TimeResponses(DIVISOR_MINUTES, getTimeTableResponses(renewalTimes));
 		}
 
 		throw new NotCompletedSubmit(team.getNumberOfMember(), team.getNumberOfSubmit());
@@ -210,7 +210,19 @@ public class TeamService {
 		return renewalTimes;
 	}
 
-	private TimeTableResponse[] getTimeTables(int[][] times) {
+	private TimeTableRequest[] getTimeTableRequests(int[][] times) {
+		TimeTableRequest[] timeTables = new TimeTableRequest[DAY_OF_WEEK];
+		timeTables[0] = new TimeTableRequest(DayOfWeek.MON, times[0]);
+		timeTables[1] = new TimeTableRequest(DayOfWeek.TUE, times[1]);
+		timeTables[2] = new TimeTableRequest(DayOfWeek.WED, times[2]);
+		timeTables[3] = new TimeTableRequest(DayOfWeek.THU, times[3]);
+		timeTables[4] = new TimeTableRequest(DayOfWeek.FRI, times[4]);
+		timeTables[5] = new TimeTableRequest(DayOfWeek.SAT, times[5]);
+		timeTables[6] = new TimeTableRequest(DayOfWeek.SUN, times[6]);
+		return timeTables;
+	}
+
+	private TimeTableResponse[] getTimeTableResponses(int[][] times) {
 		TimeTableResponse[] timeTables = new TimeTableResponse[DAY_OF_WEEK];
 		timeTables[0] = new TimeTableResponse(DayOfWeek.MON, times[0]);
 		timeTables[1] = new TimeTableResponse(DayOfWeek.TUE, times[1]);
@@ -222,11 +234,11 @@ public class TeamService {
 		return timeTables;
 	}
 
-	private TeamResultRequest getTeamResultRequest(Team team, TimeTableResponse[] timeTableResponses) {
+	private TeamResultRequest getTeamResultRequest(Team team, TimeTableRequest[] timeTableRequests) {
 		return new TeamResultRequest(
 			team.getTeamId(),
 			team.getTeamName(),
-			new ResultTimeResponses(DIVISOR_MINUTES, timeTableResponses)
+			new TimeRequests(DIVISOR_MINUTES, timeTableRequests)
 		);
 	}
 
@@ -248,22 +260,22 @@ public class TeamService {
 		return Objects.equals(team.getAuthCode(), authCode);
 	}
 
-	private TimeTableV1 findTimeTableV1ByMemberId(Member member, Team team, String authCode) {
+	private MemberTimeTableV1 findTimeTableV1ByMemberId(Member member, Team team, String authCode) {
 		if (validateAuthCode(team, authCode)) {
 			return timeTableV1Repository.findByMember_MemberId(member.getMemberId())
-				.orElse(TimeTableV1.getDefault(member, TIME_LENGTH));
+				.orElse(MemberTimeTableV1.getDefault(member, TIME_LENGTH));
 		}
 
 		return timeTableV1Repository.findByMember_MemberId(member.getMemberId())
 			.orElseThrow(() -> new NotCompletedSubmit(team.getNumberOfMember(), team.getNumberOfSubmit()));
 	}
 
-	private TimeTableV2 findTimeTableV2ByMemberId(Member member, Team team, String authCode) {
+	private MemberTimeTableV2 findTimeTableV2ByMemberId(Member member, Team team, String authCode) {
 		if (validateAuthCode(team, authCode)) {
-			return timeTableV2Repository.findByMember_MemberId(member.getMemberId())
-				.orElse(TimeTableV2.getDefault(member));
+			return memberTimeTableV2Repository.findByMember_MemberId(member.getMemberId())
+				.orElse(MemberTimeTableV2.getDefault(member));
 		}
-		return timeTableV2Repository.findByMember_MemberId(member.getMemberId())
+		return memberTimeTableV2Repository.findByMember_MemberId(member.getMemberId())
 			.orElseThrow(() -> new NotCompletedSubmit(team.getNumberOfMember(), team.getNumberOfSubmit()));
 	}
 

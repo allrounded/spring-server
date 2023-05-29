@@ -15,5 +15,8 @@ include::{docdir}/team/team.adoc[]
 
 include::{docdir}/member/member.adoc[]
 
+== 투표 폼 API
+
+include::{docdir}/vote/vote_form.adoc[]
 
 
