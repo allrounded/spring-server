@@ -18,6 +18,7 @@ import hufs.team.mogong.team.Team;
 import hufs.team.mogong.team.repository.TeamRepository;
 import hufs.team.mogong.timetable.MemberTimeTableV2;
 import hufs.team.mogong.timetable.repository.MemberTimeTableV2Repository;
+import hufs.team.mogong.timetable.repository.TeamTimeTableRepository;
 import hufs.team.mogong.tool.RestTemplateMocks;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -55,6 +56,9 @@ class FindTeamTest extends InitDocumentationTest {
 	@Autowired
 	private MemberTimeTableV2Repository memberTimeTableV2Repository;
 
+	@Autowired
+	private TeamTimeTableRepository teamTimeTableRepository;
+
 	private Long teamId;
 	private Team team;
 	private Member member1;
@@ -66,6 +70,7 @@ class FindTeamTest extends InitDocumentationTest {
 		memberTimeTableV2Repository.deleteAllInBatch();
 		memberImageRepository.deleteAllInBatch();
 		memberRepository.deleteAllInBatch();
+		teamTimeTableRepository.deleteAllInBatch();
 		teamImageRepository.deleteAllInBatch();
 		teamRepository.deleteAllInBatch();
 
