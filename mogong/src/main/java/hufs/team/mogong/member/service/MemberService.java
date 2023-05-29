@@ -67,7 +67,8 @@ public class MemberService {
 
 		Team team = findTeamByTeamId(teamId);
 
-		Member savedMember = memberRepository.save(new Member(request.getNickName(), team));
+		Member savedMember = memberRepository.save(
+			new Member(request.getNickName(), team, request.isLeader()));
 		log.debug("[MEMBER CREATE] MEMBER SAVE 성공");
 
 		MemberImage savedImage = memberImageRepository.save(new MemberImage(savedMember, getPreSignedUrl(teamId)));
@@ -77,7 +78,8 @@ public class MemberService {
 			savedMember.getMemberId(),
 			savedMember.getNickName(),
 			savedImage.getUrl(),
-			savedMember.isSubmit());
+			savedMember.isSubmit(),
+			savedMember.isLeader());
 	}
 
 	private String getPreSignedUrl(long teamId) {
@@ -98,7 +100,9 @@ public class MemberService {
 			member.getMemberId(),
 			member.getNickName(),
 			image.getUrl(),
-			member.isSubmit());
+			member.isSubmit(),
+			member.isLeader()
+		);
 	}
 
 	@Transactional
@@ -121,7 +125,8 @@ public class MemberService {
 				team.getNumberOfSubmit(),
 				member.getNickName(),
 				image.getUrl(),
-				Boolean.TRUE);
+				Boolean.TRUE,
+				member.isLeader());
 		}
 
 		timeTableV1.get().update(times);
@@ -132,7 +137,8 @@ public class MemberService {
 			team.getNumberOfSubmit(),
 			member.getNickName(),
 			image.getUrl(),
-			Boolean.TRUE);
+			Boolean.TRUE,
+			member.isLeader());
 	}
 
 	@Transactional
@@ -155,7 +161,8 @@ public class MemberService {
 				team.getNumberOfSubmit(),
 				member.getNickName(),
 				image.getUrl().split("\\?")[0],
-				Boolean.TRUE);
+				Boolean.TRUE,
+				member.isLeader());
 		}
 
 		timeTableV2.get().update(times);
@@ -166,7 +173,8 @@ public class MemberService {
 			team.getNumberOfSubmit(),
 			member.getNickName(),
 			image.getUrl(),
-			Boolean.TRUE);
+			Boolean.TRUE,
+			member.isLeader());
 	}
 
 	private List<String> requestImageProcessingV1(Team team, Member member, MemberImage image) {
@@ -190,7 +198,7 @@ public class MemberService {
 
 	private List<Long> requestImageProcessingV2(Team team, Member member, MemberImage image) {
 		ImageServerTimeResponses timeResponses = getTimeResponses(team, member, image);
-		log.debug(timeResponses.toString());
+		log.debug("TIME RESPONSES={}", timeResponses.toString());
 		TimeTableResponse[] times = timeResponses.getTimes();
 		List<Long> timeResults = new ArrayList<>();
 		StringBuilder sb = new StringBuilder();

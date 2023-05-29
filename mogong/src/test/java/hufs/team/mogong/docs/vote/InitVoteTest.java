@@ -82,8 +82,8 @@ public abstract class InitVoteTest extends InitDocumentationTest {
 	}
 
 	protected void saveMember() {
-		member1 = memberRepository.save(new Member("dummy_nickname-1", team));
-		member2 = memberRepository.save(new Member("dummy_nickname-2", team));
+		member1 = memberRepository.save(new Member("dummy_nickname-1", team, true));
+		member2 = memberRepository.save(new Member("dummy_nickname-2", team, false));
 		memberImageRepository.save(new MemberImage(member1,
 			"https://mogong.s3.ap-northeast-2.amazonaws.com/image/sample_2.JPG"));
 		memberImageRepository.save(new MemberImage(member2,

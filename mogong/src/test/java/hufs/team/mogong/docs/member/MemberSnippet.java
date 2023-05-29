@@ -27,7 +27,8 @@ public interface MemberSnippet {
 			fieldWithPath("memberId").type(JsonFieldType.NUMBER).description("생성된 팀원 아이디"),
 			fieldWithPath("nickName").type(JsonFieldType.STRING).description("생성된 팀원 이름"),
 			fieldWithPath("imageUrl").type(JsonFieldType.STRING).description("생성된 팀원의 이미지 URL"),
-			fieldWithPath("submit").type(JsonFieldType.BOOLEAN).description("생성된 팀원의 이미지 업로드 여부(default: false)")
+			fieldWithPath("submit").type(JsonFieldType.BOOLEAN).description("생성된 팀원의 이미지 업로드 여부(default: false)"),
+			fieldWithPath("leader").type(JsonFieldType.BOOLEAN).description("팀장 여부")
 		)
 	);
 
@@ -40,7 +41,8 @@ public interface MemberSnippet {
 			fieldWithPath("numberOfSubmit").type(JsonFieldType.NUMBER).description("이미지 업로드 수"),
 			fieldWithPath("nickName").type(JsonFieldType.STRING).description("팀원 이름"),
 			fieldWithPath("imageUrl").type(JsonFieldType.STRING).description("팀원 이미지 URL"),
-			fieldWithPath("submit").type(JsonFieldType.BOOLEAN).description("팀원의 이미지 업로드 여부")
+			fieldWithPath("submit").type(JsonFieldType.BOOLEAN).description("팀원의 이미지 업로드 여부"),
+			fieldWithPath("leader").type(JsonFieldType.BOOLEAN).description("팀장 여부")
 		)
 	);
 

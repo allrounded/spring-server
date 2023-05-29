@@ -129,7 +129,7 @@ public class TeamService {
 
 		List<MemberResultResponse> memberResultResponses = members.stream()
 			.map(m -> {log.debug("MEMBER ID={}의 이미지 조회", m.getMemberId());
-				return new MemberResultResponse(m.getMemberId(), m.getNickName(), m.isSubmit());})
+				return new MemberResultResponse(m.getMemberId(), m.getNickName(), m.isSubmit(), m.isLeader());})
 			.collect(Collectors.toList());
 
 		TimeResponses timeResponses = getTeamResult(team, members, isV1, authCode);
