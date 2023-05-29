@@ -31,7 +31,7 @@ import org.springframework.test.context.TestPropertySource;
 	"image-server.url=http://localhost:${wiremock.server.port}/teams/{teamId}/members/{memberId}"
 })
 @DisplayName("[API DOCS] 팀원 이미지 업로드")
-class MemberMemberImageUploadTest extends InitDocumentationTest {
+class MemberImageUploadTest extends InitDocumentationTest {
 
 	@Autowired
 	private TeamRepository teamRepository;

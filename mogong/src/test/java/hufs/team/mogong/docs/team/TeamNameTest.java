@@ -12,8 +12,7 @@ import hufs.team.mogong.image.repository.TeamImageRepository;
 import hufs.team.mogong.member.repository.MemberRepository;
 import hufs.team.mogong.team.Team;
 import hufs.team.mogong.team.repository.TeamRepository;
-import hufs.team.mogong.timetable.repository.TimeTableV2Repository;
-import org.checkerframework.checker.units.qual.A;
+import hufs.team.mogong.timetable.repository.MemberTimeTableV2Repository;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -38,14 +37,14 @@ class TeamNameTest extends InitDocumentationTest {
 	private TeamRepository teamRepository;
 
 	@Autowired
-	private TimeTableV2Repository timeTableV2Repository;
+	private MemberTimeTableV2Repository memberTimeTableV2Repository;
 
 	private String teamName;
 	private Team team;
 
 	@BeforeEach
 	void init() {
-		timeTableV2Repository.deleteAllInBatch();
+		memberTimeTableV2Repository.deleteAllInBatch();
 		memberImageRepository.deleteAllInBatch();
 		memberRepository.deleteAllInBatch();
 		teamImageRepository.deleteAllInBatch();

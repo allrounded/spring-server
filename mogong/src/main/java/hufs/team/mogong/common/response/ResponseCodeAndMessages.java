@@ -24,6 +24,12 @@ public enum ResponseCodeAndMessages implements CodeAndMessages {
 	CREATE_MEMBER_SUCCESS("M-S001", "팀원 생성이 완료되었습니다."),
 	FIND_MEMBER_SUCCESS("M-S002", "팀원 조회에 성공했습니다."),
 	UPLOAD_MEMBER_IMAGE_SUCCESS("M-S003", "팀원의 이미지 업로드에 성공했습니다."),
+
+	/**
+	 * Vote
+	 */
+	CREATE_VOTE_FORM_SUCCESS("V-S001", "팀 투표 폼 생성이 완료되었습니다."),
+	FIND_VOTE_FORM_SUCCESS("V-S002", "팀 투표 폼 조회에 성공했습니다."),
 	;
 
 	private final String code;

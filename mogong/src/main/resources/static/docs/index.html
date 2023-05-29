@@ -470,6 +470,13 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_3_팀원_이미지_업로드">3. 팀원 이미지 업로드</a></li>
 </ul>
 </li>
+<li><a href="#_투표_폼_api">투표 폼 API</a>
+<ul class="sectlevel2">
+<li><a href="#_전체_목록_votesteamsteamidforms">전체 목록 (/votes/teams/{teamId}/forms)</a></li>
+<li><a href="#_1_투표_폼_생성">1. 투표 폼 생성</a></li>
+<li><a href="#_2_투표_폼_조회">2. 투표 폼 조회</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -576,7 +583,7 @@ Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json
 Transfer-Encoding: chunked
-Date: Fri, 12 May 2023 10:47:40 GMT
+Date: Mon, 29 May 2023 05:55:44 GMT
 Keep-Alive: timeout=60
 Connection: keep-alive
 Content-Length: 309
@@ -585,8 +592,8 @@ Content-Length: 309
   "code" : "I-S001",
   "message" : "이미지 PreSigned URL 생성에 성공했습니다.",
   "data" : {
-    "preSignedUrl" : "http://localhost:5050/local-embedded-bucket/image/0449ec2c-ebfd-4fef-9bdb-d55d2856f06f.JPG?x-amz-acl=public-read",
-    "fileName" : "0449ec2c-ebfd-4fef-9bdb-d55d2856f06f.JPG"
+    "preSignedUrl" : "http://localhost:5050/local-embedded-bucket/image/816b2e45-fb2d-4540-98b8-a8c9a74547b3.JPG?x-amz-acl=public-read",
+    "fileName" : "816b2e45-fb2d-4540-98b8-a8c9a74547b3.JPG"
   }
 }</code></pre>
 </div>
@@ -600,8 +607,8 @@ Content-Length: 309
   "code" : "I-S001",
   "message" : "이미지 PreSigned URL 생성에 성공했습니다.",
   "data" : {
-    "preSignedUrl" : "http://localhost:5050/local-embedded-bucket/image/0449ec2c-ebfd-4fef-9bdb-d55d2856f06f.JPG?x-amz-acl=public-read",
-    "fileName" : "0449ec2c-ebfd-4fef-9bdb-d55d2856f06f.JPG"
+    "preSignedUrl" : "http://localhost:5050/local-embedded-bucket/image/816b2e45-fb2d-4540-98b8-a8c9a74547b3.JPG?x-amz-acl=public-read",
+    "fileName" : "816b2e45-fb2d-4540-98b8-a8c9a74547b3.JPG"
   }
 }</code></pre>
 </div>
@@ -777,7 +784,7 @@ Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json
 Transfer-Encoding: chunked
-Date: Fri, 12 May 2023 10:47:46 GMT
+Date: Mon, 29 May 2023 05:55:52 GMT
 Keep-Alive: timeout=60
 Connection: keep-alive
 Content-Length: 385
@@ -787,11 +794,11 @@ Content-Length: 385
   "message" : "팀 생성에 성공했습니다.",
   "data" : {
     "teamId" : 5,
-    "teamName" : "3254dc33-cdf6-47bb-ba0d-90b0af7984ae",
+    "teamName" : "2384685b-0cc2-49ea-b29d-17148f09694c",
     "numberOfMember" : 5,
     "numberOfSubmit" : 0,
     "authCode" : "1234",
-    "imageUrl" : "http://localhost:5050/local-embedded-bucket/image/teams/5/3254dc33-cdf6-47bb-ba0d-90b0af7984ae.jpeg?x-amz-acl=public-read"
+    "imageUrl" : "http://localhost:5050/local-embedded-bucket/image/teams/5/2384685b-0cc2-49ea-b29d-17148f09694c.jpeg?x-amz-acl=public-read"
   }
 }</code></pre>
 </div>
@@ -806,11 +813,11 @@ Content-Length: 385
   "message" : "팀 생성에 성공했습니다.",
   "data" : {
     "teamId" : 5,
-    "teamName" : "3254dc33-cdf6-47bb-ba0d-90b0af7984ae",
+    "teamName" : "2384685b-0cc2-49ea-b29d-17148f09694c",
     "numberOfMember" : 5,
     "numberOfSubmit" : 0,
     "authCode" : "1234",
-    "imageUrl" : "http://localhost:5050/local-embedded-bucket/image/teams/5/3254dc33-cdf6-47bb-ba0d-90b0af7984ae.jpeg?x-amz-acl=public-read"
+    "imageUrl" : "http://localhost:5050/local-embedded-bucket/image/teams/5/2384685b-0cc2-49ea-b29d-17148f09694c.jpeg?x-amz-acl=public-read"
   }
 }</code></pre>
 </div>
@@ -911,10 +918,10 @@ Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json
 Transfer-Encoding: chunked
-Date: Fri, 12 May 2023 10:47:46 GMT
+Date: Mon, 29 May 2023 05:55:52 GMT
 Keep-Alive: timeout=60
 Connection: keep-alive
-Content-Length: 1788
+Content-Length: 1695
 
 {
   "code" : "T-S006",
@@ -922,19 +929,15 @@ Content-Length: 1788
   "data" : {
     "teamId" : 3,
     "teamName" : "1c487536-08ef-4332-bc2f-16830f49495f",
-    "numberOfMember" : 3,
-    "numberOfSubmit" : 3,
+    "numberOfMember" : 2,
+    "numberOfSubmit" : 2,
     "members" : [ {
-      "memberId" : 7,
+      "memberId" : 5,
       "nickName" : "dummy_nickname-1",
       "submit" : false
     }, {
-      "memberId" : 8,
+      "memberId" : 6,
       "nickName" : "dummy_nickname-2",
-      "submit" : false
-    }, {
-      "memberId" : 9,
-      "nickName" : "dummy_nickname-3",
       "submit" : false
     } ],
     "resultImageUrl" : "https://mogong.s3.ap-northeast-2.amazonaws.com/image/teams/results/cf1fd929-4896-4a03-9382-33b70445c87a.jpeg",
@@ -978,19 +981,15 @@ Content-Length: 1788
   "data" : {
     "teamId" : 3,
     "teamName" : "1c487536-08ef-4332-bc2f-16830f49495f",
-    "numberOfMember" : 3,
-    "numberOfSubmit" : 3,
+    "numberOfMember" : 2,
+    "numberOfSubmit" : 2,
     "members" : [ {
-      "memberId" : 7,
+      "memberId" : 5,
       "nickName" : "dummy_nickname-1",
       "submit" : false
     }, {
-      "memberId" : 8,
+      "memberId" : 6,
       "nickName" : "dummy_nickname-2",
-      "submit" : false
-    }, {
-      "memberId" : 9,
-      "nickName" : "dummy_nickname-3",
       "submit" : false
     } ],
     "resultImageUrl" : "https://mogong.s3.ap-northeast-2.amazonaws.com/image/teams/results/cf1fd929-4896-4a03-9382-33b70445c87a.jpeg",
@@ -1129,7 +1128,7 @@ Content-Length: 1788
 <div class="sect2">
 <h3 id="_3_팀_결과_조회팀_제출_수_미충족_auth_code_미입력"><a class="link" href="#_3_팀_결과_조회팀_제출_수_미충족_auth_code_미입력">3. 팀 결과 조회(팀 제출 수 미충족 &amp; auth_code 미입력)</a></h3>
 <div class="paragraph">
-<p>API : <code>GET /teams/{teamId}/results</code></p>
+<p>API : <code>GET /teams/{teamId}/v2</code></p>
 </div>
 <div class="sect3">
 <h4 id="_200_ok_4"><a class="link" href="#_200_ok_4">200 OK</a></h4>
@@ -1159,7 +1158,7 @@ Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json
 Transfer-Encoding: chunked
-Date: Fri, 12 May 2023 10:47:46 GMT
+Date: Mon, 29 May 2023 05:55:52 GMT
 Keep-Alive: timeout=60
 Connection: keep-alive
 Content-Length: 174
@@ -1168,8 +1167,8 @@ Content-Length: 174
   "code" : "T-F002",
   "message" : "현재 등록된 이미지 수가 지정된 멤버 수보다 적습니다.",
   "data" : {
-    "submit" : 3,
-    "numberOfTeam" : 3
+    "submit" : 1,
+    "numberOfTeam" : 2
   }
 }</code></pre>
 </div>
@@ -1183,8 +1182,8 @@ Content-Length: 174
   "code" : "T-F002",
   "message" : "현재 등록된 이미지 수가 지정된 멤버 수보다 적습니다.",
   "data" : {
-    "submit" : 3,
-    "numberOfTeam" : 3
+    "submit" : 1,
+    "numberOfTeam" : 2
   }
 }</code></pre>
 </div>
@@ -1235,7 +1234,7 @@ Content-Length: 174
 <div class="sect2">
 <h3 id="_4_팀_결과_조회팀_제출_수_미충족_옳은_auth_code_입력"><a class="link" href="#_4_팀_결과_조회팀_제출_수_미충족_옳은_auth_code_입력">4. 팀 결과 조회(팀 제출 수 미충족 &amp; 옳은 auth_code 입력)</a></h3>
 <div class="paragraph">
-<p>API : <code>GET /teams/{teamId}/results?auth_code={authCode}</code></p>
+<p>API : <code>GET /teams/{teamId}/v2?auth_code={authCode}</code></p>
 </div>
 <div class="sect3">
 <h4 id="_200_ok_5"><a class="link" href="#_200_ok_5">200 OK</a></h4>
@@ -1265,10 +1264,10 @@ Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json
 Transfer-Encoding: chunked
-Date: Fri, 12 May 2023 10:47:46 GMT
+Date: Mon, 29 May 2023 05:55:52 GMT
 Keep-Alive: timeout=60
 Connection: keep-alive
-Content-Length: 1788
+Content-Length: 1695
 
 {
   "code" : "T-S006",
@@ -1276,19 +1275,15 @@ Content-Length: 1788
   "data" : {
     "teamId" : 2,
     "teamName" : "1c487536-08ef-4332-bc2f-16830f49495f",
-    "numberOfMember" : 3,
-    "numberOfSubmit" : 3,
+    "numberOfMember" : 2,
+    "numberOfSubmit" : 1,
     "members" : [ {
-      "memberId" : 4,
+      "memberId" : 3,
       "nickName" : "dummy_nickname-1",
       "submit" : false
     }, {
-      "memberId" : 5,
+      "memberId" : 4,
       "nickName" : "dummy_nickname-2",
-      "submit" : false
-    }, {
-      "memberId" : 6,
-      "nickName" : "dummy_nickname-3",
       "submit" : false
     } ],
     "resultImageUrl" : "https://mogong.s3.ap-northeast-2.amazonaws.com/image/teams/results/cf1fd929-4896-4a03-9382-33b70445c87a.jpeg",
@@ -1332,19 +1327,15 @@ Content-Length: 1788
   "data" : {
     "teamId" : 2,
     "teamName" : "1c487536-08ef-4332-bc2f-16830f49495f",
-    "numberOfMember" : 3,
-    "numberOfSubmit" : 3,
+    "numberOfMember" : 2,
+    "numberOfSubmit" : 1,
     "members" : [ {
-      "memberId" : 4,
+      "memberId" : 3,
       "nickName" : "dummy_nickname-1",
       "submit" : false
     }, {
-      "memberId" : 5,
+      "memberId" : 4,
       "nickName" : "dummy_nickname-2",
-      "submit" : false
-    }, {
-      "memberId" : 6,
-      "nickName" : "dummy_nickname-3",
       "submit" : false
     } ],
     "resultImageUrl" : "https://mogong.s3.ap-northeast-2.amazonaws.com/image/teams/results/cf1fd929-4896-4a03-9382-33b70445c87a.jpeg",
@@ -1483,7 +1474,7 @@ Content-Length: 1788
 <div class="sect2">
 <h3 id="_5_팀_결과_조회팀_제출_수_미충족_옳지_않은_auth_code_입력"><a class="link" href="#_5_팀_결과_조회팀_제출_수_미충족_옳지_않은_auth_code_입력">5. 팀 결과 조회(팀 제출 수 미충족 &amp; 옳지 않은 auth_code 입력)</a></h3>
 <div class="paragraph">
-<p>API : <code>GET /teams/{teamId}/results?auth_code={authCode}</code></p>
+<p>API : <code>GET /teams/{teamId}/v2?auth_code={authCode}</code></p>
 </div>
 <div class="sect3">
 <h4 id="_200_ok_6"><a class="link" href="#_200_ok_6">200 OK</a></h4>
@@ -1513,7 +1504,7 @@ Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json
 Transfer-Encoding: chunked
-Date: Fri, 12 May 2023 10:47:46 GMT
+Date: Mon, 29 May 2023 05:55:52 GMT
 Keep-Alive: timeout=60
 Connection: keep-alive
 Content-Length: 174
@@ -1522,8 +1513,8 @@ Content-Length: 174
   "code" : "T-F002",
   "message" : "현재 등록된 이미지 수가 지정된 멤버 수보다 적습니다.",
   "data" : {
-    "submit" : 3,
-    "numberOfTeam" : 3
+    "submit" : 1,
+    "numberOfTeam" : 2
   }
 }</code></pre>
 </div>
@@ -1537,8 +1528,8 @@ Content-Length: 174
   "code" : "T-F002",
   "message" : "현재 등록된 이미지 수가 지정된 멤버 수보다 적습니다.",
   "data" : {
-    "submit" : 3,
-    "numberOfTeam" : 3
+    "submit" : 1,
+    "numberOfTeam" : 2
   }
 }</code></pre>
 </div>
@@ -1622,7 +1613,7 @@ Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json
 Transfer-Encoding: chunked
-Date: Fri, 12 May 2023 10:47:46 GMT
+Date: Mon, 29 May 2023 05:55:52 GMT
 Keep-Alive: timeout=60
 Connection: keep-alive
 Content-Length: 176
@@ -1750,10 +1741,11 @@ Content-Length: 176
 Accept: application/json
 Content-Type: application/json
 Host: localhost
-Content-Length: 35
+Content-Length: 55
 
 {
-  "nickName" : "dummy_nickname"
+  "nickName" : "dummy_nickname",
+  "leader" : false
 }</code></pre>
 </div>
 </div>
@@ -1763,7 +1755,8 @@ Content-Length: 35
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code>{
-  "nickName" : "dummy_nickname"
+  "nickName" : "dummy_nickname",
+  "leader" : false
 }</code></pre>
 </div>
 </div>
@@ -1789,6 +1782,11 @@ Content-Length: 35
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">생성할 팀원 이름</p></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>leader</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">팀장 여부</p></td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -1812,7 +1810,7 @@ Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json
 Transfer-Encoding: chunked
-Date: Fri, 12 May 2023 10:47:40 GMT
+Date: Mon, 29 May 2023 05:55:44 GMT
 Keep-Alive: timeout=60
 Connection: keep-alive
 Content-Length: 316
@@ -1823,7 +1821,7 @@ Content-Length: 316
   "data" : {
     "memberId" : 1,
     "nickName" : "dummy_nickname",
-    "imageUrl" : "http://localhost:5050/local-embedded-bucket/image/teams/1/e0626348-0ec8-42c5-b4dc-8834b34ee572.jpeg?x-amz-acl=public-read",
+    "imageUrl" : "http://localhost:5050/local-embedded-bucket/image/teams/1/f4adf2ef-f67f-47f7-9d78-4d4e5e3c2cd9.jpeg?x-amz-acl=public-read",
     "submit" : false
   }
 }</code></pre>
@@ -1840,7 +1838,7 @@ Content-Length: 316
   "data" : {
     "memberId" : 1,
     "nickName" : "dummy_nickname",
-    "imageUrl" : "http://localhost:5050/local-embedded-bucket/image/teams/1/e0626348-0ec8-42c5-b4dc-8834b34ee572.jpeg?x-amz-acl=public-read",
+    "imageUrl" : "http://localhost:5050/local-embedded-bucket/image/teams/1/f4adf2ef-f67f-47f7-9d78-4d4e5e3c2cd9.jpeg?x-amz-acl=public-read",
     "submit" : false
   }
 }</code></pre>
@@ -1940,7 +1938,7 @@ Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json
 Transfer-Encoding: chunked
-Date: Fri, 12 May 2023 10:47:40 GMT
+Date: Mon, 29 May 2023 05:55:44 GMT
 Keep-Alive: timeout=60
 Connection: keep-alive
 Content-Length: 239
@@ -2046,13 +2044,8 @@ Content-Length: 239
 <h5 id="_request_10"><a class="link" href="#_request_10">Request</a></h5>
 <div class="sect5">
 <h6 id="_request_10_http_request"><a class="link" href="#_request_10_http_request">HTTP request</a></h6>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">PUT /teams/1/members/1/images/v2 HTTP/1.1
-Accept: application/json
-Content-Type: application/json
-Host: localhost</code></pre>
-</div>
+<div class="paragraph">
+<p>Snippet http-request not found for operation::member_member_image_upload_test/find_member_success</p>
 </div>
 </div>
 </div>
@@ -2067,6 +2060,129 @@ Host: localhost</code></pre>
 </div>
 <div class="sect5">
 <h6 id="_response_9_http_response"><a class="link" href="#_response_9_http_response">HTTP response</a></h6>
+<div class="paragraph">
+<p>Snippet http-response not found for operation::member_member_image_upload_test/find_member_success</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_response_9_response_body"><a class="link" href="#_response_9_response_body">Response body</a></h6>
+<div class="paragraph">
+<p>Snippet response-body not found for operation::member_member_image_upload_test/find_member_success</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_response_9_response_fields"><a class="link" href="#_response_9_response_fields">Response fields</a></h6>
+<div class="paragraph">
+<p>Snippet response-fields not found for operation::member_member_image_upload_test/find_member_success</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_투표_폼_api"><a class="link" href="#_투표_폼_api">투표 폼 API</a></h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_전체_목록_votesteamsteamidforms"><a class="link" href="#_전체_목록_votesteamsteamidforms">전체 목록 (/votes/teams/{teamId}/forms)</a></h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">기능</th>
+<th class="tableblock halign-left valign-top">API</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#_1_투표_폼_생성">1. 투표 폼 생성</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">[POST] /votes/teams/{teamId}/forms</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#_2_투표_폼_조회">2. 투표 폼 조회</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">[GET] /votes/teams/{teamId}/forms</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_1_투표_폼_생성"><a class="link" href="#_1_투표_폼_생성">1. 투표 폼 생성</a></h3>
+<div class="paragraph">
+<p>API : <code>POST /votes/teams/{teamId}/forms</code></p>
+</div>
+<div class="paragraph">
+<p>Request Body 로 divisorMinutes(분 단위), duplicate(중복투표 허용 여부)를 담아 보내야 합니다.</p>
+</div>
+<div class="sect3">
+<h4 id="_200_ok_11"><a class="link" href="#_200_ok_11">200 OK</a></h4>
+<div class="sect4">
+<h5 id="_request_11"><a class="link" href="#_request_11">Request</a></h5>
+<div class="sect5">
+<h6 id="_request_11_http_request"><a class="link" href="#_request_11_http_request">HTTP request</a></h6>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /votes/teams/8/forms HTTP/1.1
+Accept: application/json
+Content-Type: application/json
+Host: localhost
+Content-Length: 50
+
+{
+  "divisorMinutes" : 30,
+  "duplicate" : false
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_request_11_request_body"><a class="link" href="#_request_11_request_body">Request body</a></h6>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code>{
+  "divisorMinutes" : 30,
+  "duplicate" : false
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_request_11_request_fields"><a class="link" href="#_request_11_request_fields">Request fields</a></h6>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>divisorMinutes</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">투표 분할 시간(30분, 60분, 90분)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>duplicate</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">중복 항목 투표 가능 여부</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_response_투표_폼_생성_성공"><a class="link" href="#_response_투표_폼_생성_성공">Response (투표 폼 생성 성공)</a></h5>
+<div class="sect5">
+<h6 id="_response_투표_폼_생성_성공_http_response"><a class="link" href="#_response_투표_폼_생성_성공_http_response">HTTP response</a></h6>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
@@ -2075,47 +2191,41 @@ Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json
 Transfer-Encoding: chunked
-Date: Fri, 12 May 2023 10:47:44 GMT
+Date: Mon, 29 May 2023 05:55:52 GMT
 Keep-Alive: timeout=60
 Connection: keep-alive
-Content-Length: 343
+Content-Length: 175
 
 {
-  "code" : "M-S003",
-  "message" : "팀원의 이미지 업로드에 성공했습니다.",
+  "code" : "V-S001",
+  "message" : "팀 투표 폼 생성이 완료되었습니다.",
   "data" : {
-    "teamName" : "1c487536-08ef-4332-bc2f-16830f49495f",
-    "numberOfMember" : 5,
-    "numberOfSubmit" : 4,
-    "nickName" : "dummy_nickname",
-    "imageUrl" : "https://aws.s3.dummy-img/teams/1/dummy_img.jpeg",
-    "submit" : true
+    "teamId" : 8,
+    "divisorMinutes" : 30,
+    "duplicate" : false
   }
 }</code></pre>
 </div>
 </div>
 </div>
 <div class="sect5">
-<h6 id="_response_9_response_body"><a class="link" href="#_response_9_response_body">Response body</a></h6>
+<h6 id="_response_투표_폼_생성_성공_response_body"><a class="link" href="#_response_투표_폼_생성_성공_response_body">Response body</a></h6>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code>{
-  "code" : "M-S003",
-  "message" : "팀원의 이미지 업로드에 성공했습니다.",
+  "code" : "V-S001",
+  "message" : "팀 투표 폼 생성이 완료되었습니다.",
   "data" : {
-    "teamName" : "1c487536-08ef-4332-bc2f-16830f49495f",
-    "numberOfMember" : 5,
-    "numberOfSubmit" : 4,
-    "nickName" : "dummy_nickname",
-    "imageUrl" : "https://aws.s3.dummy-img/teams/1/dummy_img.jpeg",
-    "submit" : true
+    "teamId" : 8,
+    "divisorMinutes" : 30,
+    "duplicate" : false
   }
 }</code></pre>
 </div>
 </div>
 </div>
 <div class="sect5">
-<h6 id="_response_9_response_fields"><a class="link" href="#_response_9_response_fields">Response fields</a></h6>
+<h6 id="_response_투표_폼_생성_성공_response_fields"><a class="link" href="#_response_투표_폼_생성_성공_response_fields">Response fields</a></h6>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 33.3333%;">
@@ -2141,34 +2251,204 @@ Content-Length: 343
 <td class="tableblock halign-left valign-top"><p class="tableblock">자세한 응답 메세지</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.teamName</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">팀 이름</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.numberOfMember</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.teamId</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">팀원 수</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">팀 아이디</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.numberOfSubmit</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.divisorMinutes</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">이미지 업로드 수</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">투표 폼 시간 단위(30분, 60분, 90분)</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.nickName</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">팀원 이름</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.imageUrl</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">팀원 이미지 URL</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.submit</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.duplicate</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">팀원의 이미지 업로드 여부</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">중복 투표 가능 여부</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_response_투표_폼_생성_실"><a class="link" href="#_response_투표_폼_생성_실">Response (투표 폼 생성 실)</a></h5>
+<div class="sect5">
+<h6 id="_response_투표_폼_생성_실_http_response"><a class="link" href="#_response_투표_폼_생성_실_http_response">HTTP response</a></h6>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/json
+Transfer-Encoding: chunked
+Date: Mon, 29 May 2023 05:55:52 GMT
+Keep-Alive: timeout=60
+Connection: keep-alive
+Content-Length: 108
+
+{
+  "code" : "V-F002",
+  "message" : "해당 팀 투표는 이미 생성되었습니다.",
+  "data" : null
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_response_투표_폼_생성_실_response_body"><a class="link" href="#_response_투표_폼_생성_실_response_body">Response body</a></h6>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code>{
+  "code" : "V-F002",
+  "message" : "해당 팀 투표는 이미 생성되었습니다.",
+  "data" : null
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_response_투표_폼_생성_실_response_fields"><a class="link" href="#_response_투표_폼_생성_실_response_fields">Response fields</a></h6>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>code</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MOGONG 서버 전용 상태코드</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>message</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">자세한 응답 메세지</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Null</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">데이터는 없습니다.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_2_투표_폼_조회"><a class="link" href="#_2_투표_폼_조회">2. 투표 폼 조회</a></h3>
+<div class="paragraph">
+<p>API : <code>GET /votes/teams/{teamId}/forms</code></p>
+</div>
+<div class="sect3">
+<h4 id="_200_ok_12"><a class="link" href="#_200_ok_12">200 OK</a></h4>
+<div class="sect4">
+<h5 id="_request_12"><a class="link" href="#_request_12">Request</a></h5>
+<div class="sect5">
+<h6 id="_request_12_http_request"><a class="link" href="#_request_12_http_request">HTTP request</a></h6>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /votes/teams/9/forms HTTP/1.1
+Accept: application/json
+Content-Type: application/json
+Host: localhost</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_response_10"><a class="link" href="#_response_10">Response</a></h5>
+<div class="sect5">
+<h6 id="_response_10_http_response"><a class="link" href="#_response_10_http_response">HTTP response</a></h6>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/json
+Transfer-Encoding: chunked
+Date: Mon, 29 May 2023 05:55:53 GMT
+Keep-Alive: timeout=60
+Connection: keep-alive
+Content-Length: 172
+
+{
+  "code" : "V-S002",
+  "message" : "팀 투표 폼 조회에 성공했습니다.",
+  "data" : {
+    "teamId" : 9,
+    "divisorMinutes" : 30,
+    "duplicate" : false
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_response_10_response_body"><a class="link" href="#_response_10_response_body">Response body</a></h6>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code>{
+  "code" : "V-S002",
+  "message" : "팀 투표 폼 조회에 성공했습니다.",
+  "data" : {
+    "teamId" : 9,
+    "divisorMinutes" : 30,
+    "duplicate" : false
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_response_10_response_fields"><a class="link" href="#_response_10_response_fields">Response fields</a></h6>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>code</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MOGONG 서버 전용 상태코드</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>message</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">자세한 응답 메세지</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.teamId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">팀 아이디</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.divisorMinutes</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">투표 폼 시간 단위(30분, 60분, 90분)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.duplicate</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">중복 투표 가능 여부</p></td>
 </tr>
 </tbody>
 </table>
@@ -2182,7 +2462,7 @@ Content-Length: 343
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2023-05-12 01:26:30 +0900
+Last updated 2023-05-29 12:15:42 +0900
 </div>
 </div>
 </body>

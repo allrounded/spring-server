@@ -35,6 +35,7 @@ public class CreateMemberTest extends InitDocumentationTest {
 
 	@BeforeEach
 	void init() {
+		teamImageRepository.deleteAllInBatch();
 		teamRepository.deleteAllInBatch();
 		team = teamRepository.save(new Team("1c487536-08ef-4332-bc2f-16830f49495f",
 			5, 3, "1234"));
@@ -45,7 +46,7 @@ public class CreateMemberTest extends InitDocumentationTest {
 	@Test
 	@DisplayName("팀원 생성 성공")
 	void create_member_success(){
-		CreateMemberRequest request = new CreateMemberRequest("dummy_nickname");
+		CreateMemberRequest request = new CreateMemberRequest("dummy_nickname", false);
 
 		//given
 		given(this.spec)

@@ -44,7 +44,6 @@ public class MemberController {
 	@PutMapping("/{memberId}/images/v1")
 	public BaseResponse<MemberImageUploadResponse> uploadV1(final @PathVariable Long teamId,
 		final @PathVariable Long memberId) {
-
 		MemberImageUploadResponse response = memberService.upsertV1(teamId, memberId);
 		return new BaseResponse<>(UPLOAD_MEMBER_IMAGE_SUCCESS, response);
 	}
@@ -52,7 +51,6 @@ public class MemberController {
 	@PutMapping("/{memberId}/images/v2")
 	public BaseResponse<MemberImageUploadResponse> uploadV2(final @PathVariable Long teamId,
 		final @PathVariable Long memberId) {
-
 		MemberImageUploadResponse response = memberService.upsertV2(teamId, memberId);
 		return new BaseResponse<>(UPLOAD_MEMBER_IMAGE_SUCCESS, response);
 	}

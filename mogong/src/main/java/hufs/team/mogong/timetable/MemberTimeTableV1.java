@@ -18,10 +18,10 @@ import lombok.NoArgsConstructor;
 @Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class TimeTableV1 {
+public class MemberTimeTableV1 {
 
 	@Id
-	@Column(name = "time_table_v1_id")
+	@Column(name = "member_time_table_v1_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
@@ -47,7 +47,7 @@ public class TimeTableV1 {
 	private String sat;
 	private String sun;
 
-	public TimeTableV1(Member member, List<String> times) {
+	public MemberTimeTableV1(Member member, List<String> times) {
 		this.member = member;
 		this.mon = times.get(0);
 		this.tue = times.get(1);
@@ -58,7 +58,7 @@ public class TimeTableV1 {
 		this.sun = times.get(6);
 	}
 
-	public static TimeTableV1 getDefault(Member member, int timeLength) {
+	public static MemberTimeTableV1 getDefault(Member member, int timeLength) {
 		StringBuilder sb = new StringBuilder();
 		sb.append("0" .repeat(Math.max(0, timeLength)));
 
@@ -66,7 +66,7 @@ public class TimeTableV1 {
 		for (int i = 0; i < 7; i++) {
 			times.add(sb.toString());
 		}
-		return new TimeTableV1(member, times);
+		return new MemberTimeTableV1(member, times);
 	}
 
 	public void update(List<String> times) {

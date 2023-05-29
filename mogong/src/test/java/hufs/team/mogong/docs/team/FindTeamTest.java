@@ -14,14 +14,12 @@ import hufs.team.mogong.image.repository.MemberImageRepository;
 import hufs.team.mogong.image.repository.TeamImageRepository;
 import hufs.team.mogong.member.Member;
 import hufs.team.mogong.member.repository.MemberRepository;
-import hufs.team.mogong.member.service.MemberService;
 import hufs.team.mogong.team.Team;
 import hufs.team.mogong.team.repository.TeamRepository;
-import hufs.team.mogong.timetable.TimeTableV2;
-import hufs.team.mogong.timetable.repository.TimeTableV2Repository;
+import hufs.team.mogong.timetable.MemberTimeTableV2;
+import hufs.team.mogong.timetable.repository.MemberTimeTableV2Repository;
 import hufs.team.mogong.tool.RestTemplateMocks;
 import java.io.IOException;
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -55,20 +53,17 @@ class FindTeamTest extends InitDocumentationTest {
 	private MemberImageRepository memberImageRepository;
 
 	@Autowired
-	private TimeTableV2Repository timeTableV2Repository;
+	private MemberTimeTableV2Repository memberTimeTableV2Repository;
 
 	private Long teamId;
 	private Team team;
 	private Member member1;
 	private Member member2;
-	private Member member3;
 	private List<Long> times = new ArrayList<>();;
-
-	private EntityManager em;
 
 	@BeforeEach
 	void init() throws IOException {
-		timeTableV2Repository.deleteAllInBatch();
+		memberTimeTableV2Repository.deleteAllInBatch();
 		memberImageRepository.deleteAllInBatch();
 		memberRepository.deleteAllInBatch();
 		teamImageRepository.deleteAllInBatch();
@@ -116,8 +111,8 @@ class FindTeamTest extends InitDocumentationTest {
 			"https://mogong.s3.ap-northeast-2.amazonaws.com/image/teams/results/cf1fd929-4896-4a03-9382-33b70445c87a.jpeg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20230510T185520Z&X-Amz-SignedHeaders=host&X-Amz-Expires=599&X-Amz-Credential=AKIATAIREWDPDOXL3X74%2F20230510%2Fap-northeast-2%2Fs3%2Faws4_request&X-Amz-Signature=46aee1b91e37155e5681300e2226479cb349f46acd29a42e6abbfabf27dd318e"));
 		teamId = team.getTeamId();
 		saveMember();
-		timeTableV2Repository.save(new TimeTableV2(member1, times));
-		timeTableV2Repository.save(new TimeTableV2(member2, times));
+		memberTimeTableV2Repository.save(new MemberTimeTableV2(member1, times));
+		memberTimeTableV2Repository.save(new MemberTimeTableV2(member2, times));
 
 		//given
 		given(this.spec)
@@ -168,7 +163,7 @@ class FindTeamTest extends InitDocumentationTest {
 	void result_team_with_auth_code() {
 		saveTeam();
 		saveMember();
-		timeTableV2Repository.save(new TimeTableV2(member1, times));
+		memberTimeTableV2Repository.save(new MemberTimeTableV2(member1, times));
 
 		//given
 		given(this.spec)
@@ -194,7 +189,7 @@ class FindTeamTest extends InitDocumentationTest {
 	void result_team_with_wrong_auth_code() {
 		saveTeam();
 		saveMember();
-		timeTableV2Repository.save(new TimeTableV2(member1, times));
+		memberTimeTableV2Repository.save(new MemberTimeTableV2(member1, times));
 
 		//given
 		given(this.spec)

@@ -5,69 +5,42 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import lombok.AccessLevel;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
-@Getter
 @Entity
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class TimeTableV2 {
+@Getter
+@Inheritance(strategy = InheritanceType.JOINED)
+public abstract class TimeTable {
 
 	@Id
-	@Column(name = "time_table_v2_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "member_id")
-	private Member member;
+	protected Long id;
 
 	@Column(nullable = false)
-	private Long mon;
+	protected Long mon;
 
 	@Column(nullable = false)
-	private Long tue;
+	protected Long tue;
 
 	@Column(nullable = false)
-	private Long wed;
+	protected Long wed;
 
 	@Column(nullable = false)
-	private Long thu;
+	protected Long thu;
 
 	@Column(nullable = false)
-	private Long fri;
+	protected Long fri;
 
 	@Column(nullable = false)
-	private Long sat;
+	protected Long sat;
 
 	@Column(nullable = false)
-	private Long sun;
-
-	public TimeTableV2(Member member, List<Long> times) {
-		this.member = member;
-		this.mon = times.get(0);
-		this.tue = times.get(1);
-		this.wed = times.get(2);
-		this.thu = times.get(3);
-		this.fri = times.get(4);
-		this.sat = times.get(5);
-		this.sun = times.get(6);
-	}
-
-	public static TimeTableV2 getDefault(Member member) {
-		List<Long> times = new ArrayList<>();
-		for (int i = 0; i < 7; i++) {
-			times.add(0L);
-		}
-		return new TimeTableV2(member, times);
-	}
+	protected Long sun;
 
 	public void update(List<Long> times) {
 		this.mon = times.get(0);

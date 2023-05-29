@@ -16,7 +16,8 @@ public interface MemberSnippet {
 
 	Snippet CREATE_MEMBER_REQUEST_BODY_SNIPPET = requestSnippetWithConstraintsAndFields(
 		CreateMemberRequest.class,
-		fieldWithPath("nickName").type(JsonFieldType.STRING).description("생성할 팀원 이름")
+		fieldWithPath("nickName").type(JsonFieldType.STRING).description("생성할 팀원 이름"),
+		fieldWithPath("leader").type(JsonFieldType.BOOLEAN).description("팀장 여부")
 	);
 
 	Snippet MEMBER_RESPONSE_SNIPPET = createResponseSnippetWithFields(

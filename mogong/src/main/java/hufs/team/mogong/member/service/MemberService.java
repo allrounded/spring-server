@@ -17,10 +17,10 @@ import hufs.team.mogong.team.exception.NotFoundTeamIdException;
 import hufs.team.mogong.team.repository.TeamRepository;
 import hufs.team.mogong.team.service.dto.response.ImageServerTimeResponses;
 import hufs.team.mogong.team.service.dto.response.TimeTableResponse;
-import hufs.team.mogong.timetable.TimeTableV1;
-import hufs.team.mogong.timetable.TimeTableV2;
+import hufs.team.mogong.timetable.MemberTimeTableV1;
+import hufs.team.mogong.timetable.MemberTimeTableV2;
 import hufs.team.mogong.timetable.repository.TimeTableV1Repository;
-import hufs.team.mogong.timetable.repository.TimeTableV2Repository;
+import hufs.team.mogong.timetable.repository.MemberTimeTableV2Repository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -43,21 +43,21 @@ public class MemberService {
 	private final MemberImageRepository memberImageRepository;
 	private final ImageUploadService imageUploadService;
 	private final TimeTableV1Repository timeTableV1Repository;
-	private final TimeTableV2Repository timeTableV2Repository;
+	private final MemberTimeTableV2Repository memberTimeTableV2Repository;
 	private final RestTemplate restTemplate;
 	@Value("${image-server.url}")
 	private String imageServerUrl;
 
 	public MemberService(MemberRepository memberRepository, TeamRepository teamRepository,
 		MemberImageRepository memberImageRepository, ImageUploadService imageUploadService,
-		TimeTableV1Repository timeTableV1Repository, TimeTableV2Repository timeTableV2Repository,
+		TimeTableV1Repository timeTableV1Repository, MemberTimeTableV2Repository memberTimeTableV2Repository,
 		RestTemplate restTemplate) {
 		this.memberRepository = memberRepository;
 		this.teamRepository = teamRepository;
 		this.memberImageRepository = memberImageRepository;
 		this.imageUploadService = imageUploadService;
 		this.timeTableV1Repository = timeTableV1Repository;
-		this.timeTableV2Repository = timeTableV2Repository;
+		this.memberTimeTableV2Repository = memberTimeTableV2Repository;
 		this.restTemplate = restTemplate;
 	}
 
@@ -108,10 +108,10 @@ public class MemberService {
 		MemberImage image = findImageByMemberId(memberId);
 		List<String> times = requestImageProcessingV1(team, member, image);
 
-		Optional<TimeTableV1> timeTableV1 = timeTableV1Repository.findByMember_MemberId(memberId);
+		Optional<MemberTimeTableV1> timeTableV1 = timeTableV1Repository.findByMember_MemberId(memberId);
 
 		if (timeTableV1.isEmpty()) {
-			timeTableV1Repository.save(new TimeTableV1(member, times));
+			timeTableV1Repository.save(new MemberTimeTableV1(member, times));
 			team.addSubmit();
 			member.submit();
 			log.debug("[MEMBER IMAGE FIRST UPLOAD] team numberOfSubmit={}", team.getNumberOfSubmit());
@@ -142,10 +142,10 @@ public class MemberService {
 		MemberImage image = findImageByMemberId(memberId);
 		List<Long> times = requestImageProcessingV2(team, member, image);
 
-		Optional<TimeTableV2> timeTableV2 = timeTableV2Repository.findByMember_MemberId(memberId);
+		Optional<MemberTimeTableV2> timeTableV2 = memberTimeTableV2Repository.findByMember_MemberId(memberId);
 
 		if (timeTableV2.isEmpty()) {
-			timeTableV2Repository.save(new TimeTableV2(member, times));
+			memberTimeTableV2Repository.save(new MemberTimeTableV2(member, times));
 			member.submit();
 			team.addSubmit();
 			log.debug("[MEMBER IMAGE FIRST UPLOAD] team numberOfSubmit={}", team.getNumberOfSubmit());

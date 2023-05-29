@@ -1,6 +1,6 @@
-package hufs.team.mogong.member.service.dto.request;
+package hufs.team.mogong.vote.service.dto.request;
 
-import javax.validation.constraints.NotBlank;
+import hufs.team.mogong.team.service.dto.request.TimeRequests;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,10 +9,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PUBLIC)
-public class CreateMemberRequest {
+public class MemberVoteRequest {
 
-	@NotBlank
-	private String nickName;
-
-	private boolean leader;
+	private TimeRequests timeRequests;
 }

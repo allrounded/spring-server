@@ -50,7 +50,7 @@ public class TeamController {
 	}
 
 	@GetMapping("/names/{teamName}")
-	public BaseResponse<TeamIdResponse> findId(final @PathVariable String teamName) {
+	public BaseResponse<TeamIdResponse> findIdByTeamName(final @PathVariable String teamName) {
 		TeamIdResponse response = teamService.findId(teamName);
 		return new BaseResponse<>(FIND_TEAM_ID_SUCCESS, response);
 	}

@@ -14,6 +14,7 @@ import hufs.team.mogong.member.Member;
 import hufs.team.mogong.member.repository.MemberRepository;
 import hufs.team.mogong.team.Team;
 import hufs.team.mogong.team.repository.TeamRepository;
+import hufs.team.mogong.timetable.repository.MemberTimeTableV2Repository;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -37,6 +38,9 @@ class FindMemberTest extends InitDocumentationTest {
 	@Autowired
 	private TeamImageRepository teamImageRepository;
 
+	@Autowired
+	private MemberTimeTableV2Repository memberTimeTableV2Repository;
+
 	private Long teamId;
 	private Team team;
 	private Long memberId;
@@ -44,6 +48,7 @@ class FindMemberTest extends InitDocumentationTest {
 
 	@BeforeEach
 	void init() {
+		memberTimeTableV2Repository.deleteAllInBatch();
 		memberImageRepository.deleteAllInBatch();
 		memberRepository.deleteAllInBatch();
 		teamImageRepository.deleteAllInBatch();

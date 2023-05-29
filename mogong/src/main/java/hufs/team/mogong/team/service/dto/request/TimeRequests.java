@@ -1,5 +1,6 @@
-package hufs.team.mogong.team.service.dto.response;
+package hufs.team.mogong.team.service.dto.request;
 
+import hufs.team.mogong.team.service.dto.response.TimeTableResponse;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,9 +11,8 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor(access = AccessLevel.PUBLIC)
-public class ResultTimeResponses {
+public class TimeRequests {
 
 	private Integer divisorMinutes;
-	private TimeTableResponse[] times;
+	private TimeTableRequest[] times;
 }
-
