@@ -18,6 +18,7 @@ import hufs.team.mogong.team.service.dto.request.TimeTableRequest;
 import hufs.team.mogong.timetable.repository.MemberTimeTableV2Repository;
 import hufs.team.mogong.timetable.repository.TeamTimeTableRepository;
 import hufs.team.mogong.tool.RestTemplateMocks;
+import hufs.team.mogong.vote.repository.MemberVoteRepository;
 import hufs.team.mogong.vote.repository.TeamVoteFormRepository;
 import hufs.team.mogong.vote.repository.TeamVoteRepository;
 import java.io.IOException;
@@ -59,6 +60,9 @@ public abstract class InitVoteTest extends InitDocumentationTest {
 	@Autowired
 	protected TeamTimeTableRepository teamTimeTableRepository;
 
+	@Autowired
+	protected MemberVoteRepository memberVoteRepository;
+
 	protected static final Integer NUMBER_OF_TEAM = 5;
 	protected static final String AUTH_CODE = "1234";
 	protected static final Integer DIVISOR_MINUTES = 30;
@@ -72,6 +76,7 @@ public abstract class InitVoteTest extends InitDocumentationTest {
 
 	@BeforeEach
 	protected void init() throws IOException {
+		memberVoteRepository.deleteAllInBatch();
 		teamVoteRepository.deleteAllInBatch();
 		teamTimeTableRepository.deleteAllInBatch();
 		teamVoteFormRepository.deleteAllInBatch();
