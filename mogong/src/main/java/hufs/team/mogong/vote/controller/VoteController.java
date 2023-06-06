@@ -1,12 +1,18 @@
 package hufs.team.mogong.vote.controller;
 
+import static hufs.team.mogong.common.response.ResponseCodeAndMessages.CREATE_MEMBER_VOTE_SUCCESS;
 import static hufs.team.mogong.common.response.ResponseCodeAndMessages.CREATE_VOTE_FORM_SUCCESS;
+import static hufs.team.mogong.common.response.ResponseCodeAndMessages.FIND_MEMBER_VOTE_SUCCESS;
+import static hufs.team.mogong.common.response.ResponseCodeAndMessages.FIND_TEAM_TOTAL_VOTES_SUCCESS;
 import static hufs.team.mogong.common.response.ResponseCodeAndMessages.FIND_VOTE_FORM_SUCCESS;
+import static hufs.team.mogong.common.response.ResponseCodeAndMessages.UPDATE_MEMBER_VOTE_SUCCESS;
 
 import hufs.team.mogong.common.response.BaseResponse;
 import hufs.team.mogong.vote.service.VoteService;
 import hufs.team.mogong.vote.service.dto.request.MemberVoteRequest;
 import hufs.team.mogong.vote.service.dto.request.VoteFormRequest;
+import hufs.team.mogong.vote.service.dto.response.MemberVoteResponse;
+import hufs.team.mogong.vote.service.dto.response.TeamTotalVotesResponse;
 import hufs.team.mogong.vote.service.dto.response.VoteFormResponse;
 import javax.validation.Valid;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,9 +36,10 @@ public class VoteController {
 	/**
 	 * 0-1. 투표 폼 생성 (v)
 	 * 0-2. 투표 폼 조회 (v)
-	 * 1. 투표 결과 조회
+	 * 1. 팀 투표 결과 조회
 	 * 2. 투표 결과 생성 (각 멤버별 요청)
 	 * 3. 투표 결과 수정 (각 멤버별 요청)
+	 * 4. 멤버 투표 결과 조회 (각 멤버별 요청)
 	 */
 
 	@PostMapping("/forms")
@@ -49,21 +56,27 @@ public class VoteController {
 	}
 
 	@GetMapping
-	public BaseResponse<Void> readVotes(final @PathVariable Long teamId) {
-		return new BaseResponse<>(null, null);
+	public BaseResponse<TeamTotalVotesResponse> readTeamVotes(final @PathVariable Long teamId) {
+		return new BaseResponse<>(FIND_TEAM_TOTAL_VOTES_SUCCESS, null);
 	}
 
 	@PostMapping("/members/{memberId}")
-	public BaseResponse<Void> createVote(final @PathVariable Long teamId,
+	public BaseResponse<MemberVoteResponse> createVote(final @PathVariable Long teamId,
 		final @PathVariable Long memberId, final @RequestBody MemberVoteRequest request) {
-//		voteService.create(teamId, memberId, request);
-		return new BaseResponse<>(null, null);
+		MemberVoteResponse response = voteService.create(teamId, memberId, request);
+		return new BaseResponse<>(CREATE_MEMBER_VOTE_SUCCESS, response);
 	}
 
 	@PutMapping("/members/{memberId}")
-	public BaseResponse<Void> updateVote(final @PathVariable Long teamId,
+	public BaseResponse<MemberVoteResponse> updateVote(final @PathVariable Long teamId,
+		final @PathVariable Long memberId, final @RequestBody MemberVoteRequest request) {
+		return new BaseResponse<>(UPDATE_MEMBER_VOTE_SUCCESS, null);
+	}
+
+	@GetMapping("/members/{memberId}")
+	public BaseResponse<MemberVoteResponse> readMemberVote(final @PathVariable Long teamId,
 		final @PathVariable Long memberId) {
-		return new BaseResponse<>(null, null);
+		return new BaseResponse<>(FIND_MEMBER_VOTE_SUCCESS, null);
 	}
 
 }

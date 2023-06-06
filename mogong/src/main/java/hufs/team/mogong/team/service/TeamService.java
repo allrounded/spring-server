@@ -2,7 +2,6 @@ package hufs.team.mogong.team.service;
 
 import hufs.team.mogong.image.TeamImage;
 import hufs.team.mogong.image.exception.NotFoundTeamImageException;
-import hufs.team.mogong.image.repository.MemberImageRepository;
 import hufs.team.mogong.image.repository.TeamImageRepository;
 import hufs.team.mogong.image.service.ImageUploadService;
 import hufs.team.mogong.image.service.dto.PreSignedUrlRequest;
@@ -28,10 +27,13 @@ import hufs.team.mogong.team.service.dto.response.TimeResponses;
 import hufs.team.mogong.team.service.dto.response.TimeTableResponse;
 import hufs.team.mogong.timetable.MemberTimeTableV1;
 import hufs.team.mogong.timetable.MemberTimeTableV2;
-import hufs.team.mogong.timetable.repository.TimeTableV1Repository;
+import hufs.team.mogong.timetable.TeamTimeTable;
+import hufs.team.mogong.timetable.repository.MemberTimeTableV1Repository;
 import hufs.team.mogong.timetable.repository.MemberTimeTableV2Repository;
+import hufs.team.mogong.timetable.repository.TeamTimeTableRepository;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
@@ -59,26 +61,27 @@ public class TeamService {
 	private String imageServerUrl;
 
 	private final TeamRepository teamRepository;
-	private final MemberImageRepository memberImageRepository;
 	private final TeamImageRepository teamImageRepository;
 	private final MemberRepository memberRepository;
-	private final TimeTableV1Repository timeTableV1Repository;
+	private final MemberTimeTableV1Repository memberTimeTableV1Repository;
 	private final MemberTimeTableV2Repository memberTimeTableV2Repository;
+	private final TeamTimeTableRepository teamTimeTableRepository;
 
 	private final RestTemplate restTemplate;
 	private final ImageUploadService imageUploadService;
 
 
-	public TeamService(TeamRepository teamRepository, MemberImageRepository memberImageRepository,
-		TeamImageRepository teamImageRepository, MemberRepository memberRepository,
-		TimeTableV1Repository timeTableV1Repository, MemberTimeTableV2Repository memberTimeTableV2Repository,
-		RestTemplate restTemplate, ImageUploadService imageUploadService) {
+	public TeamService(TeamRepository teamRepository, TeamImageRepository teamImageRepository,
+		MemberRepository memberRepository, MemberTimeTableV1Repository memberTimeTableV1Repository,
+		MemberTimeTableV2Repository memberTimeTableV2Repository,
+		TeamTimeTableRepository teamTimeTableRepository, RestTemplate restTemplate,
+		ImageUploadService imageUploadService) {
 		this.teamRepository = teamRepository;
-		this.memberImageRepository = memberImageRepository;
 		this.teamImageRepository = teamImageRepository;
 		this.memberRepository = memberRepository;
-		this.timeTableV1Repository = timeTableV1Repository;
+		this.memberTimeTableV1Repository = memberTimeTableV1Repository;
 		this.memberTimeTableV2Repository = memberTimeTableV2Repository;
+		this.teamTimeTableRepository = teamTimeTableRepository;
 		this.restTemplate = restTemplate;
 		this.imageUploadService = imageUploadService;
 	}
@@ -182,6 +185,8 @@ public class TeamService {
 				MemberTimeTableV2 timeTable = findTimeTableV2ByMemberId(member, team, authCode);
 				timeTable.accumulate(times);
 			}
+			upsertTeamTimeTable(times, team);
+
 			int[][] renewalTimes = changeTimesToIntArray(times);
 			TimeTableRequest[] timeTableResponses = getTimeTableRequests(renewalTimes);
 			ImageServerResultResponse resultResponse = requestTeamResult(getTeamResultRequest(team, timeTableResponses));
@@ -194,6 +199,18 @@ public class TeamService {
 		}
 
 		throw new NotCompletedSubmit(team.getNumberOfMember(), team.getNumberOfSubmit());
+	}
+
+	private void upsertTeamTimeTable(long[] times, Team team) {
+		Optional<TeamTimeTable> teamTimeTable = teamTimeTableRepository.findByTeam_TeamId(team.getTeamId());
+		if (teamTimeTable.isPresent()) {
+			log.debug("TEAM TIME TABLE UPDATE : teamId = {}", team.getTeamId());
+			TeamTimeTable timeTable = teamTimeTable.get();
+			timeTable.update(times);
+			return;
+		}
+		log.debug("TEAM TIME TABLE CREATE : teamId = {}", team.getTeamId());
+		teamTimeTableRepository.save(new TeamTimeTable(team, times));
 	}
 
 	private int[][] changeTimesToIntArray(long[] times) {
@@ -262,11 +279,11 @@ public class TeamService {
 
 	private MemberTimeTableV1 findTimeTableV1ByMemberId(Member member, Team team, String authCode) {
 		if (validateAuthCode(team, authCode)) {
-			return timeTableV1Repository.findByMember_MemberId(member.getMemberId())
+			return memberTimeTableV1Repository.findByMember_MemberId(member.getMemberId())
 				.orElse(MemberTimeTableV1.getDefault(member, TIME_LENGTH));
 		}
 
-		return timeTableV1Repository.findByMember_MemberId(member.getMemberId())
+		return memberTimeTableV1Repository.findByMember_MemberId(member.getMemberId())
 			.orElseThrow(() -> new NotCompletedSubmit(team.getNumberOfMember(), team.getNumberOfSubmit()));
 	}
 

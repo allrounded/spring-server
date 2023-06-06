@@ -34,10 +34,16 @@ public enum ErrorCodeAndMessages implements CodeAndMessages {
 	IMAGE_SERVER_ERROR("IS-F001", "IMAGE SERVER의 에러로 인해 요청이 제대로 수행되지 못했습니다."),
 
 	/**
+	 * TimeTable
+	 */
+	NOT_FOUND_TEAM_TIME_TABLE("TT-F001", "TEAM 시간표를 찾지 못했습니다."),
+
+	/**
 	 * Vote
 	 */
 	NOT_FOUND_TEAM_VOTE("V-F001", "해당 팀 투표가 아직 완성되지 않았습니다."),
 	ALREADY_EXISTS_TEAM_VOTE("V-F002", "해당 팀 투표는 이미 생성되었습니다."),
+	ALREADY_EXIST_MEMBER_VOTE("V-F003", "해당 멤버는 이미 투표를 생성하였습니다. 만약 변경하고 싶다면, UPDATE를 해주세요"),
 	;
 	private final String code;
 	private final String message;

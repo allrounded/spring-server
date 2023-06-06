@@ -13,6 +13,7 @@ import hufs.team.mogong.image.repository.TeamImageRepository;
 import hufs.team.mogong.member.service.dto.request.CreateMemberRequest;
 import hufs.team.mogong.team.Team;
 import hufs.team.mogong.team.repository.TeamRepository;
+import hufs.team.mogong.timetable.repository.TeamTimeTableRepository;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -30,11 +31,15 @@ public class CreateMemberTest extends InitDocumentationTest {
 	@Autowired
 	private TeamImageRepository teamImageRepository;
 
+	@Autowired
+	private TeamTimeTableRepository teamTimeTableRepository;
+
 	private Long teamId;
 	private Team team;
 
 	@BeforeEach
 	void init() {
+		teamTimeTableRepository.deleteAllInBatch();
 		teamImageRepository.deleteAllInBatch();
 		teamRepository.deleteAllInBatch();
 		team = teamRepository.save(new Team("1c487536-08ef-4332-bc2f-16830f49495f",

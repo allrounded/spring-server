@@ -30,6 +30,10 @@ public enum ResponseCodeAndMessages implements CodeAndMessages {
 	 */
 	CREATE_VOTE_FORM_SUCCESS("V-S001", "팀 투표 폼 생성이 완료되었습니다."),
 	FIND_VOTE_FORM_SUCCESS("V-S002", "팀 투표 폼 조회에 성공했습니다."),
+	FIND_TEAM_TOTAL_VOTES_SUCCESS("V-S003", "팀 전체 투표 조회에 성공했습니다."),
+	CREATE_MEMBER_VOTE_SUCCESS("V-S004", "팀 멤버 투표 생성에 성공했습니다."),
+	UPDATE_MEMBER_VOTE_SUCCESS("V-S005", "팀 멤버 투표 수정에 성공했습니다."),
+	FIND_MEMBER_VOTE_SUCCESS("V-S006", "팀 멤버 투표 조회에 성공했습니다."),
 	;
 
 	private final String code;
