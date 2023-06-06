@@ -8,7 +8,7 @@ import static hufs.team.mogong.docs.vote.VoteSnippet.CREATE_VOTE_FORM_SUCCESS_RE
 import static io.restassured.RestAssured.given;
 import static org.springframework.restdocs.restassured3.RestAssuredRestDocumentation.document;
 
-import hufs.team.mogong.vote.TeamVote;
+import hufs.team.mogong.vote.TeamVoteForm;
 import hufs.team.mogong.vote.service.dto.request.VoteFormRequest;
 import hufs.team.mogong.vote.service.dto.response.VoteFormResponse;
 import org.hamcrest.Matchers;
@@ -55,7 +55,7 @@ class CreateVoteFormTest extends InitVoteTest {
 	void create_team_vote_fail() {
 		saveTeam();
 		VoteFormRequest request = new VoteFormRequest(30, false);
-		teamVoteRepository.save(new TeamVote(team, 30, false));
+		teamVoteFormRepository.save(new TeamVoteForm(team, 30, false));
 
 		//given
 		given(this.spec)

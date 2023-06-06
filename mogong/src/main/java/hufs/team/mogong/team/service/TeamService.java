@@ -2,7 +2,6 @@ package hufs.team.mogong.team.service;
 
 import hufs.team.mogong.image.TeamImage;
 import hufs.team.mogong.image.exception.NotFoundTeamImageException;
-import hufs.team.mogong.image.repository.MemberImageRepository;
 import hufs.team.mogong.image.repository.TeamImageRepository;
 import hufs.team.mogong.image.service.ImageUploadService;
 import hufs.team.mogong.image.service.dto.PreSignedUrlRequest;

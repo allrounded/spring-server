@@ -5,7 +5,7 @@ import static hufs.team.mogong.docs.vote.VoteSnippet.CREATE_VOTE_FORM_SUCCESS_RE
 import static io.restassured.RestAssured.given;
 import static org.springframework.restdocs.restassured3.RestAssuredRestDocumentation.document;
 
-import hufs.team.mogong.vote.TeamVote;
+import hufs.team.mogong.vote.TeamVoteForm;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -19,7 +19,7 @@ class FindVoteFormTest extends InitVoteTest {
 	@DisplayName("팀 투표 폼 조회 성공")
 	void find_team_vote_success() {
 		saveTeam();
-		teamVoteRepository.save(new TeamVote(team, 30, false));
+		teamVoteFormRepository.save(new TeamVoteForm(team, 30, false));
 
 		//given
 		given(this.spec)

@@ -1,5 +1,8 @@
 package hufs.team.mogong.docs.vote;
 
+import static hufs.team.mogong.team.DayOfWeek.*;
+import static hufs.team.mogong.team.DayOfWeek.MON;
+
 import hufs.team.mogong.docs.InitDocumentationTest;
 import hufs.team.mogong.image.MemberImage;
 import hufs.team.mogong.image.TeamImage;
@@ -7,11 +10,14 @@ import hufs.team.mogong.image.repository.MemberImageRepository;
 import hufs.team.mogong.image.repository.TeamImageRepository;
 import hufs.team.mogong.member.Member;
 import hufs.team.mogong.member.repository.MemberRepository;
+import hufs.team.mogong.team.DayOfWeek;
 import hufs.team.mogong.team.Team;
 import hufs.team.mogong.team.repository.TeamRepository;
+import hufs.team.mogong.team.service.dto.request.TimeRequests;
+import hufs.team.mogong.team.service.dto.request.TimeTableRequest;
 import hufs.team.mogong.timetable.repository.MemberTimeTableV2Repository;
 import hufs.team.mogong.tool.RestTemplateMocks;
-import hufs.team.mogong.vote.repository.TeamVoteRepository;
+import hufs.team.mogong.vote.repository.TeamVoteFormRepository;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,23 +46,25 @@ public abstract class InitVoteTest extends InitDocumentationTest {
 	protected MemberRepository memberRepository;
 
 	@Autowired
-	protected TeamVoteRepository teamVoteRepository;
+	protected TeamVoteFormRepository teamVoteFormRepository;
 
 	@Autowired
 	protected MemberTimeTableV2Repository memberTimeTableV2Repository;
 
 	protected static final Integer NUMBER_OF_TEAM = 5;
 	protected static final String AUTH_CODE = "1234";
+	protected static final Integer DIVISOR_MINUTES = 30;
 
 	protected Long teamId;
 	protected Team team;
 	protected Member member1;
 	protected Member member2;
 	protected List<Long> times = new ArrayList<>();;
+	protected TimeRequests timeRequests;
 
 	@BeforeEach
 	protected void init() throws IOException {
-		teamVoteRepository.deleteAllInBatch();
+		teamVoteFormRepository.deleteAllInBatch();
 		memberTimeTableV2Repository.deleteAllInBatch();
 		memberImageRepository.deleteAllInBatch();
 		memberRepository.deleteAllInBatch();
@@ -88,5 +96,34 @@ public abstract class InitVoteTest extends InitDocumentationTest {
 			"https://mogong.s3.ap-northeast-2.amazonaws.com/image/sample_2.JPG"));
 		memberImageRepository.save(new MemberImage(member2,
 			"https://mogong.s3.ap-northeast-2.amazonaws.com/image/sample_3.JPG"));
+	}
+
+	protected void saveTimeRequest() {
+		TimeTableRequest[] timeTableRequests = {
+			new TimeTableRequest(MON,
+				new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1,
+					1, 0, 1, 0, 1}),
+			new TimeTableRequest(TUE,
+				new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1,
+					1, 0, 1, 0, 1}),
+			new TimeTableRequest(WED,
+				new int[]{1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0}),
+			new TimeTableRequest(THU,
+				new int[]{1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0}),
+			new TimeTableRequest(FRI,
+				new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1,
+					1, 0, 1, 0, 1}),
+			new TimeTableRequest(SAT,
+				new int[]{1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0}),
+			new TimeTableRequest(SUN,
+				new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1,
+					1, 0, 1, 0, 1}),
+
+		};
+
+		timeRequests = new TimeRequests(DIVISOR_MINUTES, timeTableRequests);
 	}
 }

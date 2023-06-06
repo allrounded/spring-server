@@ -1,9 +1,6 @@
 package hufs.team.mogong.vote;
 
-import hufs.team.mogong.member.Member;
-import hufs.team.mogong.timetable.TimeTable;
-import java.util.ArrayList;
-import java.util.List;
+import hufs.team.mogong.team.Team;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -19,24 +16,24 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class MemberVote extends TimeTable {
+public class TeamVoteForm {
 
 	@Id
-	@Column(name = "member_vote_id")
+	@Column(name = "team_vote_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "member_id")
-	private Member member;
 
-	public MemberVote(Member member, List<Long> times) {
-		this.member = member;
-		this.mon = times.get(0);
-		this.tue = times.get(1);
-		this.wed = times.get(2);
-		this.thu = times.get(3);
-		this.fri = times.get(4);
-		this.sat = times.get(5);
-		this.sun = times.get(6);
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "team_id")
+	private Team team;
+
+	private Integer divisorMinutes;
+
+	private boolean duplicate;
+
+	public TeamVoteForm(Team team, Integer divisorMinutes, boolean duplicate) {
+		this.team = team;
+		this.divisorMinutes = divisorMinutes;
+		this.duplicate = duplicate;
 	}
 }
