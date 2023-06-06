@@ -6,9 +6,6 @@ import static hufs.team.mogong.docs.vote.VoteSnippet.CREATE_MEMBER_VOTE_SUCCESS_
 import static io.restassured.RestAssured.given;
 import static org.springframework.restdocs.restassured3.RestAssuredRestDocumentation.document;
 
-import hufs.team.mogong.team.Team;
-import hufs.team.mogong.team.service.dto.request.TimeRequests;
-import hufs.team.mogong.team.service.dto.request.TimeTableRequest;
 import hufs.team.mogong.timetable.TeamTimeTable;
 import hufs.team.mogong.timetable.repository.TeamTimeTableRepository;
 import hufs.team.mogong.vote.TeamVote;
@@ -23,12 +20,6 @@ import org.springframework.http.MediaType;
 
 @DisplayName("[API DOCS] 멤버 투표 생성")
 class CreateMemberVoteTest extends InitVoteTest {
-
-	@Autowired
-	private TeamVoteRepository teamVoteRepository;
-
-	@Autowired
-	private TeamTimeTableRepository teamTimeTableRepository;
 
 	@Test
 	@DisplayName("멤버 투표 생성 성공")
