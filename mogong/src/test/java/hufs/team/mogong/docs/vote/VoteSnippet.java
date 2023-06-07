@@ -36,7 +36,7 @@ public interface VoteSnippet {
 		responseFieldsOfCommonNonData()
 	);
 
-	Snippet CREATE_MEMBER_VOTE_REQUEST_BODY_SNIPPET = requestSnippetWithConstraintsAndFields(
+	Snippet UPSERT_MEMBER_VOTE_REQUEST_BODY_SNIPPET = requestSnippetWithConstraintsAndFields(
 		MemberVoteRequest.class,
 		fieldWithPath("timeRequests").type(JsonFieldType.OBJECT).description("멤버가 투표한 시간표"),
 		fieldWithPath("timeRequests.divisorMinutes").type(JsonFieldType.NUMBER).description("투표 폼 시간 단위(30분, 60분, 90분)"),
@@ -45,7 +45,7 @@ public interface VoteSnippet {
 		fieldWithPath("timeRequests.times[].time[]").type(JsonFieldType.ARRAY).description("시간표 배열(0, 1로 이루어진 배열)")
 	);
 
-	Snippet CREATE_MEMBER_VOTE_SUCCESS_RESPONSE_SNIPPET = createResponseSnippetWithFields(
+	Snippet UPSERT_MEMBER_VOTE_SUCCESS_RESPONSE_SNIPPET = createResponseSnippetWithFields(
 		responseFieldsOfCommon(),
 		responseFieldsOfObjectWithConstraintsAndFields(
 			MemberVoteResponse.class,

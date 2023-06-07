@@ -1,11 +1,6 @@
 package hufs.team.mogong.vote;
 
-import hufs.team.mogong.member.Member;
 import hufs.team.mogong.team.Team;
-import hufs.team.mogong.timetable.TimeTable;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -13,7 +8,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -72,23 +66,29 @@ public class TeamVote {
 		char[] friCharArr = this.fri.toCharArray();
 		char[] satCharArr = this.sat.toCharArray();
 		char[] sunCharArr = this.sun.toCharArray();
-
+		StringBuilder sbMon = new StringBuilder();
+		StringBuilder sbTue = new StringBuilder();
+		StringBuilder sbWed = new StringBuilder();
+		StringBuilder sbThu = new StringBuilder();
+		StringBuilder sbFri = new StringBuilder();
+		StringBuilder sbSat = new StringBuilder();
+		StringBuilder sbSun = new StringBuilder();
 		for (int i = 0; i < vote[0].length; i++) {
-			monCharArr[i] += vote[0][i]*diff;
-			tueCharArr[i] += vote[1][i]*diff;
-			wedCharArr[i] += vote[2][i]*diff;
-			thuCharArr[i] += vote[3][i]*diff;
-			friCharArr[i] += vote[4][i]*diff;
-			satCharArr[i] += vote[5][i]*diff;
-			sunCharArr[i] += vote[6][i]*diff;
+			sbMon.append(Math.max(0, Character.getNumericValue(monCharArr[i]) + vote[0][i]*diff));
+			sbTue.append(Math.max(0, Character.getNumericValue(tueCharArr[i]) + vote[1][i]*diff));
+			sbWed.append(Math.max(0, Character.getNumericValue(wedCharArr[i]) + vote[2][i]*diff));
+			sbThu.append(Math.max(0, Character.getNumericValue(thuCharArr[i]) + vote[3][i]*diff));
+			sbFri.append(Math.max(0, Character.getNumericValue(friCharArr[i]) + vote[4][i]*diff));
+			sbSat.append(Math.max(0, Character.getNumericValue(satCharArr[i]) + vote[5][i]*diff));
+			sbSun.append(Math.max(0, Character.getNumericValue(sunCharArr[i]) + vote[6][i]*diff));
 		}
 
-		this.mon = Arrays.toString(monCharArr);
-		this.tue = Arrays.toString(tueCharArr);
-		this.wed = Arrays.toString(wedCharArr);
-		this.thu = Arrays.toString(thuCharArr);
-		this.fri = Arrays.toString(friCharArr);
-		this.sat = Arrays.toString(satCharArr);
-		this.sun = Arrays.toString(sunCharArr);
+		this.mon = sbMon.toString();
+		this.tue = sbTue.toString();
+		this.wed = sbWed.toString();
+		this.thu = sbThu.toString();
+		this.fri = sbFri.toString();
+		this.sat = sbSat.toString();
+		this.sun = sbSun.toString();
 	}
 }
