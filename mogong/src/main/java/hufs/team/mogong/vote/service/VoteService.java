@@ -255,4 +255,22 @@ public class VoteService {
 		return memberRepository.findById(memberId)
 			.orElseThrow(NotFoundMemberIdException::new);
 	}
+
+	@Transactional
+	public TeamTotalVotesResponse findTeamVotes(Long teamId) {
+		log.debug("TEAM ID={}", teamId);
+		TeamTimeTable teamTimeTable = findTeamTimeTableByTeamId(teamId);
+		TimeResponses teamTimeTableResponse = getTimeResponses(teamTimeTable);
+		log.debug("TEAM TIME TABLE 조회 완료");
+
+
+		TeamVote teamVote = getTeamVote(teamId);
+		log.debug("TEAM VOTE 조회 완료(없으면 새로 생성)");
+
+		return new TeamTotalVotesResponse(
+			teamId,
+			teamTimeTableResponse,
+			getTimeResponses(teamVote)
+		);
+	}
 }

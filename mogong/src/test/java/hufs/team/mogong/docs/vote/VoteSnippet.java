@@ -70,4 +70,22 @@ public interface VoteSnippet {
 		)
 	);
 
+	Snippet FIND_TEAM_TOTAL_VOTES_SUCCESS_RESPONSE_SNIPPET = createResponseSnippetWithFields(
+		responseFieldsOfCommon(),
+		responseFieldsOfObjectWithConstraintsAndFields(
+			MemberVoteResponse.class,
+			fieldWithPath("teamId").type(JsonFieldType.NUMBER).description("팀 아이디"),
+			fieldWithPath("teamTimeTable").type(JsonFieldType.OBJECT).description("팀 공강 시간표 데이터"),
+			fieldWithPath("teamTimeTable.divisorMinutes").type(JsonFieldType.NUMBER).description("팀 공강 시간표 시간 단위(30분, 60분, 90분)"),
+			fieldWithPath("teamTimeTable.times[]").type(JsonFieldType.ARRAY).description("팀 공강 시간표 배열"),
+			fieldWithPath("teamTimeTable.times[].dayOfWeek").type(JsonFieldType.STRING).description("팀 공강 시간표 요일(MON, TUE, WED, THU, FRI, SAT, SUN)"),
+			fieldWithPath("teamTimeTable.times[].time[]").type(JsonFieldType.ARRAY).description("팀 공강 시간표 배열(0, 1로 이루어진 배열)"),
+			fieldWithPath("teamVote").type(JsonFieldType.OBJECT).description("팀원 투표 총합"),
+			fieldWithPath("teamVote.divisorMinutes").type(JsonFieldType.NUMBER).description("팀원 투표 총합 시간 단위(30분, 60분, 90분)"),
+			fieldWithPath("teamVote.times[]").type(JsonFieldType.ARRAY).description("팀원 투표 총합 배열"),
+			fieldWithPath("teamVote.times[].dayOfWeek").type(JsonFieldType.STRING).description("팀원 투표 총합 요일(MON, TUE, WED, THU, FRI, SAT, SUN)"),
+			fieldWithPath("teamVote.times[].time[]").type(JsonFieldType.ARRAY).description("팀원 투표 총합 배열(0, 1로 이루어진 배열)")
+		)
+	);
+
 }

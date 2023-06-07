@@ -7,14 +7,10 @@ import static io.restassured.RestAssured.given;
 import static org.springframework.restdocs.restassured3.RestAssuredRestDocumentation.document;
 
 import hufs.team.mogong.timetable.TeamTimeTable;
-import hufs.team.mogong.timetable.repository.TeamTimeTableRepository;
-import hufs.team.mogong.vote.TeamVote;
-import hufs.team.mogong.vote.repository.TeamVoteRepository;
 import hufs.team.mogong.vote.service.dto.request.MemberVoteRequest;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 

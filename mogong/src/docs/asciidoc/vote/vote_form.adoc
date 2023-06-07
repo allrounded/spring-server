@@ -6,6 +6,10 @@
 | <<1. 투표 폼 생성>> | [POST] /votes/teams/{teamId}/forms
 | <<2. 투표 폼 조회>> | [GET] /votes/teams/{teamId}/forms
 | <<3. 팀원 투표 생성>> | [POST] /votes/teams/{teamId}/members/{memberId}
+| <<4. 팀원 투표 조회>> | [GET] /votes/teams/{teamId}/members/{memberId}
+| <<5. 팀원 투표 변경>> | [PUT] /votes/teams/{teamId}/members/{memberId}
+| <<6. 팀 전체 투표 현황 조회>> | [GET] /votes/teams/{teamId}
+
 
 |===
 
@@ -47,7 +51,7 @@ operation::find_vote_form_test/find_team_vote_success[snippets='http-response,re
 
 === 3. 멤버 투표 생성
 
-API : `POST /votes/teams{teamId}/members/{memberId}`
+API : `POST` `/votes/teams/{teamId}/members/{memberId}`
 
 ==== 200 OK
 
@@ -59,3 +63,36 @@ operation::create_member_vote_test/create_member_vote_success[snippets='http-req
 
 operation::create_member_vote_test/create_member_vote_success[snippets='http-response,response-fields']
 
+=== 4. 팀원 투표 조회
+
+API : `GET` `/votes/teams/{teamId}/members/{memberId}`
+
+==== 200 OK
+
+===== Request
+
+===== Response
+
+=== 5. 팀원 투표 변경
+
+API : `PUT` `/votes/teams/{teamId}/members/{memberId}`
+
+==== 200 OK
+
+===== Request
+
+===== Response
+
+=== 6. 팀 전체 투표 현황 조회
+
+API : `GET` `/votes/teams/{teamId}`
+
+==== 200 OK
+
+===== Request
+
+operation::find_team_vote_test/find_team_vote_success[snippets='http-request']
+
+===== Response
+
+operation::find_team_vote_test/find_team_vote_success[snippets='http-response,response-fields']

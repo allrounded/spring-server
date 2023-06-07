@@ -57,7 +57,8 @@ public class VoteController {
 
 	@GetMapping
 	public BaseResponse<TeamTotalVotesResponse> readTeamVotes(final @PathVariable Long teamId) {
-		return new BaseResponse<>(FIND_TEAM_TOTAL_VOTES_SUCCESS, null);
+		TeamTotalVotesResponse response = voteService.findTeamVotes(teamId);
+		return new BaseResponse<>(FIND_TEAM_TOTAL_VOTES_SUCCESS, response);
 	}
 
 	@PostMapping("/members/{memberId}")
