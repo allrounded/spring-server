@@ -5,6 +5,7 @@
 
 | <<1. 투표 폼 생성>> | [POST] /votes/teams/{teamId}/forms
 | <<2. 투표 폼 조회>> | [GET] /votes/teams/{teamId}/forms
+| <<3. 팀원 투표 생성>> | [POST] /votes/teams/{teamId}/members/{memberId}
 
 |===
 

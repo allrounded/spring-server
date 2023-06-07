@@ -44,7 +44,10 @@ public class MemberTimeTableV1 {
 	@Column(nullable = false)
 	private String fri;
 
+	@Column(nullable = false)
 	private String sat;
+
+	@Column(nullable = false)
 	private String sun;
 
 	public MemberTimeTableV1(Member member, List<String> times) {
