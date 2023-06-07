@@ -64,7 +64,7 @@ operation::create_member_vote_test/create_member_vote_success[snippets='http-req
 
 operation::create_member_vote_test/create_member_vote_success[snippets='http-response,response-fields']
 
-=== 4. 팀원 투표 조회
+=== 4. 팀원 투표 조회 (투표가 진행되었다는 가정)
 
 API : `GET` `/votes/teams/{teamId}/members/{memberId}`
 
@@ -72,7 +72,11 @@ API : `GET` `/votes/teams/{teamId}/members/{memberId}`
 
 ===== Request
 
+operation::find_member_vote_test/find_member_vote_success[snippets='http-request']
+
 ===== Response
+
+operation::find_member_vote_test/find_member_vote_success[snippets='http-response,response-fields']
 
 === 5. 팀원 투표 변경
 

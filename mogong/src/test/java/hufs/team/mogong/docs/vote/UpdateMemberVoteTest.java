@@ -21,9 +21,6 @@ import org.springframework.http.MediaType;
 @DisplayName("[API DOCS] 멤버 투표 수정")
 class UpdateMemberVoteTest extends InitVoteTest {
 
-	@Autowired
-	private VoteService voteService;
-
 	@Test
 	@DisplayName("멤버 투표 수정 성공")
 	void update_member_vote_success() {

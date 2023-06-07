@@ -78,7 +78,8 @@ public class VoteController {
 	@GetMapping("/members/{memberId}")
 	public BaseResponse<MemberVoteResponse> readMemberVote(final @PathVariable Long teamId,
 		final @PathVariable Long memberId) {
-		return new BaseResponse<>(FIND_MEMBER_VOTE_SUCCESS, null);
+		MemberVoteResponse response = voteService.findVote(teamId, memberId);
+		return new BaseResponse<>(FIND_MEMBER_VOTE_SUCCESS, response);
 	}
 
 }

@@ -282,7 +282,7 @@ public class VoteService {
 
 	@Transactional
 	public MemberVoteResponse updateVote(Long teamId, Long memberId, MemberVoteRequest request) {
-		log.debug("TEAM ID={}", teamId);
+		log.debug("TEAM ID={}, MEMBER ID={}", teamId, memberId);
 		TeamTimeTable teamTimeTable = findTeamTimeTableByTeamId(teamId);
 		TimeResponses teamTimeTableResponse = getTimeResponses(teamTimeTable);
 		log.debug("TEAM TIME TABLE 조회 완료");
@@ -293,49 +293,17 @@ public class VoteService {
 		TeamVote teamVote = getTeamVote(teamId);
 		log.debug("TEAM VOTE 조회 완료(없으면 Exception 반환)");
 
-		log.debug("MON = {}", teamVote.getMon());
-		log.debug("TUE = {}", teamVote.getTue());
-		log.debug("WED = {}", teamVote.getWed());
-		log.debug("THU = {}", teamVote.getThu());
-		log.debug("FRI = {}", teamVote.getFri());
-		log.debug("SAT = {}", teamVote.getSat());
-		log.debug("SUN = {}", teamVote.getSun());
-
-
 		MemberVote memberVote = findMemberVoteByMemberId(memberId);
 		log.debug("MEMBER VOTE 조회 완료");
 
 		teamVote.apply(changeTimesToIntArray(getLongArray(memberVote)), -1);
 		log.debug("기존 MEMBER VOTE -> TEAM TOTAL VOTES에서 차감 완료");
 
-		log.debug("MON = {}", teamVote.getMon());
-		log.debug("TUE = {}", teamVote.getTue());
-		log.debug("WED = {}", teamVote.getWed());
-		log.debug("THU = {}", teamVote.getThu());
-		log.debug("FRI = {}", teamVote.getFri());
-		log.debug("SAT = {}", teamVote.getSat());
-		log.debug("SUN = {}", teamVote.getSun());
-
 		memberVote.updateTimes(getMemberVoteTimes(request));
 		log.debug("MEMBER VOTE 수정 완료");
-		log.debug("MON = {}", teamVote.getMon());
-		log.debug("TUE = {}", teamVote.getTue());
-		log.debug("WED = {}", teamVote.getWed());
-		log.debug("THU = {}", teamVote.getThu());
-		log.debug("FRI = {}", teamVote.getFri());
-		log.debug("SAT = {}", teamVote.getSat());
-		log.debug("SUN = {}", teamVote.getSun());
 
 		teamVote.apply(changeTimesToIntArray(getLongArray(memberVote)), 1);
 		log.debug("NEW MEMBER VOTE -> TEAM TOTAL VOTES에 합산 완료");
-
-		log.debug("MON = {}", Long.toBinaryString(memberVote.getMon()));
-		log.debug("TUE = {}", Long.toBinaryString(memberVote.getTue()));
-		log.debug("WED = {}", Long.toBinaryString(memberVote.getWed()));
-		log.debug("THU = {}", Long.toBinaryString(memberVote.getThu()));
-		log.debug("FRI = {}", Long.toBinaryString(memberVote.getFri()));
-		log.debug("SAT = {}", Long.toBinaryString(memberVote.getSat()));
-		log.debug("SUN = {}", Long.toBinaryString(memberVote.getSun()));
 
 		TeamTotalVotesResponse teamTotalVotesResponse = new TeamTotalVotesResponse(
 			teamId,
@@ -353,5 +321,33 @@ public class VoteService {
 	private MemberVote findMemberVoteByMemberId(Long memberId) {
 		return memberVoteRepository.findByMember_MemberId(memberId)
 			.orElseThrow(NotFoundMemberVoteException::new);
+	}
+
+	public MemberVoteResponse findVote(Long teamId, Long memberId) {
+		log.debug("TEAM ID={}, MEMBER ID={}", teamId, memberId);
+		TeamTimeTable teamTimeTable = findTeamTimeTableByTeamId(teamId);
+		TimeResponses teamTimeTableResponse = getTimeResponses(teamTimeTable);
+		log.debug("TEAM TIME TABLE 조회 완료");
+
+		if (notFoundTeamVote(teamId)) {
+			throw new NotFoundTeamVoteException();
+		}
+		TeamVote teamVote = getTeamVote(teamId);
+		log.debug("TEAM VOTE 조회 완료(없으면 Exception 반환)");
+
+		MemberVote memberVote = findMemberVoteByMemberId(memberId);
+		log.debug("MEMBER VOTE 조회 완료");
+
+		TeamTotalVotesResponse teamTotalVotesResponse = new TeamTotalVotesResponse(
+			teamId,
+			teamTimeTableResponse,
+			getTimeResponses(teamVote)
+		);
+
+		return new MemberVoteResponse(
+			teamTotalVotesResponse,
+			memberId,
+			getTimeResponses(memberVote)
+		);
 	}
 }
