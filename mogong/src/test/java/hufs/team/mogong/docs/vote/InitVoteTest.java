@@ -1,7 +1,12 @@
 package hufs.team.mogong.docs.vote;
 
-import static hufs.team.mogong.team.DayOfWeek.*;
+import static hufs.team.mogong.team.DayOfWeek.FRI;
 import static hufs.team.mogong.team.DayOfWeek.MON;
+import static hufs.team.mogong.team.DayOfWeek.SAT;
+import static hufs.team.mogong.team.DayOfWeek.SUN;
+import static hufs.team.mogong.team.DayOfWeek.THU;
+import static hufs.team.mogong.team.DayOfWeek.TUE;
+import static hufs.team.mogong.team.DayOfWeek.WED;
 
 import hufs.team.mogong.docs.InitDocumentationTest;
 import hufs.team.mogong.image.MemberImage;
@@ -10,7 +15,6 @@ import hufs.team.mogong.image.repository.MemberImageRepository;
 import hufs.team.mogong.image.repository.TeamImageRepository;
 import hufs.team.mogong.member.Member;
 import hufs.team.mogong.member.repository.MemberRepository;
-import hufs.team.mogong.team.DayOfWeek;
 import hufs.team.mogong.team.Team;
 import hufs.team.mogong.team.repository.TeamRepository;
 import hufs.team.mogong.team.service.dto.request.TimeRequests;
@@ -66,6 +70,8 @@ public abstract class InitVoteTest extends InitDocumentationTest {
 	protected static final Integer NUMBER_OF_TEAM = 5;
 	protected static final String AUTH_CODE = "1234";
 	protected static final Integer DIVISOR_MINUTES = 30;
+	protected static final Integer TIME_LENGTH = 30;
+	protected static final Integer DAY_OF_WEEK = 7;
 
 	protected Long teamId;
 	protected Team team;
@@ -119,26 +125,45 @@ public abstract class InitVoteTest extends InitDocumentationTest {
 				new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1,
 					1, 0, 1, 0, 1}),
 			new TimeTableRequest(TUE,
-				new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1,
-					1, 0, 1, 0, 1}),
+				new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0, 1, 1,
+					0, 0, 1, 1, 1}),
 			new TimeTableRequest(WED,
-				new int[]{1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-					0, 0, 0, 0, 0}),
+				new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0, 1, 1, 0,
+					0, 1, 1, 1, 0}),
 			new TimeTableRequest(THU,
-				new int[]{1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-					0, 0, 0, 0, 0}),
+				new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 1, 0, 1, 0, 0, 0, 1,
+					0, 0, 0, 1, 1}),
 			new TimeTableRequest(FRI,
 				new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1,
 					1, 0, 1, 0, 1}),
 			new TimeTableRequest(SAT,
-				new int[]{1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+				new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 					0, 0, 0, 0, 0}),
 			new TimeTableRequest(SUN,
-				new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1,
-					1, 0, 1, 0, 1}),
-
+				new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0}),
 		};
 
 		timeRequests = new TimeRequests(DIVISOR_MINUTES, timeTableRequests);
+	}
+
+	protected String[] initTeamVote() {
+		String[] teamVoteArray = new String[DAY_OF_WEEK];
+		for (int i = 0; i < DAY_OF_WEEK; i++) {
+			teamVoteArray[i] = "0".repeat(TIME_LENGTH);
+		}
+		return teamVoteArray;
+	}
+
+	protected String[] initTeamVoteForUpdate() {
+		String[] teamVoteArray = new String[DAY_OF_WEEK];
+		teamVoteArray[0] = "0".repeat(14) + Long.toBinaryString(33333L); // 1000001000110101
+		teamVoteArray[1] = "0".repeat(16) + Long.toBinaryString(11111L); // 10101101100111
+		teamVoteArray[2] = "0".repeat(15) + Long.toBinaryString(22222L); // 101011011001110
+		teamVoteArray[3] = "0".repeat(10) + Long.toBinaryString(555555L).toString(); // 10000111101000100011
+		teamVoteArray[4] = "0".repeat(14) + Long.toBinaryString(33333L); // 1000001000110101
+		teamVoteArray[5] = "0".repeat(30);
+		teamVoteArray[6] = "0".repeat(30);
+		return teamVoteArray;
 	}
 }

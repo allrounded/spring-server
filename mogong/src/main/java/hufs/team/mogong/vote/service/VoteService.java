@@ -19,6 +19,7 @@ import hufs.team.mogong.vote.TeamVote;
 import hufs.team.mogong.vote.TeamVoteForm;
 import hufs.team.mogong.vote.exception.AlreadyExistMemberVote;
 import hufs.team.mogong.vote.exception.AlreadyExistsTeamVote;
+import hufs.team.mogong.vote.exception.NotFoundMemberVoteException;
 import hufs.team.mogong.vote.exception.NotFoundTeamVoteException;
 import hufs.team.mogong.vote.repository.MemberVoteRepository;
 import hufs.team.mogong.vote.repository.TeamVoteFormRepository;
@@ -140,6 +141,10 @@ public class VoteService {
 		return tempTeamVote.orElseGet(() -> teamVoteRepository.save(new TeamVote(team, initTeamVote())));
 	}
 
+	private boolean notFoundTeamVote(Long teamId) {
+		return teamVoteRepository.findByTeam_TeamId(teamId).isEmpty();
+	}
+
 	private MemberVote saveMemberVote(Long memberId, MemberVoteRequest request) {
 		checkMemberVoteAlreadyExist(memberId);
 		Member member = findMemberByMemberId(memberId);
@@ -254,5 +259,95 @@ public class VoteService {
 	private Member findMemberByMemberId(Long memberId) {
 		return memberRepository.findById(memberId)
 			.orElseThrow(NotFoundMemberIdException::new);
+	}
+
+	public TeamTotalVotesResponse findTeamVotes(Long teamId) {
+		log.debug("TEAM ID={}", teamId);
+		TeamTimeTable teamTimeTable = findTeamTimeTableByTeamId(teamId);
+		TimeResponses teamTimeTableResponse = getTimeResponses(teamTimeTable);
+		log.debug("TEAM TIME TABLE 조회 완료");
+
+		if (notFoundTeamVote(teamId)) {
+			throw new NotFoundTeamVoteException();
+		}
+		TeamVote teamVote = getTeamVote(teamId);
+		log.debug("TEAM VOTE 조회 완료(없으면 Exception 반환)");
+
+		return new TeamTotalVotesResponse(
+			teamId,
+			teamTimeTableResponse,
+			getTimeResponses(teamVote)
+		);
+	}
+
+	@Transactional
+	public MemberVoteResponse updateVote(Long teamId, Long memberId, MemberVoteRequest request) {
+		log.debug("TEAM ID={}, MEMBER ID={}", teamId, memberId);
+		TeamTimeTable teamTimeTable = findTeamTimeTableByTeamId(teamId);
+		TimeResponses teamTimeTableResponse = getTimeResponses(teamTimeTable);
+		log.debug("TEAM TIME TABLE 조회 완료");
+
+		if (notFoundTeamVote(teamId)) {
+			throw new NotFoundTeamVoteException();
+		}
+		TeamVote teamVote = getTeamVote(teamId);
+		log.debug("TEAM VOTE 조회 완료(없으면 Exception 반환)");
+
+		MemberVote memberVote = findMemberVoteByMemberId(memberId);
+		log.debug("MEMBER VOTE 조회 완료");
+
+		teamVote.apply(changeTimesToIntArray(getLongArray(memberVote)), -1);
+		log.debug("기존 MEMBER VOTE -> TEAM TOTAL VOTES에서 차감 완료");
+
+		memberVote.updateTimes(getMemberVoteTimes(request));
+		log.debug("MEMBER VOTE 수정 완료");
+
+		teamVote.apply(changeTimesToIntArray(getLongArray(memberVote)), 1);
+		log.debug("NEW MEMBER VOTE -> TEAM TOTAL VOTES에 합산 완료");
+
+		TeamTotalVotesResponse teamTotalVotesResponse = new TeamTotalVotesResponse(
+			teamId,
+			teamTimeTableResponse,
+			getTimeResponses(teamVote)
+		);
+
+		return new MemberVoteResponse(
+			teamTotalVotesResponse,
+			memberId,
+			getTimeResponses(memberVote)
+		);
+	}
+
+	private MemberVote findMemberVoteByMemberId(Long memberId) {
+		return memberVoteRepository.findByMember_MemberId(memberId)
+			.orElseThrow(NotFoundMemberVoteException::new);
+	}
+
+	public MemberVoteResponse findVote(Long teamId, Long memberId) {
+		log.debug("TEAM ID={}, MEMBER ID={}", teamId, memberId);
+		TeamTimeTable teamTimeTable = findTeamTimeTableByTeamId(teamId);
+		TimeResponses teamTimeTableResponse = getTimeResponses(teamTimeTable);
+		log.debug("TEAM TIME TABLE 조회 완료");
+
+		if (notFoundTeamVote(teamId)) {
+			throw new NotFoundTeamVoteException();
+		}
+		TeamVote teamVote = getTeamVote(teamId);
+		log.debug("TEAM VOTE 조회 완료(없으면 Exception 반환)");
+
+		MemberVote memberVote = findMemberVoteByMemberId(memberId);
+		log.debug("MEMBER VOTE 조회 완료");
+
+		TeamTotalVotesResponse teamTotalVotesResponse = new TeamTotalVotesResponse(
+			teamId,
+			teamTimeTableResponse,
+			getTimeResponses(teamVote)
+		);
+
+		return new MemberVoteResponse(
+			teamTotalVotesResponse,
+			memberId,
+			getTimeResponses(memberVote)
+		);
 	}
 }

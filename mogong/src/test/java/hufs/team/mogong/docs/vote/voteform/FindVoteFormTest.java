@@ -1,10 +1,11 @@
-package hufs.team.mogong.docs.vote;
+package hufs.team.mogong.docs.vote.voteform;
 
 import static hufs.team.mogong.common.response.ResponseCodeAndMessages.FIND_VOTE_FORM_SUCCESS;
 import static hufs.team.mogong.docs.vote.VoteSnippet.CREATE_VOTE_FORM_SUCCESS_RESPONSE_SNIPPET;
 import static io.restassured.RestAssured.given;
 import static org.springframework.restdocs.restassured3.RestAssuredRestDocumentation.document;
 
+import hufs.team.mogong.docs.vote.InitVoteTest;
 import hufs.team.mogong.vote.TeamVoteForm;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.DisplayName;

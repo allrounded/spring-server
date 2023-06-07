@@ -1,4 +1,4 @@
-package hufs.team.mogong.docs.vote;
+package hufs.team.mogong.docs.vote.voteform;
 
 import static hufs.team.mogong.common.exception.ErrorCodeAndMessages.ALREADY_EXISTS_TEAM_VOTE;
 import static hufs.team.mogong.common.response.ResponseCodeAndMessages.CREATE_VOTE_FORM_SUCCESS;
@@ -8,6 +8,7 @@ import static hufs.team.mogong.docs.vote.VoteSnippet.CREATE_VOTE_FORM_SUCCESS_RE
 import static io.restassured.RestAssured.given;
 import static org.springframework.restdocs.restassured3.RestAssuredRestDocumentation.document;
 
+import hufs.team.mogong.docs.vote.InitVoteTest;
 import hufs.team.mogong.vote.TeamVoteForm;
 import hufs.team.mogong.vote.service.dto.request.VoteFormRequest;
 import hufs.team.mogong.vote.service.dto.response.VoteFormResponse;

@@ -57,7 +57,8 @@ public class VoteController {
 
 	@GetMapping
 	public BaseResponse<TeamTotalVotesResponse> readTeamVotes(final @PathVariable Long teamId) {
-		return new BaseResponse<>(FIND_TEAM_TOTAL_VOTES_SUCCESS, null);
+		TeamTotalVotesResponse response = voteService.findTeamVotes(teamId);
+		return new BaseResponse<>(FIND_TEAM_TOTAL_VOTES_SUCCESS, response);
 	}
 
 	@PostMapping("/members/{memberId}")
@@ -70,13 +71,15 @@ public class VoteController {
 	@PutMapping("/members/{memberId}")
 	public BaseResponse<MemberVoteResponse> updateVote(final @PathVariable Long teamId,
 		final @PathVariable Long memberId, final @RequestBody MemberVoteRequest request) {
-		return new BaseResponse<>(UPDATE_MEMBER_VOTE_SUCCESS, null);
+		MemberVoteResponse response = voteService.updateVote(teamId, memberId, request);
+		return new BaseResponse<>(UPDATE_MEMBER_VOTE_SUCCESS, response);
 	}
 
 	@GetMapping("/members/{memberId}")
 	public BaseResponse<MemberVoteResponse> readMemberVote(final @PathVariable Long teamId,
 		final @PathVariable Long memberId) {
-		return new BaseResponse<>(FIND_MEMBER_VOTE_SUCCESS, null);
+		MemberVoteResponse response = voteService.findVote(teamId, memberId);
+		return new BaseResponse<>(FIND_MEMBER_VOTE_SUCCESS, response);
 	}
 
 }

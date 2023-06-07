@@ -44,6 +44,7 @@ public enum ErrorCodeAndMessages implements CodeAndMessages {
 	NOT_FOUND_TEAM_VOTE("V-F001", "해당 팀 투표가 아직 완성되지 않았습니다."),
 	ALREADY_EXISTS_TEAM_VOTE("V-F002", "해당 팀 투표는 이미 생성되었습니다."),
 	ALREADY_EXIST_MEMBER_VOTE("V-F003", "해당 멤버는 이미 투표를 생성하였습니다. 만약 변경하고 싶다면, UPDATE를 해주세요"),
+	NOT_FOUND_MEMBER_VOTE("V-F004", "해당 팀원 투표가 생성되지 않았습니다. 투표 생성을 먼저 진행해주세요."),
 	;
 	private final String code;
 	private final String message;
