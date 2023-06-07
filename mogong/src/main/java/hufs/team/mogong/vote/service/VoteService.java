@@ -124,6 +124,9 @@ public class VoteService {
 		MemberVote savedMemberVote = saveMemberVote(memberId, request);
 		log.debug("MEMBER VOTE 생성 완료");
 
+		teamVote.apply(changeTimesToIntArray(getLongArray(savedMemberVote)), 1);
+		log.debug("MEMBER VOTE -> TEAM TOTAL VOTES 합산 완료");
+
 		return new MemberVoteResponse(
 			teamTotalVotesResponse,
 			memberId,
@@ -170,12 +173,29 @@ public class VoteService {
 		return new TimeResponses(DIVISOR_MINUTES, getTimeTableResponses(times));
 	}
 
-	private List<Long> initTeamVote() {
-		List<Long> teamVoteList = new ArrayList<>();
+	private TimeResponses getTimeResponses(TeamVote teamVote) {
+		int[][] times = changeTimesToIntArray(getStringArray(teamVote));
+		return new TimeResponses(DIVISOR_MINUTES, getTimeTableResponses(times));
+	}
+
+	private String[] getStringArray(TeamVote teamVote) {
+		String[] stringArray = new String[DAY_OF_WEEK];
+		stringArray[0] = teamVote.getMon();
+		stringArray[1] = teamVote.getTue();
+		stringArray[2] = teamVote.getWed();
+		stringArray[3] = teamVote.getThu();
+		stringArray[4] = teamVote.getFri();
+		stringArray[5] = teamVote.getSat();
+		stringArray[6] = teamVote.getSun();
+		return stringArray;
+	}
+
+	private String[] initTeamVote() {
+		String[] teamVoteArray = new String[DAY_OF_WEEK];
 		for (int i = 0; i < DAY_OF_WEEK; i++) {
-			teamVoteList.add(0L);
+			teamVoteArray[i] = "0".repeat(TIME_LENGTH);
 		}
-		return teamVoteList;
+		return teamVoteArray;
 	}
 
 	private long[] getLongArray(TimeTable timeTable) {
@@ -200,9 +220,19 @@ public class VoteService {
 			}
 			idx++;
 		}
-
 		return renewalTimes;
 	}
+
+	private int[][] changeTimesToIntArray(String[] times) {
+		int[][] renewalTimes = new int[DAY_OF_WEEK][TIME_LENGTH];
+		for (int day = 0; day < DAY_OF_WEEK; day++) {
+			for (int i = 0; i < times[day].length() ; i++) {
+				renewalTimes[day][i] = Character.getNumericValue(times[day].charAt(i)) - ZERO_NUMERIC_VALUE;
+			}
+		}
+		return renewalTimes;
+	}
+
 
 	private TimeTableResponse[] getTimeTableResponses(int[][] times) {
 		TimeTableResponse[] timeTables = new TimeTableResponse[DAY_OF_WEEK];

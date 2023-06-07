@@ -26,7 +26,6 @@ class CreateMemberVoteTest extends InitVoteTest {
 	void create_member_vote_success() {
 		saveTeam();
 		saveMember();
-		teamVoteRepository.saveAndFlush(new TeamVote(team, times));
 		teamTimeTableRepository.saveAndFlush(
 			new TeamTimeTable(team, new long[]{10, 20, 30, 40, 50, 60, 70}));
 
