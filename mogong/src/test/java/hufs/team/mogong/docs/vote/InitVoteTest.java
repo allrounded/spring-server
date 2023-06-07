@@ -66,6 +66,8 @@ public abstract class InitVoteTest extends InitDocumentationTest {
 	protected static final Integer NUMBER_OF_TEAM = 5;
 	protected static final String AUTH_CODE = "1234";
 	protected static final Integer DIVISOR_MINUTES = 30;
+	protected static final Integer TIME_LENGTH = 30;
+	protected static final Integer DAY_OF_WEEK = 7;
 
 	protected Long teamId;
 	protected Team team;
@@ -140,5 +142,13 @@ public abstract class InitVoteTest extends InitDocumentationTest {
 		};
 
 		timeRequests = new TimeRequests(DIVISOR_MINUTES, timeTableRequests);
+	}
+
+	protected String[] initTeamVote() {
+		String[] teamVoteArray = new String[DAY_OF_WEEK];
+		for (int i = 0; i < DAY_OF_WEEK; i++) {
+			teamVoteArray[i] = "0".repeat(TIME_LENGTH);
+		}
+		return teamVoteArray;
 	}
 }

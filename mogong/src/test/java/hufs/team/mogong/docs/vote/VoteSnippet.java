@@ -88,4 +88,8 @@ public interface VoteSnippet {
 		)
 	);
 
+	Snippet FIND_TEAM_TOTAL_VOTES_FAIL_RESPONSE_SNIPPET = createResponseSnippetWithFields(
+		responseFieldsOfCommonNonData()
+	);
+
 }

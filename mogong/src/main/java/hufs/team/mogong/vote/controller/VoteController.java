@@ -71,7 +71,8 @@ public class VoteController {
 	@PutMapping("/members/{memberId}")
 	public BaseResponse<MemberVoteResponse> updateVote(final @PathVariable Long teamId,
 		final @PathVariable Long memberId, final @RequestBody MemberVoteRequest request) {
-		return new BaseResponse<>(UPDATE_MEMBER_VOTE_SUCCESS, null);
+		MemberVoteResponse response = voteService.updateVote(teamId, memberId, request);
+		return new BaseResponse<>(UPDATE_MEMBER_VOTE_SUCCESS, response);
 	}
 
 	@GetMapping("/members/{memberId}")

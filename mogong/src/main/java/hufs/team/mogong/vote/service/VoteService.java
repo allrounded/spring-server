@@ -140,6 +140,10 @@ public class VoteService {
 		return tempTeamVote.orElseGet(() -> teamVoteRepository.save(new TeamVote(team, initTeamVote())));
 	}
 
+	private boolean notFoundTeamVote(Long teamId) {
+		return teamVoteRepository.findByTeam_TeamId(teamId).isEmpty();
+	}
+
 	private MemberVote saveMemberVote(Long memberId, MemberVoteRequest request) {
 		checkMemberVoteAlreadyExist(memberId);
 		Member member = findMemberByMemberId(memberId);
@@ -256,21 +260,27 @@ public class VoteService {
 			.orElseThrow(NotFoundMemberIdException::new);
 	}
 
-	@Transactional
 	public TeamTotalVotesResponse findTeamVotes(Long teamId) {
 		log.debug("TEAM ID={}", teamId);
 		TeamTimeTable teamTimeTable = findTeamTimeTableByTeamId(teamId);
 		TimeResponses teamTimeTableResponse = getTimeResponses(teamTimeTable);
 		log.debug("TEAM TIME TABLE 조회 완료");
 
-
+		if (notFoundTeamVote(teamId)) {
+			throw new NotFoundTeamVoteException();
+		}
 		TeamVote teamVote = getTeamVote(teamId);
-		log.debug("TEAM VOTE 조회 완료(없으면 새로 생성)");
+		log.debug("TEAM VOTE 조회 완료(없으면 Exception 반환)");
 
 		return new TeamTotalVotesResponse(
 			teamId,
 			teamTimeTableResponse,
 			getTimeResponses(teamVote)
 		);
+	}
+
+	@Transactional
+	public MemberVoteResponse updateVote(Long teamId, Long memberId, MemberVoteRequest request) {
+		return null;
 	}
 }
